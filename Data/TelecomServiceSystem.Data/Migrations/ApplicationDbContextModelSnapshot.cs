@@ -237,12 +237,6 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DepartmentId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("EGN")
                         .IsRequired()
                         .HasColumnType("nvarchar(10)")
@@ -274,10 +268,7 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int?>("ManagerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ManagerId1")
+                    b.Property<string>("ManagerId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MiddleName")
@@ -321,15 +312,9 @@ namespace TelecomServiceSystem.Data.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("DepartmentId1")
-                        .IsUnique()
-                        .HasFilter("[DepartmentId1] IS NOT NULL");
-
                     b.HasIndex("IsDeleted");
 
-                    b.HasIndex("ManagerId1");
+                    b.HasIndex("ManagerId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
@@ -397,38 +382,6 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Customers");
-                });
-
-            modelBuilder.Entity("TelecomServiceSystem.Data.Models.Department", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ManagerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("TelecomServiceSystem.Data.Models.Device", b =>
@@ -503,20 +456,11 @@ namespace TelecomServiceSystem.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ContractDuration")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Expirеs")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -549,6 +493,9 @@ namespace TelecomServiceSystem.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ContractDuration")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -559,8 +506,17 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("Expirеs")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ICC")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IMEI")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -702,19 +658,9 @@ namespace TelecomServiceSystem.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TelecomServiceSystem.Data.Models.Department", "Department")
-                        .WithMany("Users")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("TelecomServiceSystem.Data.Models.Department", null)
-                        .WithOne("Manager")
-                        .HasForeignKey("TelecomServiceSystem.Data.Models.ApplicationUser", "DepartmentId1");
-
                     b.HasOne("TelecomServiceSystem.Data.Models.ApplicationUser", "Manager")
                         .WithMany()
-                        .HasForeignKey("ManagerId1");
+                        .HasForeignKey("ManagerId");
                 });
 
             modelBuilder.Entity("TelecomServiceSystem.Data.Models.Customer", b =>

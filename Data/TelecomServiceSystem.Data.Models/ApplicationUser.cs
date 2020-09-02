@@ -5,6 +5,7 @@ namespace TelecomServiceSystem.Data.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+
     using Microsoft.AspNetCore.Identity;
     using TelecomServiceSystem.Data.Common.Models;
 
@@ -41,13 +42,8 @@ namespace TelecomServiceSystem.Data.Models
 
         public string PictureURL { get; set; }
 
-        [ForeignKey(nameof(Department))]
-        public int DepartmentId { get; set; }
-
-        public virtual Department Department { get; set; }
-
         [ForeignKey(nameof(ApplicationUser))]
-        public int? ManagerId { get; set; }
+        public string ManagerId { get; set; }
 
         public virtual ApplicationUser Manager { get; set; }
 

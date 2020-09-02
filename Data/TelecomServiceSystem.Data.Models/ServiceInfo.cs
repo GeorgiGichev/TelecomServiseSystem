@@ -1,5 +1,6 @@
 ﻿namespace TelecomServiceSystem.Data.Models
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -29,5 +30,13 @@
         public string Number { get; set; }
 
         public string ICC { get; set; }
+
+        public string IMEI { get; set; }
+
+        public int ContractDuration { get; set; }
+
+        public DateTime Expirеs { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

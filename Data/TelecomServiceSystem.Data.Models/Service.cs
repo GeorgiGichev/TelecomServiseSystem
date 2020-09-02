@@ -22,11 +22,7 @@
 
         public ServiceType ServiceType { get; set; }
 
-        public int ContractDuration { get; set; }
-
-        public DateTime Expirеs { get; set; }
-
-        public bool IsActive { get; set; }
+        
 
         public decimal Price { get; set; }
 
