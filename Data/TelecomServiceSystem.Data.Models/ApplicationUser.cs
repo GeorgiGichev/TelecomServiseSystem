@@ -35,11 +35,6 @@ namespace TelecomServiceSystem.Data.Models
         [MaxLength(10)]
         public string EGN { get; set; }
 
-        [ForeignKey(nameof(Address))]
-        public int AddressId { get; set; }
-
-        public virtual Address Address { get; set; }
-
         public string PictureURL { get; set; }
 
         [ForeignKey(nameof(ApplicationUser))]

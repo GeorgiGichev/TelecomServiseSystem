@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace TelecomServiceSystem.Data.Migrations
+﻿namespace TelecomServiceSystem.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class AddInitialModels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,7 +24,7 @@ namespace TelecomServiceSystem.Data.Migrations
                     Number = table.Column<int>(nullable: false),
                     Entrance = table.Column<string>(maxLength: 20, nullable: true),
                     Floor = table.Column<int>(nullable: true),
-                    Apartment = table.Column<int>(nullable: true)
+                    Apartment = table.Column<int>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -41,7 +42,7 @@ namespace TelecomServiceSystem.Data.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    DeletedOn = table.Column<DateTime>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -56,7 +57,7 @@ namespace TelecomServiceSystem.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IMEI = table.Column<string>(maxLength: 15, nullable: false),
                     Brand = table.Column<string>(maxLength: 10, nullable: false),
-                    Model = table.Column<string>(maxLength: 20, nullable: false)
+                    Model = table.Column<string>(maxLength: 20, nullable: false),
                 },
                 constraints: table =>
                 {
@@ -78,7 +79,7 @@ namespace TelecomServiceSystem.Data.Migrations
                     ContractDuration = table.Column<int>(nullable: false),
                     Expirеs = table.Column<DateTime>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
-                    Price = table.Column<decimal>(nullable: false)
+                    Price = table.Column<decimal>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -96,7 +97,7 @@ namespace TelecomServiceSystem.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: true),
-                    Value = table.Column<string>(nullable: true)
+                    Value = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -109,7 +110,7 @@ namespace TelecomServiceSystem.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ICC = table.Column<string>(maxLength: 22, nullable: false)
+                    ICC = table.Column<string>(maxLength: 22, nullable: false),
                 },
                 constraints: table =>
                 {
@@ -145,7 +146,7 @@ namespace TelecomServiceSystem.Data.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    DeletedOn = table.Column<DateTime>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -180,7 +181,7 @@ namespace TelecomServiceSystem.Data.Migrations
                     PersonalNumber = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(nullable: false),
-                    AddressId = table.Column<int>(nullable: false)
+                    AddressId = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -201,7 +202,7 @@ namespace TelecomServiceSystem.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    ClaimValue = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -222,7 +223,7 @@ namespace TelecomServiceSystem.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    ClaimValue = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -242,7 +243,7 @@ namespace TelecomServiceSystem.Data.Migrations
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -260,7 +261,7 @@ namespace TelecomServiceSystem.Data.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    RoleId = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -286,7 +287,7 @@ namespace TelecomServiceSystem.Data.Migrations
                     UserId = table.Column<string>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    Value = table.Column<string>(nullable: true)
+                    Value = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -311,7 +312,7 @@ namespace TelecomServiceSystem.Data.Migrations
                     UserId = table.Column<string>(nullable: true),
                     ServiceInfoId = table.Column<int>(nullable: false),
                     FinishedOn = table.Column<DateTime>(nullable: true),
-                    Status = table.Column<int>(nullable: false)
+                    Status = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -338,7 +339,7 @@ namespace TelecomServiceSystem.Data.Migrations
                     CustomerId = table.Column<string>(nullable: false),
                     ServiceId = table.Column<int>(nullable: false),
                     Number = table.Column<string>(maxLength: 20, nullable: false),
-                    ICC = table.Column<string>(nullable: true)
+                    ICC = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {

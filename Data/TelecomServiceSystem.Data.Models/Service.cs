@@ -22,8 +22,6 @@
 
         public ServiceType ServiceType { get; set; }
 
-        
-
         public decimal Price { get; set; }
 
         public virtual ICollection<ServiceInfo> ServicesInfo { get; set; }

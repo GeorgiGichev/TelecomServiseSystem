@@ -1,13 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore.Internal;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TelecomServiceSystem.Data.Models;
-
-namespace TelecomServiceSystem.Data.Seeding
+﻿namespace TelecomServiceSystem.Data.Seeding
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    using Microsoft.EntityFrameworkCore.Internal;
+    using TelecomServiceSystem.Data.Models;
+
     internal class AddresSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)

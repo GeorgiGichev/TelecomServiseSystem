@@ -20,6 +20,5 @@
         [Required]
         [MaxLength(20)]
         public string Model { get; set; }
-
     }
 }
