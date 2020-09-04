@@ -25,6 +25,7 @@
 
             var seeders = new List<ISeeder>
                           {
+                              new ServiceNumbersSeeder(),
                               new ServicesSeeder(),
                               new AddresSeeder(),
                               new UserSeeder(),

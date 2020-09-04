@@ -23,11 +23,6 @@
     {
         private readonly SignInManager<ApplicationUser> signInManager;
 
-        public RegisterModel(SignInManager<ApplicationUser> signInManager)
-        {
-            this.signInManager = signInManager;
-        }
-
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<RegisterModel> logger;
         private readonly IEmailSender emailSender;
@@ -75,7 +70,6 @@
             [Display(Name = "First name")]
             public string FirstName { get; set; }
 
-            [MinLength(2)]
             [MaxLength(20)]
             [Display(Name = "Middle name")]
             public string MiddleName { get; set; }
@@ -87,7 +81,7 @@
             public string LastName { get; set; }
 
             [Required]
-            [StringLength(10)]
+            [RegularExpression(@"^\d{10}$" , ErrorMessage = "Invalid EGN")]
             [Display(Name = "EGN")]
             public string EGN { get; set; }
         }

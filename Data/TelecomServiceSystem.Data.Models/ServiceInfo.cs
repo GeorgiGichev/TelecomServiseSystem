@@ -25,9 +25,10 @@
 
         public virtual Service Service { get; set; }
 
-        [Required]
-        [MaxLength(20)]
-        public string Number { get; set; }
+        [ForeignKey(nameof(ServiseNumber))]
+        public int ServiceNumberId { get; set; }
+
+        public virtual ServiseNumber ServiseNumber { get; set; }
 
         public string ICC { get; set; }
 

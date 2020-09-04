@@ -519,16 +519,14 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Number")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
                     b.Property<string>("OrderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServiceNumberId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -541,6 +539,8 @@ namespace TelecomServiceSystem.Data.Migrations
                         .IsUnique();
 
                     b.HasIndex("ServiceId");
+
+                    b.HasIndex("ServiceNumberId");
 
                     b.ToTable("ServicesInfos");
                 });
@@ -717,6 +717,12 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.HasOne("TelecomServiceSystem.Data.Models.Service", "Service")
                         .WithMany("ServicesInfo")
                         .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TelecomServiceSystem.Data.Models.ServiseNumber", "ServiseNumber")
+                        .WithMany()
+                        .HasForeignKey("ServiceNumberId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
