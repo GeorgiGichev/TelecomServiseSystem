@@ -81,7 +81,7 @@
             public string LastName { get; set; }
 
             [Required]
-            [RegularExpression(@"^\d{10}$" , ErrorMessage = "Invalid EGN")]
+            [RegularExpression(@"^\d{10}$", ErrorMessage = "Invalid EGN")]
             [Display(Name = "EGN")]
             public string EGN { get; set; }
         }

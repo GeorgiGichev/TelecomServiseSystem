@@ -1,0 +1,90 @@
+﻿@model TelecomServiceSystem.Web.ViewModels.Administration.Search.SearchEmployeeViewModel
+
+@{ this.ViewData["Title"] = "Search Employees"; }
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header"><h3 class="text-center font-weight-light my-4">Search Employee</h3></div>
+                <div class="card-body">
+                    <form asp-route-returnUrl="" method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label asp-for="@Model.Input.FirstName"></label>
+                                <input asp-for="@Model.Input.FirstName" class="form-control" />
+                                <span asp-validation-for="@Model.Input.FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="@Model.Input.MiddleName"></label>
+                                <input asp-for="@Model.Input.MiddleName" class="form-control" />
+                                <span asp-validation-for="@Model.Input.MiddleName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label asp-for="@Model.Input.LastName"></label>
+                                <input asp-for="@Model.Input.LastName" class="form-control" />
+                                <span asp-validation-for="@Model.Input.LastName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="@Model.Input.EGN"></label>
+                                <input asp-for="@Model.Input.EGN" class="form-control" />
+                                <span asp-validation-for="@Model.Input.EGN" class="text-danger"></span>
+                            </div>
+                        </div>
+                            <button type="submit" class="btn btn-primary btn-block">Search</button>
+                    </form>
+                </div>
+                <div class="col-md-6 col-md-offset-2">
+                    <section>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Middle Name</th>
+                                <th>Last Name</th>
+                                <th>EGN</th>
+                                <th>Created On</th>
+                                <th>Deleted On</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Age</th>
+                                <th>Start date</th>
+                                <th>Salary</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach (var employee in Model.EmployeesList)
+                            {
+                            <tr>
+                                <td>@employee.FirstName</td>
+                                <td>@employee.MiddleName</td>
+                                <td>@employee.LastName</td>
+                                <td><a asp-area="Administration" asp-controller="Employee" asp-action="Edit" asp-route-id="@employee.Id">@employee.EGN</a></td>
+                                <td>@employee.CreatedOn</td>
+                                <td>@employee.DeletedOn</td>
+                            </tr>
+                            }
+                           
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -18,6 +18,7 @@
     using TelecomServiceSystem.Data.Repositories;
     using TelecomServiceSystem.Data.Seeding;
     using TelecomServiceSystem.Services.Data;
+    using TelecomServiceSystem.Services.Data.Customers;
     using TelecomServiceSystem.Services.Data.Employees;
     using TelecomServiceSystem.Services.Mapping;
     using TelecomServiceSystem.Services.Messaging;
@@ -66,6 +67,7 @@
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IEmployeesService, EmployeesService>();
+            services.AddTransient<ICustomerService, CustomerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

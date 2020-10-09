@@ -1,0 +1,56 @@
+﻿@model TelecomServiceSystem.Web.ViewModels.Administration.Employees.EditViewModel
+
+@{ this.ViewData["Title"] = "Edit Employees"; }
+
+<partial name="_Buttons" model="@Model.Id">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Edit Employee`s Account</h3></div>
+                    <div class="card-body">
+                        <form asp-route-returnUrl="" asp-action="edit" method="post">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="FirstName"></label>
+                                    <input asp-for="FirstName" class="form-control" />
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="MiddleName"></label>
+                                    <input asp-for="MiddleName" class="form-control" />
+                                    <span asp-validation-for="MiddleName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="LastName"></label>
+                                    <input asp-for="LastName" class="form-control" />
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="EGN"></label>
+                                    <input asp-for="EGN" class="form-control" />
+                                    <span asp-validation-for="EGN" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="CreatedOn"></label>
+                                    <input asp-for="CreatedOn" class="form-control" disabled />
+                                    <span asp-validation-for="CreatedOn" class="text-danger"></span>
+                                </div>
+                            </div>
+                                <button type="submit" class="btn btn-primary btn-block">Edit</button>
+                                <a class="btn btn-primary btn-block"
+                                   asp-area="Administration" asp-controller="Employee" asp-action="Index">Back</a>
+                        </form>
+                    </div>
+                    <div class="col-md-6 col-md-offset-2">
+                        <section>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
