@@ -1,4 +1,7 @@
 ﻿@using TelecomServiceSystem.Common
+@using TelecomServiceSystem.Data.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,12 +10,13 @@
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
 
     <link href="~/css/styles.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true"/>
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" asp-append-version="true" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous" asp-append-version="true"></script>
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
+        <a class="navbar-brand col-2" asp-area="" asp-controller="Home" asp-action="Index">@GlobalConstants.SystemName</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
         <div class="container">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -29,23 +33,40 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <div class="sb-sidenav-menu-heading">Core</div>
-                        <a class="nav-link" href="index.html">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Dashboard
-                        </a>
-                        <div class="sb-sidenav-menu-heading">Interface</div>
-                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Layouts
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
-                            </nav>
-                        </div>
+                        @if (this.SignInManager.IsSignedIn(this.User))
+                        {
+                            <div class="sb-sidenav-menu-heading">Search</div>
+                            if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                            {
+                                <a class="nav-link" asp-area="Administration" asp-controller="Employee" asp-action="Index">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    Emploees
+                                </a>
+                            }
+
+                            if (this.User.IsInRole(GlobalConstants.SellerRoleName) ||
+                                this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                            {
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    Customers
+                                </a>
+                            }
+
+                            <a class="nav-link" href="index.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Orders
+                            </a>
+                        }
+                        <div class="sb-sidenav-menu-heading">Create</div>
+                        @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                        {
+                            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Register">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                New Employee
+
+                            </a>
+                        }
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                             Pages
@@ -117,13 +138,13 @@
     <script src="~/js/site.min.js" asp-append-version="true"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous" asp-append-version="true"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous" asp-append-version="true"></script>
-    <script src="~/js/scripts.js" asp-append-version="true"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous" asp-append-version="true"></script>
     <script src="~/js/chart-area-demo.js" asp-append-version="true"></script>
     <script src="~/js/chart-bar-demo.js" asp-append-version="true"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous" asp-append-version="true"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous" asp-append-version="true"></script>
     <script src="~/js/datatables-demo.js" asp-append-version="true"></script>
+    <script src="~/js/scripts.js" asp-append-version="true"></script>
     @this.RenderSection("Scripts", required: false)
 </body>
 </html>

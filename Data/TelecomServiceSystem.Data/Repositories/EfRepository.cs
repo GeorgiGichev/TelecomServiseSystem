@@ -37,6 +37,12 @@
             entry.State = EntityState.Modified;
         }
 
+        public virtual async Task UpdateModel<TInput>(TEntity model, TInput input)
+        {
+            this.Context.Entry<TEntity>(model).CurrentValues.SetValues(input);
+            await this.Context.SaveChangesAsync();
+        }
+
         public virtual void Delete(TEntity entity) => this.DbSet.Remove(entity);
 
         public Task<int> SaveChangesAsync() => this.Context.SaveChangesAsync();

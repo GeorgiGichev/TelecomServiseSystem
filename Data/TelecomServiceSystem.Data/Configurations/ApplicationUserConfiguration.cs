@@ -28,6 +28,14 @@
                 .HasForeignKey(e => e.UserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
+
+            appUser
+                .HasIndex(u => u.EGN)
+                .IsUnique();
+
+            appUser
+                .HasIndex(u => u.Email)
+                .IsUnique();
         }
     }
 }

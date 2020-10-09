@@ -2,12 +2,17 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using TelecomServiceSystem.Common;
+    using TelecomServiceSystem.Data.Models;
 
-    public class ApplicationDbContextSeeder : ISeeder
+    public class ApplicationDbContextSeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
@@ -28,8 +33,8 @@
                               new ServiceNumbersSeeder(),
                               new ServicesSeeder(),
                               new AddresSeeder(),
-                              new UserSeeder(),
                               new RolesSeeder(),
+                              new UserSeeder(),
                               new SettingsSeeder(),
                           };
 

@@ -4,8 +4,10 @@
     {
         public const string SystemName = "Telecom Service System";
 
-        public const string AdministratorRoleName = "Administrator";
+        public const string AdministratorRoleName = "Admin";
 
         public const string SellerRoleName = "Seller";
+
+        public const string EngeneerRoleName = "Engeneer";
     }
 }

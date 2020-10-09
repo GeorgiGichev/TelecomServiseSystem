@@ -15,6 +15,8 @@
 
         void Update(TEntity entity);
 
+        Task UpdateModel<TInput>(TEntity model, TInput input);
+
         void Delete(TEntity entity);
 
         Task<int> SaveChangesAsync();

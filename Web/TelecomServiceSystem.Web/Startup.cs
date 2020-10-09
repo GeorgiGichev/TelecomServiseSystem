@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -17,6 +18,7 @@
     using TelecomServiceSystem.Data.Repositories;
     using TelecomServiceSystem.Data.Seeding;
     using TelecomServiceSystem.Services.Data;
+    using TelecomServiceSystem.Services.Data.Employees;
     using TelecomServiceSystem.Services.Mapping;
     using TelecomServiceSystem.Services.Messaging;
     using TelecomServiceSystem.Web.ViewModels;
@@ -63,6 +65,7 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IEmployeesService, EmployeesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
