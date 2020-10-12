@@ -44,6 +44,11 @@
         [HttpPost]
         public async Task<IActionResult> Edit(EditViewModel model)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
             await this.employeesService.Edit<EditViewModel>(model);
 
             return this.View(model);

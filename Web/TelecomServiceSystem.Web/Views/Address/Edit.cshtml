@@ -1,0 +1,71 @@
+﻿@model TelecomServiceSystem.Web.ViewModels.Customers.CustomersAddressInputModel
+@{ this.ViewData["Title"] = "Edit Address"; }
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header"><h3 class="text-center font-weight-light my-4">Edit Address</h3></div>
+                <div class="card-body">
+                    <form asp-route-returnUrl="" method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="required" asp-for="@Model.Country"></label>
+                                <input asp-for="@Model.Country" class="form-control" />
+                                <span asp-validation-for="@Model.Country" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="required" asp-for="@Model.City"></label>
+                                <input asp-for="@Model.City" class="form-control" />
+                                <span asp-validation-for="@Model.City" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="required" asp-for="@Model.Street"></label>
+                                <input asp-for="@Model.Street" class="form-control" />
+                                <span asp-validation-for="@Model.Street" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="required" asp-for="@Model.Neighborhood"></label>
+                                <input asp-for="@Model.Neighborhood" class="form-control" />
+                                <span asp-validation-for="@Model.Neighborhood" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label class="required" asp-for="@Model.Number"></label>
+                                <input asp-for="@Model.Number" class="form-control" />
+                                <span asp-validation-for="@Model.Number" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label asp-for="@Model.Entrance"></label>
+                                <input asp-for="@Model.Entrance" class="form-control" />
+                                <span asp-validation-for="@Model.Entrance" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label asp-for="@Model.Floor"></label>
+                                <input asp-for="@Model.Floor" class="form-control" />
+                                <span asp-validation-for="@Model.Floor" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label asp-for="@Model.Apartment"></label>
+                                <input asp-for="@Model.Apartment" class="form-control" />
+                                <span asp-validation-for="@Model.Apartment" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row invisible">
+                                <input asp-for="@Model.CustomerId" class="form-control" />
+                        </div>
+                            <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+                    </form>
+                </div>
+                <div class="col-md-6 col-md-offset-2">
+                    <section>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

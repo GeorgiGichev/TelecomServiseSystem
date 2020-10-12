@@ -8,7 +8,7 @@
 
     using Microsoft.EntityFrameworkCore.Internal;
     using TelecomServiceSystem.Data.Models;
-    using TelecomServiceSystem.Data.Models.Contracts;
+    using TelecomServiceSystem.Data.Models.Enums;
 
     internal class ServicesSeeder : ISeeder
     {

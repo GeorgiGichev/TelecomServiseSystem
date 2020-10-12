@@ -4,7 +4,7 @@
     using System.ComponentModel.DataAnnotations.Schema;
 
     using TelecomServiceSystem.Data.Common.Models;
-    using TelecomServiceSystem.Data.Models.Contracts;
+    using TelecomServiceSystem.Data.Models.Enums;
 
     public class Order : BaseDeletableModel<string>
     {

@@ -19,6 +19,24 @@
             this.customerRepo = customerRepo;
         }
 
+        public async Task<string> CreateAsync<T>(T input)
+        {
+            var customerToAdd = input.To<Customer>();
+            await this.customerRepo.AddAsync(customerToAdd);
+            await this.customerRepo.SaveChangesAsync();
+            return customerToAdd.Id;
+        }
+
+        public async Task Edit<T>(T input)
+        {
+            var customerToEdit = input.To<Customer>();
+            var customer = await this.GetByIdAsync<Customer>(customerToEdit.Id);
+            await this.customerRepo.UpdateModel(customer, input);
+        }
+
+        public async Task<T> GetByIdAsync<T>(string id)
+            => (await this.customerRepo.All().FirstOrDefaultAsync(c => c.Id == id)).To<T>();
+
         public async Task<IEnumerable<TOutput>> GetBySearchCriteriaAsync<TOutput, TQuery>(TQuery query)
         {
             IQueryable<Customer> customers = this.customerRepo.All();

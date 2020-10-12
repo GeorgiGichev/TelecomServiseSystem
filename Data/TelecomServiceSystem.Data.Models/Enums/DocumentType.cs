@@ -1,4 +1,4 @@
-﻿namespace TelecomServiceSystem.Data.Models.Contracts
+﻿namespace TelecomServiceSystem.Data.Models.Enums
 {
     using System;
     using System.Collections.Generic;

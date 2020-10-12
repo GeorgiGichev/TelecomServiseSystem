@@ -6,5 +6,11 @@
     public interface ICustomerService
     {
         Task<IEnumerable<TOutput>> GetBySearchCriteriaAsync<TOutput, TQuery>(TQuery query);
+
+        Task<string> CreateAsync<T>(T input);
+
+        Task<T> GetByIdAsync<T>(string id);
+
+        Task Edit<T>(T input);
     }
 }

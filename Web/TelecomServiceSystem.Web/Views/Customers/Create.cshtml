@@ -1,0 +1,115 @@
+﻿@model TelecomServiceSystem.Web.ViewModels.Customers.CreateCustomerInputModel
+@{ this.ViewData["Title"] = "Create Customers"; }
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Customer</h3></div>
+                <div class="card-body">
+                    <h4 class="text-center font-weight-light my-4">Personal Data</h4>
+                    <form asp-route-returnUrl="" method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="required" asp-for="@Model.FirstName"></label>
+                                <input asp-for="@Model.FirstName" class="form-control" />
+                                <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="@Model.MiddleName"></label>
+                                <input asp-for="@Model.MiddleName" class="form-control" />
+                                <span asp-validation-for="@Model.MiddleName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="required" asp-for="@Model.LastName"></label>
+                                <input asp-for="@Model.LastName" class="form-control" />
+                                <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="required" asp-for="@Model.PersonalNumber"></label>
+                                <input asp-for="@Model.PersonalNumber" class="form-control" />
+                                <span asp-validation-for="@Model.PersonalNumber" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label asp-for="@Model.Email"></label>
+                                <input asp-for="@Model.Email" class="form-control" />
+                                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="required" asp-for="@Model.Phone"></label>
+                                <input asp-for="@Model.Phone" class="form-control" />
+                                <span asp-validation-for="@Model.Phone" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label class="col-md-6 required" for="DocumentType">Choose a document type:</label>
+                                <select class="col-md-6 form-control" asp-for="@Model.DocumentType">
+                                    <option value="1">Id Card</option>
+                                    <option value="2">Passport</option>
+                                </select>
+                            </div>
+                        </div>
+                        <h4 class="text-center font-weight-light my-4">Address</h4>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="required" asp-for="@Model.Address.Country"></label>
+                                <input asp-for="@Model.Address.Country" class="form-control" />
+                                <span asp-validation-for="@Model.Address.Country" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="required" asp-for="@Model.Address.City"></label>
+                                <input asp-for="@Model.Address.City" class="form-control" />
+                                <span asp-validation-for="@Model.Address.City" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="required" asp-for="@Model.Address.Street"></label>
+                                <input asp-for="@Model.Address.Street" class="form-control" />
+                                <span asp-validation-for="@Model.Address.Street" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="required" asp-for="@Model.Address.Neighborhood"></label>
+                                <input asp-for="@Model.Address.Neighborhood" class="form-control" />
+                                <span asp-validation-for="@Model.Address.Neighborhood" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label class="required" asp-for="@Model.Address.Number"></label>
+                                <input asp-for="@Model.Address.Number" class="form-control" />
+                                <span asp-validation-for="@Model.Address.Number" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label asp-for="@Model.Address.Entrance"></label>
+                                <input asp-for="@Model.Address.Entrance" class="form-control" />
+                                <span asp-validation-for="@Model.Address.Entrance" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label asp-for="@Model.Address.Floor"></label>
+                                <input asp-for="@Model.Address.Floor" class="form-control" />
+                                <span asp-validation-for="@Model.Address.Floor" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label asp-for="@Model.Address.Apartment"></label>
+                                <input asp-for="@Model.Address.Apartment" class="form-control" />
+                                <span asp-validation-for="@Model.Address.Apartment" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Create</button>
+                    </form>
+                </div>
+                <div class="col-md-6 col-md-offset-2">
+                    <section>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

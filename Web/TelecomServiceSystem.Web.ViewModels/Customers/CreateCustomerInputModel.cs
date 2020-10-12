@@ -1,14 +1,12 @@
-﻿namespace TelecomServiceSystem.Web.ViewModels.Administration.Employees
+﻿namespace TelecomServiceSystem.Web.ViewModels.Customers
 {
-    using System;
     using System.ComponentModel.DataAnnotations;
+
     using TelecomServiceSystem.Data.Models;
     using TelecomServiceSystem.Services.Mapping;
 
-    public class EditViewModel : IMapFrom<ApplicationUser>, IMapTo<ApplicationUser>
+    public class CreateCustomerInputModel : IMapTo<Customer>
     {
-        public string Id { get; set; }
-
         [Required]
         [MinLength(2)]
         [MaxLength(20)]
@@ -26,10 +24,18 @@
         public string LastName { get; set; }
 
         [Required]
-        [RegularExpression(@"^\d{10}$", ErrorMessage = "Invalid EGN")]
-        [Display(Name = "EGN")]
-        public string EGN { get; set; }
+        public int DocumentType { get; set; }
 
-        public DateTime CreatedOn { get; set; }
+        [Required]
+        [MinLength(5)]
+        [Display(Name = "Personal Number")]
+        public string PersonalNumber { get; set; }
+
+        public string Email { get; set; }
+
+        [Required]
+        public string Phone { get; set; }
+
+        public CustomersAddressInputModel Address { get; set; }
     }
 }

@@ -7,7 +7,7 @@
     using System.Text;
 
     using TelecomServiceSystem.Data.Common.Models;
-    using TelecomServiceSystem.Data.Models.Contracts;
+    using TelecomServiceSystem.Data.Models.Enums;
 
     public class Service : BaseDeletableModel<int>
     {

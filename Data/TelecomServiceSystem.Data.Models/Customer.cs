@@ -10,7 +10,7 @@
     using Microsoft.EntityFrameworkCore.Diagnostics;
     using Microsoft.EntityFrameworkCore.Query.Internal;
     using TelecomServiceSystem.Data.Common.Models;
-    using TelecomServiceSystem.Data.Models.Contracts;
+    using TelecomServiceSystem.Data.Models.Enums;
 
     public class Customer : BaseDeletableModel<string>
     {
@@ -18,6 +18,7 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.ServicesInfo = new HashSet<ServiceInfo>();
+            this.Addresses = new HashSet<Address>();
         }
 
         [Required]
@@ -41,9 +42,7 @@
         [Required]
         public string Phone { get; set; }
 
-        public int AddressId { get; set; }
-
-        public virtual Address Address { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; }
 
         public virtual ICollection<ServiceInfo> ServicesInfo { get; set; }
     }
