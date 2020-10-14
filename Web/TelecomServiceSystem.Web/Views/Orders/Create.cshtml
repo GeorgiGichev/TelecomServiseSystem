@@ -1,23 +1,13 @@
-﻿@model string
-@{ this.ViewData["Title"] = "Search Customers"; }
+﻿@model TelecomServiceSystem.Web.ViewModels.Orders.OrderInputViewModel
+@{ this.ViewData["Title"] = "Choose Service Type"; }
 
-@*<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-12">
-            <div class="row justify-content-center">
-                <div class="card shadow-lg border-0 rounded-lg mt-5 col-6" style="width:400px">
-                    <img class="card-img-top" src="" alt="Card image">
-                    <div class="card-body">
-                        <a asp-controller="Orders" asp-action="Create" asp-route-serviceType="mobile" asp-route-customerId="@Model" class="btn btn-primary">Mobile services</a>
-                    </div>
-                </div>
-                <div class="card shadow-lg border-0 rounded-lg mt-5 col-6" style="width:400px">
-                    <img class="card-img-top" src="img_avatar1.png" alt="Card image">
-                    <div class="card-body">
-                        <a asp-controller="Orders" asp-action="Create" asp-route-serviceType="fixed" asp-route-customerId="@Model" class="btn btn-primary">Fixed services</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>*@
+@if (Model.Services.ServiseType == 1)
+{
+    <partial name="_Mobile" model="@Model"/>
+}
+else if(Model.Services.ServiseType == 2)
+{
+    <partial name="_Fixed" model="@Model"/>
+}
+
+

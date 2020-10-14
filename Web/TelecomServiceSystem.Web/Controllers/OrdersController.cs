@@ -2,20 +2,16 @@
 {
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using TelecomServiceSystem.Data.Models;
     using TelecomServiceSystem.Services.Data.Orders;
     using TelecomServiceSystem.Web.ViewModels.Orders;
 
     public class OrdersController : BaseController
     {
-        private readonly UserManager<ApplicationUser> userManager;
         private readonly IOrderService orderService;
 
-        public OrdersController(UserManager<ApplicationUser> userManager, IOrderService orderService)
+        public OrdersController(IOrderService orderService)
         {
-            this.userManager = userManager;
             this.orderService = orderService;
         }
 
@@ -25,16 +21,11 @@
             return this.View(model);
         }
 
-        //[HttpPost]
-        //public IActionResult ChooseServiceType(ChooseServiceViewModel model)
-        //{
-
-        //    return this.View(model);
-        //}
-
-        public IActionResult Create(string customerId, string serviceType)
+        public IActionResult Create(string customerId, int serviceType)
         {
-            return this.View();
+            var model = new OrderInputViewModel();
+            model.Services = new ServiceViewModel { ServiseType = serviceType };
+            return this.View(model);
         }
 
         [HttpPost]

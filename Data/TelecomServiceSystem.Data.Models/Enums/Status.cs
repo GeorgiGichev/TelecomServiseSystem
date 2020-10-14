@@ -8,5 +8,6 @@
     {
         ForExecution = 1,
         Finished = 2,
+        NotSubmited = 3,
     }
 }
