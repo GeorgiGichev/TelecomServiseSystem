@@ -38,6 +38,7 @@
             }
 
             await this.customerService.Edit<CustomerEditViewModel>(model);
+            model.Addresses = await this.addressService.GetByCustomerIdAsync<CustomersAddressInputModel>(model.Id) as ICollection<CustomersAddressInputModel>;
 
             return this.View(model);
         }

@@ -1,5 +1,6 @@
 ﻿namespace TelecomServiceSystem.Data.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using TelecomServiceSystem.Data.Common.Models;
@@ -32,5 +33,7 @@
         public string CustomerId { get; set; }
 
         public Customer Customer { get; set; }
+
+        public ICollection<ServiceInfo> ServicesInfos { get; set; }
     }
 }

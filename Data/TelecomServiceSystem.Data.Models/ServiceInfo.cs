@@ -39,5 +39,10 @@
         public DateTime Expirеs { get; set; }
 
         public bool IsActive { get; set; }
+
+        [ForeignKey(nameof(Address))]
+        public int AddressId { get; set; }
+
+        public Address Address { get; set; }
     }
 }

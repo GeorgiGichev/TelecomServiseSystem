@@ -2,30 +2,26 @@
 {
     using Microsoft.EntityFrameworkCore.Migrations;
 
-    public partial class AddRelationshipNumberToServiceInfo : Migration
+    public partial class AddAddressIdToServiceInfo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Number",
-                table: "ServicesInfos");
-
             migrationBuilder.AddColumn<int>(
-                name: "ServiceNumberId",
+                name: "AddressId",
                 table: "ServicesInfos",
                 nullable: false,
                 defaultValue: 0);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ServicesInfos_ServiceNumberId",
+                name: "IX_ServicesInfos_AddressId",
                 table: "ServicesInfos",
-                column: "ServiceNumberId");
+                column: "AddressId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_ServicesInfos_ServiceNumbers_ServiceNumberId",
+                name: "FK_ServicesInfos_Addresses_AddressId",
                 table: "ServicesInfos",
-                column: "ServiceNumberId",
-                principalTable: "ServiceNumbers",
+                column: "AddressId",
+                principalTable: "Addresses",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }
@@ -33,24 +29,16 @@
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_ServicesInfos_ServiceNumbers_ServiceNumberId",
+                name: "FK_ServicesInfos_Addresses_AddressId",
                 table: "ServicesInfos");
 
             migrationBuilder.DropIndex(
-                name: "IX_ServicesInfos_ServiceNumberId",
+                name: "IX_ServicesInfos_AddressId",
                 table: "ServicesInfos");
 
             migrationBuilder.DropColumn(
-                name: "ServiceNumberId",
+                name: "AddressId",
                 table: "ServicesInfos");
-
-            migrationBuilder.AddColumn<string>(
-                name: "Number",
-                table: "ServicesInfos",
-                type: "nvarchar(20)",
-                maxLength: 20,
-                nullable: false,
-                defaultValue: string.Empty);
         }
     }
 }

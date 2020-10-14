@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace TelecomServiceSystem.Data.Migrations
+﻿namespace TelecomServiceSystem.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class ChangeRealtionBetweenAddressesAndCustomer : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

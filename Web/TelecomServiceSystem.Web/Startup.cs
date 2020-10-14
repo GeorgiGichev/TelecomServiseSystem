@@ -21,6 +21,7 @@
     using TelecomServiceSystem.Services.Data.Addresses;
     using TelecomServiceSystem.Services.Data.Customers;
     using TelecomServiceSystem.Services.Data.Employees;
+    using TelecomServiceSystem.Services.Data.Orders;
     using TelecomServiceSystem.Services.Mapping;
     using TelecomServiceSystem.Services.Messaging;
     using TelecomServiceSystem.Web.ViewModels;
@@ -70,6 +71,7 @@
             services.AddTransient<IEmployeesService, EmployeesService>();
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IAddressService, AddressService>();
+            services.AddTransient<IOrderService, OrderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

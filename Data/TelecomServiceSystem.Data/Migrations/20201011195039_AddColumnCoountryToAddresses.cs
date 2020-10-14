@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace TelecomServiceSystem.Data.Migrations
+﻿namespace TelecomServiceSystem.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class AddColumnCoountryToAddresses : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -11,7 +11,7 @@ namespace TelecomServiceSystem.Data.Migrations
                 table: "Addresses",
                 maxLength: 50,
                 nullable: false,
-                defaultValue: "");
+                defaultValue: string.Empty);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
