@@ -1,6 +1,7 @@
 ﻿namespace TelecomServiceSystem.Data.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
 
     using TelecomServiceSystem.Data.Common.Models;
@@ -18,12 +19,10 @@
 
         public virtual ApplicationUser User { get; set; }
 
-        public int ServiceInfoId { get; set; }
-
-        public virtual ServiceInfo ServiceInfo { get; set; }
-
         public DateTime? FinishedOn { get; set; }
 
         public Status Status { get; set; }
+
+        public ICollection<ServiceInfo> ServicesInfos { get; set; } = new HashSet<ServiceInfo>();
     }
 }

@@ -43,14 +43,17 @@
 
             if (serviceType == "mobile")
             {
-                model.MobileServiceInfo = new MobileServiceInfoViewModel();
+                model.MobileServiceInfo = new MobileServiceInfoViewModel
+                {
+                    ICC = await this.serviceInfoService.GetICC(),
+                    CustomerId = customerId,
+                };
             }
             else
             {
                 model.FixedServiceInfo = new FixedServiceInfiViewModel();
             }
 
-            model.MobileServiceInfo.ICC = await this.serviceInfoService.GetICC();
             return this.View(model);
         }
 
@@ -66,18 +69,22 @@
             if (serviceType == "mobile")
             {
                 model.MobileServiceInfo = await this.orderService
-                    .CreateAsync<MobileServiceInfoViewModel, OrderViewModel>(new OrderViewModel
+                    .CreateAsync<MobileServiceInfoViewModel, OrderViewModel>(
+                    new OrderViewModel
                     {
                         UserId = this.User.GetId(),
-                    });
+                    },
+                    model.MobileServiceInfo);
             }
             else
             {
                 model.FixedServiceInfo = await this.orderService
-                    .CreateAsync<FixedServiceInfiViewModel, OrderViewModel>(new OrderViewModel
+                    .CreateAsync<FixedServiceInfiViewModel, OrderViewModel>(
+                    new OrderViewModel
                     {
                         UserId = this.User.GetId(),
-                    });
+                    },
+                    model.FixedServiceInfo);
             }
         }
     }

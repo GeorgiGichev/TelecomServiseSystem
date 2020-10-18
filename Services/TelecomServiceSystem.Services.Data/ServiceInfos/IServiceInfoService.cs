@@ -6,7 +6,7 @@
 
     public interface IServiceInfoService
     {
-        Task<ServiceInfo> CreateAsync(string orderId);
+        Task<ServiceInfo> CreateAsync<T>(string orderId, T model);
 
         Task<string> GetICC();
     }

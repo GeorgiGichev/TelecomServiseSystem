@@ -32,6 +32,7 @@
                           {
                               new ServiceNumbersSeeder(),
                               new ServicesSeeder(),
+                              new CustomerSeeder(),
                               new AddresSeeder(),
                               new RolesSeeder(),
                               new UserSeeder(),
@@ -45,6 +46,7 @@
                 await dbContext.SaveChangesAsync();
                 logger.LogInformation($"Seeder {seeder.GetType().Name} done.");
             }
+
         }
     }
 }

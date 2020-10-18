@@ -1,8 +1,10 @@
 ﻿namespace TelecomServiceSystem.Services.Data.Orders
 {
+    using System;
     using System.Threading.Tasks;
     using TelecomServiceSystem.Data.Common.Repositories;
     using TelecomServiceSystem.Data.Models;
+    using TelecomServiceSystem.Data.Models.Enums;
     using TelecomServiceSystem.Services.Data.ServiceInfos;
     using TelecomServiceSystem.Services.Mapping;
 
@@ -17,11 +19,17 @@
             this.seriveInfoService = seriveInfoService;
         }
 
-        public async Task<Toutput> CreateAsync<Toutput, Tinput>(Tinput model)
+        public async Task<Toutput> CreateAsync<Toutput, Tinput>(Tinput order, Toutput serviceInfo)
         {
-            var orderToAdd = model.To<Order>();
-            var serviceInfo = await this.seriveInfoService.CreateAsync(orderToAdd.Id);
-            orderToAdd.ServiceInfoId = serviceInfo.Id;
+            var orderFromModel = order.To<Order>();
+            var orderToAdd = new Order
+            {
+                UserId = orderFromModel.UserId,
+                Status = Enum.Parse<Status>("ForExecution"),
+            };
+
+            var info = await this.seriveInfoService.CreateAsync(orderToAdd.Id, serviceInfo);
+            orderToAdd.ServicesInfos.Add(info);
             await this.orderRepo.AddAsync(orderToAdd);
             await this.orderRepo.SaveChangesAsync();
 

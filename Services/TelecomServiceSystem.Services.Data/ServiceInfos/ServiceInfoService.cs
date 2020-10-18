@@ -7,6 +7,7 @@
     using TelecomServiceSystem.Common;
     using TelecomServiceSystem.Data.Common.Repositories;
     using TelecomServiceSystem.Data.Models;
+    using TelecomServiceSystem.Services.Mapping;
 
     public class ServiceInfoService : IServiceInfoService
     {
@@ -19,12 +20,11 @@
             this.simRepo = simRepo;
         }
 
-        public async Task<ServiceInfo> CreateAsync(string orderId)
+        public async Task<ServiceInfo> CreateAsync<T>(string orderId, T model)
         {
-            await this.serviseInfoRepo.AddAsync(new ServiceInfo
-            {
-                OrderId = orderId,
-            });
+            var serviceInfoToAdd = model.To<ServiceInfo>();
+            serviceInfoToAdd.OrderId = orderId;
+            await this.serviseInfoRepo.AddAsync(serviceInfoToAdd);
             await this.serviseInfoRepo.SaveChangesAsync();
 
             return await this.serviseInfoRepo.All()

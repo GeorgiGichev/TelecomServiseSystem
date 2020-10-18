@@ -10,8 +10,8 @@ using TelecomServiceSystem.Data;
 namespace TelecomServiceSystem.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201011195039_AddColumnCoountryToAddresses")]
-    partial class AddColumnCoountryToAddresses
+    [Migration("20201018191514_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -405,17 +405,31 @@ namespace TelecomServiceSystem.Data.Migrations
                         .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("IMEI")
                         .IsRequired()
                         .HasColumnType("nvarchar(15)")
                         .HasMaxLength(15);
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Model")
                         .IsRequired()
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
 
                     b.ToTable("Devices");
                 });
@@ -439,9 +453,6 @@ namespace TelecomServiceSystem.Data.Migrations
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("ServiceInfoId")
-                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -502,6 +513,9 @@ namespace TelecomServiceSystem.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ContractDuration")
                         .HasColumnType("int");
 
@@ -545,12 +559,13 @@ namespace TelecomServiceSystem.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddressId");
+
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("IsDeleted");
 
-                    b.HasIndex("OrderId")
-                        .IsUnique();
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("ServiceId");
 
@@ -559,7 +574,7 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.ToTable("ServicesInfos");
                 });
 
-            modelBuilder.Entity("TelecomServiceSystem.Data.Models.ServiseNumber", b =>
+            modelBuilder.Entity("TelecomServiceSystem.Data.Models.ServiceNumber", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -630,12 +645,26 @@ namespace TelecomServiceSystem.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ICC")
                         .IsRequired()
                         .HasColumnType("nvarchar(22)")
                         .HasMaxLength(22);
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
 
                     b.ToTable("SimCards");
                 });
@@ -714,6 +743,12 @@ namespace TelecomServiceSystem.Data.Migrations
 
             modelBuilder.Entity("TelecomServiceSystem.Data.Models.ServiceInfo", b =>
                 {
+                    b.HasOne("TelecomServiceSystem.Data.Models.Address", "Address")
+                        .WithMany("ServicesInfos")
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("TelecomServiceSystem.Data.Models.Customer", "Customer")
                         .WithMany("ServicesInfo")
                         .HasForeignKey("CustomerId")
@@ -721,8 +756,8 @@ namespace TelecomServiceSystem.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("TelecomServiceSystem.Data.Models.Order", "Order")
-                        .WithOne("ServiceInfo")
-                        .HasForeignKey("TelecomServiceSystem.Data.Models.ServiceInfo", "OrderId")
+                        .WithMany("ServicesInfos")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -732,7 +767,7 @@ namespace TelecomServiceSystem.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TelecomServiceSystem.Data.Models.ServiseNumber", "ServiseNumber")
+                    b.HasOne("TelecomServiceSystem.Data.Models.ServiceNumber", "ServiseNumber")
                         .WithMany()
                         .HasForeignKey("ServiceNumberId")
                         .OnDelete(DeleteBehavior.Restrict)

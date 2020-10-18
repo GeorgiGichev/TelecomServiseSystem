@@ -452,9 +452,6 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ServiceInfoId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -566,8 +563,7 @@ namespace TelecomServiceSystem.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.HasIndex("OrderId")
-                        .IsUnique();
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("ServiceId");
 
@@ -758,8 +754,8 @@ namespace TelecomServiceSystem.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("TelecomServiceSystem.Data.Models.Order", "Order")
-                        .WithOne("ServiceInfo")
-                        .HasForeignKey("TelecomServiceSystem.Data.Models.ServiceInfo", "OrderId")
+                        .WithMany("ServicesInfos")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
