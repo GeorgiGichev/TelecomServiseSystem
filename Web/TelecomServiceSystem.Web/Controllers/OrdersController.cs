@@ -1,5 +1,6 @@
 ﻿namespace TelecomServiceSystem.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
@@ -61,6 +62,15 @@
         public async Task<IActionResult> Create(OrderInputViewModel model)
         {
             await this.CreateOrder(model.ServiceType, model);
+            var modelForRedirect = new OrderViewModel
+            {
+                Id = model.OrderId,
+            };
+            return this.RedirectToAction("SignDocuments", modelForRedirect);
+        }
+
+        public async Task<IActionResult> SignDocuments(OrderViewModel order)
+        {
             return this.View();
         }
 
@@ -75,7 +85,9 @@
                         UserId = this.User.GetId(),
                     },
                     model.MobileServiceInfo);
-            }
+
+                model.OrderId = model.MobileServiceInfo.OrderId;
+                }
             else
             {
                 model.FixedServiceInfo = await this.orderService
@@ -85,6 +97,8 @@
                         UserId = this.User.GetId(),
                     },
                     model.FixedServiceInfo);
+
+                model.OrderId = model.FixedServiceInfo.OrderId;
             }
         }
     }

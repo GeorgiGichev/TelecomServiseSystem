@@ -27,13 +27,11 @@
                 UserId = orderFromModel.UserId,
                 Status = Enum.Parse<Status>("ForExecution"),
             };
-
-            var info = await this.seriveInfoService.CreateAsync(orderToAdd.Id, serviceInfo);
-            orderToAdd.ServicesInfos.Add(info);
             await this.orderRepo.AddAsync(orderToAdd);
             await this.orderRepo.SaveChangesAsync();
+            var info = await this.seriveInfoService.CreateAsync(orderToAdd.Id, serviceInfo);
 
-            return serviceInfo.To<Toutput>();
+            return info.To<Toutput>();
         }
     }
 }

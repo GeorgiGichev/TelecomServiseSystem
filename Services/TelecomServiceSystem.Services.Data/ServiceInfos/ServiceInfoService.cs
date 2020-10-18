@@ -1,5 +1,6 @@
 ﻿namespace TelecomServiceSystem.Services.Data.ServiceInfos
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -24,6 +25,7 @@
         {
             var serviceInfoToAdd = model.To<ServiceInfo>();
             serviceInfoToAdd.OrderId = orderId;
+            serviceInfoToAdd.Expirеs = DateTime.UtcNow.AddMonths(serviceInfoToAdd.ContractDuration);
             await this.serviseInfoRepo.AddAsync(serviceInfoToAdd);
             await this.serviseInfoRepo.SaveChangesAsync();
 

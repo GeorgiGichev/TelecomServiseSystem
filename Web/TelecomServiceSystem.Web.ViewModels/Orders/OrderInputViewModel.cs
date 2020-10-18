@@ -4,6 +4,8 @@
 
     public class OrderInputViewModel
     {
+        public string OrderId { get; set; }
+
         public string ServiceType { get; set; }
 
         public MobileServiceInfoViewModel MobileServiceInfo { get; set; }
