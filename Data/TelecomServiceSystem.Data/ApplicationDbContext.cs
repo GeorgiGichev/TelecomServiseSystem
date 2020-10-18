@@ -39,7 +39,7 @@
 
         public DbSet<Setting> Settings { get; set; }
 
-        public DbSet<ServiseNumber> ServiceNumbers { get; set; }
+        public DbSet<ServiceNumber> ServiceNumbers { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 

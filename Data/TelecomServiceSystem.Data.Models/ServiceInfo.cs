@@ -28,7 +28,7 @@
         [ForeignKey(nameof(ServiseNumber))]
         public int ServiceNumberId { get; set; }
 
-        public virtual ServiseNumber ServiseNumber { get; set; }
+        public virtual ServiceNumber ServiseNumber { get; set; }
 
         public string ICC { get; set; }
 

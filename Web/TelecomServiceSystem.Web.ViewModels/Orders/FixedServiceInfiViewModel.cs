@@ -2,7 +2,10 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class FixedServiceInfiViewModel
+    using TelecomServiceSystem.Data.Models;
+    using TelecomServiceSystem.Services.Mapping;
+
+    public class FixedServiceInfiViewModel : IMapFrom<ServiceInfo>, IMapTo<ServiceInfo>
     {
         public int Id { get; set; }
 

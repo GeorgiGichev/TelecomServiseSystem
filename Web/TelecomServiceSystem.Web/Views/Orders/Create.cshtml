@@ -1,11 +1,11 @@
 ﻿@model TelecomServiceSystem.Web.ViewModels.Orders.OrderInputViewModel
 @{ this.ViewData["Title"] = "Choose Service Type"; }
 
-@if (Model.Services.ServiseType == 1)
+@if (Model.ServiceType == "mobile")
 {
     <partial name="_Mobile" model="@Model"/>
 }
-else if(Model.Services.ServiseType == 2)
+else if(Model.ServiceType == "fixed")
 {
     <partial name="_Fixed" model="@Model"/>
 }

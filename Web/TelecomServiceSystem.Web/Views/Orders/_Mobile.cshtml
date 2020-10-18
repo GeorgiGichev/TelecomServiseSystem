@@ -22,6 +22,35 @@
                                 <span asp-validation-for="@Model.MobileServiceInfo.IMEI" class="text-danger"></span>
                             </div>
                         </div>
+                        <div class="row"><br /></div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label class="col-md-6 required" asp-for="@Model.MobileServiceInfo.ServiceId">Rate plan</label>
+                                <select class="col-md-6 form-control" asp-for="@Model.MobileServiceInfo.ServiceId">
+                                    @foreach (var service in Model.Services)
+                                    {
+                                        <option value="@service.Id">@service.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="col-md-6 required" asp-for="@Model.MobileServiceInfo.ServiceNumberId">Number</label>
+                                <select class="col-md-6 form-control" asp-for="@Model.MobileServiceInfo.ServiceNumberId">
+                                    @foreach (var number in Model.Numbers)
+                                    {
+                                        <option value="@number.Id">@number.Number</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="col-md-6 required" asp-for="@Model.MobileServiceInfo.ContractDuration">Contract duration</label>
+                                <select class="col-md-6 form-control" asp-for="@Model.MobileServiceInfo.ContractDuration">
+                                    <option value="12">12</option>
+                                    <option value="24">24</option>
+                                </select>
+                                <span asp-validation-for="@Model.MobileServiceInfo.IMEI" class="text-danger"></span>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

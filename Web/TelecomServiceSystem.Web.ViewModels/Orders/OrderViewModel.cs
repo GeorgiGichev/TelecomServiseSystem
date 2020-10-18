@@ -1,6 +1,9 @@
 ﻿namespace TelecomServiceSystem.Web.ViewModels.Orders
 {
-    public class OrderViewModel
+    using TelecomServiceSystem.Data.Models;
+    using TelecomServiceSystem.Services.Mapping;
+
+    public class OrderViewModel : IMapFrom<Order>, IMapTo<Order>
     {
         public string Id { get; set; }
 

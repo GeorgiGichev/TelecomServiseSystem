@@ -17,17 +17,17 @@
                 return;
             }
 
-            var numbers = new List<ServiseNumber>();
+            var numbers = new List<ServiceNumber>();
 
             for (int i = 866000001; i <= 866000999; i++)
             {
-                numbers.Add(new ServiseNumber() { Number = i.ToString() });
+                numbers.Add(new ServiceNumber() { Number = i.ToString() });
             }
 
             for (int i = 100001; i < 100999; i++)
             {
-                numbers.Add(new ServiseNumber() { Number = "N." + i });
-                numbers.Add(new ServiseNumber() { Number = "TV." + i });
+                numbers.Add(new ServiceNumber() { Number = "N." + i });
+                numbers.Add(new ServiceNumber() { Number = "TV." + i });
             }
 
             await dbContext.ServiceNumbers.AddRangeAsync(numbers);

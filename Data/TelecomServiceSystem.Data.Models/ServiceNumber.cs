@@ -2,9 +2,9 @@
 {
     using TelecomServiceSystem.Data.Common.Models;
 
-    public class ServiseNumber : BaseDeletableModel<int>
+    public class ServiceNumber : BaseDeletableModel<int>
     {
-        public ServiseNumber()
+        public ServiceNumber()
         {
             this.IsFree = true;
         }

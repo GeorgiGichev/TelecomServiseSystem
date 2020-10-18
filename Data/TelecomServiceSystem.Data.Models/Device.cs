@@ -1,14 +1,11 @@
 ﻿namespace TelecomServiceSystem.Data.Models
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Text;
 
-    public class Device
+    using TelecomServiceSystem.Data.Common.Models;
+
+    public class Device : BaseDeletableModel<int>
     {
-        public int Id { get; set; }
-
         [Required]
         [MaxLength(15)]
         public string IMEI { get; set; }

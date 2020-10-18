@@ -2,7 +2,10 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class MobileServiceInfoViewModel
+    using TelecomServiceSystem.Data.Models;
+    using TelecomServiceSystem.Services.Mapping;
+
+    public class MobileServiceInfoViewModel : IMapFrom<ServiceInfo>, IMapTo<ServiceInfo>
     {
         public int Id { get; set; }
 

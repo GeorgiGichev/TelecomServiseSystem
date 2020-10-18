@@ -1,11 +1,12 @@
 ﻿namespace TelecomServiceSystem.Web.ViewModels.Orders
 {
-    using System.Collections.Generic;
+    using TelecomServiceSystem.Data.Models;
+    using TelecomServiceSystem.Services.Mapping;
 
-    public class ServiceViewModel
+    public class ServiceViewModel : IMapFrom<Service>, IMapTo<Service>
     {
-        public IEnumerable<string> ServiceNames { get; set; } = new HashSet<string>();
+        public string Name { get; set; }
 
-        public int ServiseType { get; set; }
+        public int Id { get; set; }
     }
 }
