@@ -14,7 +14,7 @@
         public int ServiceId { get; set; }
 
         [Required]
-        [MinLength(22 , ErrorMessage = "ICC required 22 symbols")]
+        [MinLength(22, ErrorMessage = "ICC required 22 symbols")]
         [StringLength(22)]
         public string ICC { get; set; }
 

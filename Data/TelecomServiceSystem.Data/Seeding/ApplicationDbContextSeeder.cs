@@ -36,6 +36,7 @@
                               new RolesSeeder(),
                               new UserSeeder(),
                               new SettingsSeeder(),
+                              new SimSeeder(),
                           };
 
             foreach (var seeder in seeders)
