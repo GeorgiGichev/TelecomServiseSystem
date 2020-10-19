@@ -9,5 +9,7 @@
         Task<ServiceInfo> CreateAsync<T>(string orderId, T model);
 
         Task<string> GetICC();
+
+        Task<T> GetByOrderId<T>(string orderId);
     }
 }

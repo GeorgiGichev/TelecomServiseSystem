@@ -13,7 +13,7 @@
 
         public int ServiceId { get; set; }
 
-        [RegularExpression(@"^12 | 24$", ErrorMessage = "Contract duration can be 12 or 24 months!")]
+        [RegularExpression(@"^12|24$", ErrorMessage = "Contract duration can be 12 or 24 months!")]
         public int ContractDuration { get; set; }
 
         public int ServiceNumberId { get; set; }

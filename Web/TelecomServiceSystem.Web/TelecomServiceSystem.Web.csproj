@@ -30,6 +30,7 @@
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.76" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.7" />
+    <PackageReference Include="PhantomJS" Version="2.1.1" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.164" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -44,5 +45,17 @@
     <ProjectReference Include="..\..\Services\TelecomServiceSystem.Services\TelecomServiceSystem.Services.csproj" />
     <ProjectReference Include="..\TelecomServiceSystem.Web.Infrastructure\TelecomServiceSystem.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\TelecomServiceSystem.Web.ViewModels\TelecomServiceSystem.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\js\rasterize.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\js\scripts.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\js\site.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

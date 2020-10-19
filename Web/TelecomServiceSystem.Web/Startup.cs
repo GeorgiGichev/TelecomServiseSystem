@@ -25,8 +25,10 @@
     using TelecomServiceSystem.Services.Data.ServiceInfos;
     using TelecomServiceSystem.Services.Data.ServiceNumber;
     using TelecomServiceSystem.Services.Data.Services;
+    using TelecomServiceSystem.Services.HtmlToPDF;
     using TelecomServiceSystem.Services.Mapping;
     using TelecomServiceSystem.Services.Messaging;
+    using TelecomServiceSystem.Services.ViewRrender;
     using TelecomServiceSystem.Web.ViewModels;
 
     public class Startup
@@ -78,6 +80,8 @@
             services.AddTransient<IServiceService, ServiceService>();
             services.AddTransient<IServiceNumberService, ServiceNumbersService>();
             services.AddTransient<IServiceInfoService, ServiceInfoService>();
+            services.AddScoped<IViewRenderService, ViewRenderService>();
+            services.AddScoped<IHtmlToPdfConverter, HtmlToPdfConverter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

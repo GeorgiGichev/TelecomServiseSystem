@@ -3,12 +3,17 @@
     using System;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
+    using TelecomServiceSystem.Services.Data.Customers;
     using TelecomServiceSystem.Services.Data.Orders;
     using TelecomServiceSystem.Services.Data.ServiceInfos;
     using TelecomServiceSystem.Services.Data.ServiceNumber;
     using TelecomServiceSystem.Services.Data.Services;
+    using TelecomServiceSystem.Services.HtmlToPDF;
+    using TelecomServiceSystem.Services.ViewRrender;
     using TelecomServiceSystem.Web.Infrastructure.Extensions;
+    using TelecomServiceSystem.Web.ViewModels.Customers;
     using TelecomServiceSystem.Web.ViewModels.Orders;
 
     public class OrdersController : BaseController
@@ -17,13 +22,21 @@
         private readonly IServiceService serviceService;
         private readonly IServiceNumberService numberService;
         private readonly IServiceInfoService serviceInfoService;
+        private readonly IViewRenderService viewRenderService;
+        private readonly IHtmlToPdfConverter htmlToPdfConverter;
+        private readonly IWebHostEnvironment environment;
+        private readonly ICustomerService customerService;
 
-        public OrdersController(IOrderService orderService, IServiceService serviceService, IServiceNumberService numberService, IServiceInfoService serviceInfoService)
+        public OrdersController(IOrderService orderService, IServiceService serviceService, IServiceNumberService numberService, IServiceInfoService serviceInfoService, IViewRenderService viewRenderService, IHtmlToPdfConverter htmlToPdfConverter, IWebHostEnvironment environment, ICustomerService customerService)
         {
             this.orderService = orderService;
             this.serviceService = serviceService;
             this.numberService = numberService;
             this.serviceInfoService = serviceInfoService;
+            this.viewRenderService = viewRenderService;
+            this.htmlToPdfConverter = htmlToPdfConverter;
+            this.environment = environment;
+            this.customerService = customerService;
         }
 
         public IActionResult ChooseServiceType(string customerId)
@@ -66,12 +79,18 @@
             {
                 Id = model.OrderId,
             };
-            return this.RedirectToAction("SignDocuments", modelForRedirect);
+
+            string customerId = model.ServiceType == "mobile" ? model.MobileServiceInfo.CustomerId : model.FixedServiceInfo.CustomerId;
+            var customerModel = await this.customerService.GetByIdAsync<CustomerEditViewModel>(customerId);
+            return this.RedirectToAction("Edit", "Customers", customerModel);
         }
 
-        public async Task<IActionResult> SignDocuments(OrderViewModel order)
+        public async Task<IActionResult> GetPdf(OrderViewModel input)
         {
-            return this.View();
+            //var model = this.serviceInfoService.GetByOrderId(input);
+            var htmlData = await this.viewRenderService.RenderToStringAsync("~/Views/Orders/GetPdf.cshtml", input);
+            var fileContents = this.htmlToPdfConverter.Convert(this.environment.ContentRootPath, htmlData, "A4", "Portrait");
+            return this.File(fileContents, "application/pdf");
         }
 
         private async Task CreateOrder(string serviceType, OrderInputViewModel model)

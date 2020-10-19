@@ -33,6 +33,13 @@
                 .FirstOrDefaultAsync(si => si.OrderId == orderId);
         }
 
+        public async Task<T> GetByOrderId<T>(string orderId)
+        {
+            return (await this.serviseInfoRepo.All()
+                .FirstOrDefaultAsync(si => si.OrderId == orderId))
+                .To<T>();
+        }
+
         public async Task<string> GetICC()
         {
             if (this.simRepo.All().Count() == 0)
