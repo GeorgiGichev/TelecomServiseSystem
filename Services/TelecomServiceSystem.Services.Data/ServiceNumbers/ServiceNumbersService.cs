@@ -18,7 +18,7 @@
             this.numbersRepo = numbersRepo;
         }
 
-        public async Task<IEnumerable<T>> GetFreeNumbers<T>(string serviceType, string serviceName)
+        public async Task<IEnumerable<T>> GetFreeNumbersAsync<T>(string serviceType, string serviceName)
         {
             string startOfNumber = string.Empty;
             if (serviceType == "mobile")
@@ -42,6 +42,14 @@
                 .Take(10)
                 .To<T>()
                 .ToListAsync();
+        }
+
+        public async Task SetNumberAsHiredAsync(int numberId)
+        {
+            var number = await this.numbersRepo.All().FirstOrDefaultAsync(n => n.Id == numberId);
+            number.IsFree = false;
+            this.numbersRepo.Update(number);
+            await this.numbersRepo.SaveChangesAsync();
         }
     }
 }

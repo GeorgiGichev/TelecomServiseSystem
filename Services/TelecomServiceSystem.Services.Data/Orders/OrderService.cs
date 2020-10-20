@@ -1,22 +1,26 @@
 ﻿namespace TelecomServiceSystem.Services.Data.Orders
 {
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Threading.Tasks;
     using TelecomServiceSystem.Data.Common.Repositories;
     using TelecomServiceSystem.Data.Models;
     using TelecomServiceSystem.Data.Models.Enums;
     using TelecomServiceSystem.Services.Data.ServiceInfos;
+    using TelecomServiceSystem.Services.Data.ServiceNumber;
     using TelecomServiceSystem.Services.Mapping;
 
     public class OrderService : IOrderService
     {
         private readonly IDeletableEntityRepository<Order> orderRepo;
         private readonly IServiceInfoService seriveInfoService;
+        private readonly IServiceNumberService serviceNumberService;
 
-        public OrderService(IDeletableEntityRepository<Order> orderRepo, IServiceInfoService seriveInfoService)
+        public OrderService(IDeletableEntityRepository<Order> orderRepo, IServiceInfoService seriveInfoService, IServiceNumberService serviceNumberService)
         {
             this.orderRepo = orderRepo;
             this.seriveInfoService = seriveInfoService;
+            this.serviceNumberService = serviceNumberService;
         }
 
         public async Task<Toutput> CreateAsync<Toutput, Tinput>(Tinput order, Toutput serviceInfo)
@@ -25,13 +29,24 @@
             var orderToAdd = new Order
             {
                 UserId = orderFromModel.UserId,
-                Status = Enum.Parse<Status>("ForExecution"),
+                Status = Status.ForExecution,
             };
             await this.orderRepo.AddAsync(orderToAdd);
             await this.orderRepo.SaveChangesAsync();
             var info = await this.seriveInfoService.CreateAsync(orderToAdd.Id, serviceInfo);
 
             return info.To<Toutput>();
+        }
+
+        public async Task FinishOrderAsync<T>(T model)
+        {
+            var infoModel = model.To<ServiceInfo>();
+            var order = await this.orderRepo.All().FirstOrDefaultAsync(o => o.Id == infoModel.OrderId);
+            order.Status = Status.Finished;
+            order.FinishedOn = DateTime.UtcNow;
+            this.orderRepo.Update(order);
+            await this.serviceNumberService.SetNumberAsHiredAsync(infoModel.ServiceNumberId);
+            await this.seriveInfoService.SetServiceAsActiveAsync(infoModel.Id);
         }
     }
 }

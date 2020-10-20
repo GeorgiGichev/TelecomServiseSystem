@@ -296,7 +296,7 @@ namespace TelecomServiceSystem.Data.Migrations
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     UserId = table.Column<string>(nullable: true),
                     FinishedOn = table.Column<DateTime>(nullable: true),
-                    Status = table.Column<int>(nullable: false)
+                    Status = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {

@@ -21,13 +21,13 @@
 
             for (int i = 866000001; i <= 866000999; i++)
             {
-                numbers.Add(new ServiceNumber() { Number = i.ToString() });
+                numbers.Add(new ServiceNumber() { Number = i.ToString(), IsFree = true });
             }
 
             for (int i = 100001; i < 100999; i++)
             {
-                numbers.Add(new ServiceNumber() { Number = "N." + i });
-                numbers.Add(new ServiceNumber() { Number = "TV." + i });
+                numbers.Add(new ServiceNumber() { Number = "N." + i, IsFree = true });
+                numbers.Add(new ServiceNumber() { Number = "TV." + i, IsFree = true });
             }
 
             await dbContext.ServiceNumbers.AddRangeAsync(numbers);

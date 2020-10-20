@@ -5,5 +5,7 @@
     public interface IOrderService
     {
         Task<Toutput> CreateAsync<Toutput, Tinput>(Tinput order, Toutput serviceInfo);
+
+        Task FinishOrderAsync<T>(T model);
     }
 }

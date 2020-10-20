@@ -11,7 +11,7 @@ namespace TelecomServiceSystem.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20201018195756_nullableAddressIdInServiceInfo")]
-    partial class nullableAddressIdInServiceInfo
+    partial class NullableAddressIdInServiceInfo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -1,6 +1,5 @@
 ﻿namespace TelecomServiceSystem.Web.Controllers
 {
-    using System;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Hosting;
@@ -53,7 +52,7 @@
             };
 
             model.Services = await this.serviceService.GetServiceNamesByType<ServiceViewModel>(serviceType);
-            model.Numbers = await this.numberService.GetFreeNumbers<ServiceNumberViewModel>(serviceType, null);
+            model.Numbers = await this.numberService.GetFreeNumbersAsync<ServiceNumberViewModel>(serviceType, null);
 
             if (serviceType == "mobile")
             {
@@ -65,7 +64,10 @@
             }
             else
             {
-                model.FixedServiceInfo = new FixedServiceInfiViewModel();
+                model.FixedServiceInfo = new FixedServiceInfiViewModel
+                {
+                    CustomerId = customerId,
+                };
             }
 
             return this.View(model);
@@ -75,11 +77,6 @@
         public async Task<IActionResult> Create(OrderInputViewModel model)
         {
             await this.CreateOrder(model.ServiceType, model);
-            var modelForRedirect = new OrderViewModel
-            {
-                Id = model.OrderId,
-            };
-
             string customerId = model.ServiceType == "mobile" ? model.MobileServiceInfo.CustomerId : model.FixedServiceInfo.CustomerId;
             var customerModel = await this.customerService.GetByIdAsync<CustomerEditViewModel>(customerId);
             return this.RedirectToAction("Edit", "Customers", customerModel);
@@ -87,7 +84,7 @@
 
         public async Task<IActionResult> GetPdf(OrderViewModel input)
         {
-            //var model = this.serviceInfoService.GetByOrderId(input);
+            // var model = this.serviceInfoService.GetByOrderId(input);
             var htmlData = await this.viewRenderService.RenderToStringAsync("~/Views/Orders/GetPdf.cshtml", input);
             var fileContents = this.htmlToPdfConverter.Convert(this.environment.ContentRootPath, htmlData, "A4", "Portrait");
             return this.File(fileContents, "application/pdf");
@@ -106,7 +103,9 @@
                     model.MobileServiceInfo);
 
                 model.OrderId = model.MobileServiceInfo.OrderId;
-                }
+
+                await this.orderService.FinishOrderAsync<MobileServiceInfoViewModel>(model.MobileServiceInfo);
+            }
             else
             {
                 model.FixedServiceInfo = await this.orderService

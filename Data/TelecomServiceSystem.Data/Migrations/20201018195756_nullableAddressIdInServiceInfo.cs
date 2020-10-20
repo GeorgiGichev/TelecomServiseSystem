@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace TelecomServiceSystem.Data.Migrations
+﻿namespace TelecomServiceSystem.Data.Migrations
 {
-    public partial class nullableAddressIdInServiceInfo : Migration
+    using Microsoft.EntityFrameworkCore.Migrations;
+
+    public partial class NullableAddressIdInServiceInfo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

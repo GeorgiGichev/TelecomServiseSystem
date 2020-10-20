@@ -54,5 +54,15 @@
 
             return sim.ICC;
         }
+
+        public async Task SetServiceAsActiveAsync(int serviceInfoId)
+        {
+            var serviceInfo = await this.serviseInfoRepo.All().FirstOrDefaultAsync(si => si.Id == serviceInfoId);
+            serviceInfo.IsActive = true;
+            this.serviseInfoRepo.Update(serviceInfo);
+            var sim = await this.simRepo.All().FirstOrDefaultAsync(s => s.ICC == serviceInfo.ICC);
+            this.simRepo.HardDelete(sim);
+            await this.serviseInfoRepo.SaveChangesAsync();
+        }
     }
 }

@@ -5,6 +5,8 @@
 
     public interface IServiceNumberService
     {
-        Task<IEnumerable<T>> GetFreeNumbers<T>(string serviceType, string serviceName);
+        Task<IEnumerable<T>> GetFreeNumbersAsync<T>(string serviceType, string serviceName);
+
+        Task SetNumberAsHiredAsync(int numberId);
     }
 }

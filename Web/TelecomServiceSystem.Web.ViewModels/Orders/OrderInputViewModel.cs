@@ -15,6 +15,5 @@
         public IEnumerable<ServiceNumberViewModel> Numbers { get; set; }
 
         public IEnumerable<ServiceViewModel> Services { get; set; } = new HashSet<ServiceViewModel>();
-
     }
 }
