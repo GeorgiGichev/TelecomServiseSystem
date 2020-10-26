@@ -57,6 +57,11 @@
                         </div>
                         <h4 class="text-center font-weight-light my-4">Address</h4>
                         <div class="form-row">
+                            <div class="form-check">
+                                <label><input type="checkbox" value="true">Is main address</label>
+                            </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="required" asp-for="@Model.Address.Country"></label>
                                 <input asp-for="@Model.Address.Country" class="form-control" />

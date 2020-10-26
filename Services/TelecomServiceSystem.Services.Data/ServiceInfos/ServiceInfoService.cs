@@ -29,8 +29,8 @@
             await this.serviseInfoRepo.AddAsync(serviceInfoToAdd);
             await this.serviseInfoRepo.SaveChangesAsync();
 
-            return await this.serviseInfoRepo.All()
-                .FirstOrDefaultAsync(si => si.OrderId == orderId);
+            return serviceInfoToAdd;//await this.serviseInfoRepo.All()
+                //.FirstOrDefaultAsync(si => si.OrderId == orderId);
         }
 
         public async Task<T> GetByOrderId<T>(string orderId)
@@ -51,7 +51,6 @@
               .FirstOrDefaultAsync();
 
             this.simRepo.Delete(sim);
-
             return sim.ICC;
         }
 

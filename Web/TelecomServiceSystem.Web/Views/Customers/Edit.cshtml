@@ -74,6 +74,7 @@
                                                     <th>Entrance</th>
                                                     <th>Floor</th>
                                                     <th>Apartment</th>
+                                                    <th>Main</th>
                                                 </tr>
                                             </thead>
                                             <tfoot>
@@ -86,6 +87,7 @@
                                                     <th>Entrance</th>
                                                     <th>Floor</th>
                                                     <th>Apartment</th>
+                                                    <th>Main</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
@@ -100,6 +102,15 @@
                                                     <td>@address.Entrance</td>
                                                     <td>@address.Floor</td>
                                                     <td>@address.Apartment</td>
+                                                    @if (address.IsMainAddress)
+                                                    {
+                                                        <td>✓</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td></td>
+                                                    }
+
                                                 </tr>
 }
 

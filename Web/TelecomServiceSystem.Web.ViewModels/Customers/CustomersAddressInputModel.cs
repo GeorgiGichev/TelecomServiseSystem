@@ -1,9 +1,7 @@
 ﻿namespace TelecomServiceSystem.Web.ViewModels.Customers
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Text;
+
     using TelecomServiceSystem.Data.Models;
     using TelecomServiceSystem.Services.Mapping;
 
@@ -43,6 +41,8 @@
 
         [Display(Name = "Apartment")]
         public int? Apartment { get; set; }
+
+        public bool IsMainAddress { get; set; }
 
         public string CustomerId { get; set; }
     }

@@ -48,14 +48,11 @@
                                     <option value="12">12</option>
                                     <option value="24">24</option>
                                 </select>
-                                <span asp-validation-for="@Model.MobileServiceInfo.IMEI" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-4">
-                                <label asp-for="@Model.MobileServiceInfo.CustomerId"></label>
                                 <input type="hidden" asp-for="@Model.MobileServiceInfo.CustomerId" class="form-control" />
                             </div>
                             <div class="form-group col-md-4">
-                                <label asp-for="@Model.ServiceType"></label>
                                 <input type="hidden" asp-for="@Model.ServiceType" class="form-control" />
                             </div>
                         </div>

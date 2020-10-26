@@ -12,5 +12,7 @@
         Task<T> GetByIdAsync<T>(int id);
 
         Task EditAsync<T>(T input);
+
+        Task<IEnumerable<T>> GetByCustomerId<T>(string customerId);
     }
 }

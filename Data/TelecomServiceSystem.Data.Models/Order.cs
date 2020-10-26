@@ -12,6 +12,7 @@
         public Order()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.ServicesInfos = new HashSet<ServiceInfo>();
         }
 
         [ForeignKey(nameof(ApplicationUser))]
@@ -23,6 +24,6 @@
 
         public Status Status { get; set; }
 
-        public ICollection<ServiceInfo> ServicesInfos { get; set; } = new HashSet<ServiceInfo>();
+        public virtual ICollection<ServiceInfo> ServicesInfos { get; set; }
     }
 }

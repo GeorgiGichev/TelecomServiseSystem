@@ -1,9 +1,12 @@
 ﻿namespace TelecomServiceSystem.Web.Controllers
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using TelecomServiceSystem.Services.Data.Addresses;
     using TelecomServiceSystem.Services.Data.Customers;
     using TelecomServiceSystem.Services.Data.Orders;
     using TelecomServiceSystem.Services.Data.ServiceInfos;
@@ -12,6 +15,7 @@
     using TelecomServiceSystem.Services.HtmlToPDF;
     using TelecomServiceSystem.Services.ViewRrender;
     using TelecomServiceSystem.Web.Infrastructure.Extensions;
+    using TelecomServiceSystem.Web.ViewModels.Addresses;
     using TelecomServiceSystem.Web.ViewModels.Customers;
     using TelecomServiceSystem.Web.ViewModels.Orders;
 
@@ -25,8 +29,9 @@
         private readonly IHtmlToPdfConverter htmlToPdfConverter;
         private readonly IWebHostEnvironment environment;
         private readonly ICustomerService customerService;
+        private readonly IAddressService addressService;
 
-        public OrdersController(IOrderService orderService, IServiceService serviceService, IServiceNumberService numberService, IServiceInfoService serviceInfoService, IViewRenderService viewRenderService, IHtmlToPdfConverter htmlToPdfConverter, IWebHostEnvironment environment, ICustomerService customerService)
+        public OrdersController(IOrderService orderService, IServiceService serviceService, IServiceNumberService numberService, IServiceInfoService serviceInfoService, IViewRenderService viewRenderService, IHtmlToPdfConverter htmlToPdfConverter, IWebHostEnvironment environment, ICustomerService customerService, IAddressService addressService)
         {
             this.orderService = orderService;
             this.serviceService = serviceService;
@@ -36,12 +41,25 @@
             this.htmlToPdfConverter = htmlToPdfConverter;
             this.environment = environment;
             this.customerService = customerService;
+            this.addressService = addressService;
         }
 
         public IActionResult ChooseServiceType(string customerId)
         {
             var model = new ChooseServiceViewModel { CustomerId = customerId };
             return this.View(model);
+        }
+
+        public async Task<IActionResult> GetFreeNumbersAsJson(string serviceName)
+        {
+            var numbers = await this.numberService.GetFreeNumbersAsync<ServiceNumberViewModel>("fix", serviceName);
+            return this.Json(numbers);
+        }
+
+        public async Task<IActionResult> AddressesAsJson(string customerId)
+        {
+            var addresses = await this.addressService.GetByCustomerId<InstalationAddressViewModel>(customerId);
+            return this.Json(addresses);
         }
 
         public async Task<IActionResult> Create(string customerId, string serviceType)
@@ -52,10 +70,10 @@
             };
 
             model.Services = await this.serviceService.GetServiceNamesByType<ServiceViewModel>(serviceType);
-            model.Numbers = await this.numberService.GetFreeNumbersAsync<ServiceNumberViewModel>(serviceType, null);
 
             if (serviceType == "mobile")
             {
+                model.Numbers = await this.numberService.GetFreeNumbersAsync<ServiceNumberViewModel>(serviceType, null);
                 model.MobileServiceInfo = new MobileServiceInfoViewModel
                 {
                     ICC = await this.serviceInfoService.GetICC(),

@@ -43,5 +43,12 @@
             var address = await this.addressRepo.All().FirstOrDefaultAsync(a => a.Id == addressInput.Id);
             await this.addressRepo.UpdateModel(address, input);
         }
+
+        public async Task<IEnumerable<T>> GetByCustomerId<T>(string customerId)
+        {
+            return await this.addressRepo.All()
+                .Where(x => x.CustomerId == customerId)
+                .To<T>().ToListAsync();
+        }
     }
 }

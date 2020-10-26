@@ -10,6 +10,11 @@
                     <form asp-route-returnUrl="" method="post">
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-row">
+                            <div class="form-check">
+                                <label asp-for="@Model.IsMainAddress"><input asp-for="@Model.IsMainAddress" type="checkbox" value="true">Is main address</label>
+                            </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="required" asp-for="@Model.Country"></label>
                                 <input asp-for="@Model.Country" class="form-control" />

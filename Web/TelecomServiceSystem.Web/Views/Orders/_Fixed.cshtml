@@ -1,1 +1,147 @@
-﻿<h1>Fixed</h1>
+﻿@model TelecomServiceSystem.Web.ViewModels.Orders.OrderInputViewModel
+@{ this.ViewData["Title"] = "Create fixed service"; }
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header"><h3 class="text-center font-weight-light my-4">Fixed service</h3></div>
+                <div class="card-body">
+                    <form asp-route-returnUrl="" asp-action="Create" method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label class="col-md-6 required" asp-for="@Model.FixedServiceInfo.ServiceId">Rate plan</label>
+                                <select class="col-md-6 form-control" id="serviceName" asp-for="@Model.FixedServiceInfo.ServiceId">
+                                    @foreach (var service in Model.Services)
+                                    {
+                                        <option value="@service.Id">@service.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="col-md-6 required" asp-for="@Model.FixedServiceInfo.ServiceNumberId">Number</label>
+                                <select class="col-md-6 form-control" id="numbers" asp-for="@Model.FixedServiceInfo.ServiceNumberId">
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="col-md-6 required" asp-for="@Model.FixedServiceInfo.ContractDuration">Contract duration</label>
+                                <select class="col-md-6 form-control" asp-for="@Model.FixedServiceInfo.ContractDuration">
+                                    <option value="12">12</option>
+                                    <option value="24">24</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <input type="hidden" id="customer" asp-for="@Model.FixedServiceInfo.CustomerId" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <input type="hidden" asp-for="@Model.ServiceType" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-8">
+                                <label class="col-md-10 required" asp-for="@Model.FixedServiceInfo.AddressId">Address</label>
+                                <select class="col-md-10 form-control" id="address" asp-for="@Model.FixedServiceInfo.AddressId">
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <button class="btn btn-primary col-md-4">Add address</button>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-block" asp-controller="Orders" asp-action="GetPdf" formtarget="_blank">Generate contract</button>
+                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                        <a class="btn btn-primary btn-block"
+                           asp-area="" asp-controller="Home" asp-action="Index">Close</a>
+                        <div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.addEventListener('load', (event) => { GetFreeNumbers(), GetAddresses() });
+</script>
+
+<script>
+    document.getElementById("serviceName").onchange = function () { GetFreeNumbers() };
+</script>
+
+<script>
+    function GetFreeNumbers() {
+        const element = document.getElementById("serviceName");
+        const selectedService = element.options[element.selectedIndex].text;
+        const numbersSelect = document.getElementById("numbers");
+        var i, L = numbersSelect.options.length - 1;
+        for (i = L; i >= 0; i--) {
+            numbersSelect.remove(i);
+        };
+        if (selectedService != null && selectedService != '') {
+            $.ajax({
+                type: "GET",
+                url: "/Orders/GetFreeNumbersAsJson?serviceName=" + selectedService,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: selectedService,
+                contentType: "json; charset=utf-8",
+                success: function (numbers) {
+                    if (numbers != null && !jQuery.isEmptyObject(numbers)) {
+                        document.createElement("option");
+                        document.createTextNode("");
+                        $.each(numbers, function (index, number) {
+                            var option = document.createElement("option");
+                            option.setAttribute("value", number.id);
+                            var text = document.createTextNode(number.number);
+                            option.appendChild(text);
+                            numbersSelect.appendChild(option);
+                        });
+                    };
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        }
+    };
+</script>
+
+<script>
+    function GetAddresses() {
+        console.log(10);
+        const element = document.getElementById("address");
+        const customerId = document.getElementById("customer").value;
+        console.log(customerId)
+        if (customerId != null || customerId != '') {
+            $.ajax({
+                type: "GET",
+                url: "/Orders/AddressesAsJson?customerId=" + customerId,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: customerId,
+                contentType: "json; charset=utf-8",
+                success: function (addreses) {
+                    if (addreses != null && !jQuery.isEmptyObject(addreses)) {
+                        document.createElement("option");
+                        document.createTextNode("");
+                        $.each(addreses, function (index, address) {
+                            var option = document.createElement("option");
+                            option.setAttribute("value", address.id);
+                            var text = document.createTextNode(address.fullAddress);
+                            option.appendChild(text);
+                            element.appendChild(option);
+                        });
+                    };
+                },
+                failure: function (response) {
+                    alert(response);
+                }
+            });
+        }
+    };
+</script>

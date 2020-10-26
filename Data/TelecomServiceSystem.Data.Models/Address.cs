@@ -7,6 +7,11 @@
 
     public class Address : BaseDeletableModel<int>
     {
+        public Address()
+        {
+            this.ServicesInfos = new HashSet<ServiceInfo>();
+        }
+
         [Required]
         [MaxLength(50)]
         public string Country { get; set; }
@@ -32,8 +37,10 @@
 
         public string CustomerId { get; set; }
 
-        public Customer Customer { get; set; }
+        public virtual Customer Customer { get; set; }
 
-        public ICollection<ServiceInfo> ServicesInfos { get; set; }
+        public bool IsMainAddress { get; set; } = false;
+
+        public virtual ICollection<ServiceInfo> ServicesInfos { get; set; }
     }
 }

@@ -12,7 +12,7 @@
 
         public FixedServiceInfiViewModel FixedServiceInfo { get; set; }
 
-        public IEnumerable<ServiceNumberViewModel> Numbers { get; set; }
+        public IEnumerable<ServiceNumberViewModel> Numbers { get; set; } = new HashSet<ServiceNumberViewModel>();
 
         public IEnumerable<ServiceViewModel> Services { get; set; } = new HashSet<ServiceViewModel>();
     }
