@@ -1,11 +1,9 @@
 ﻿namespace TelecomServiceSystem.Web.Controllers
 {
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Rendering;
     using TelecomServiceSystem.Services.Data.Addresses;
     using TelecomServiceSystem.Services.Data.Customers;
     using TelecomServiceSystem.Services.Data.Orders;
@@ -79,16 +77,16 @@
                     ICC = await this.serviceInfoService.GetICC(),
                     CustomerId = customerId,
                 };
-            }
-            else
-            {
-                model.FixedServiceInfo = new FixedServiceInfiViewModel
-                {
-                    CustomerId = customerId,
-                };
+
+                return this.View("Mobile", model);
             }
 
-            return this.View(model);
+            model.FixedServiceInfo = new FixedServiceInfiViewModel
+            {
+                CustomerId = customerId,
+            };
+
+            return this.View("Fixed", model);
         }
 
         [HttpPost]

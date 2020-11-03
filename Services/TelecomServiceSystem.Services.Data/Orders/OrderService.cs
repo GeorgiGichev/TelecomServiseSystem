@@ -1,8 +1,9 @@
 ﻿namespace TelecomServiceSystem.Services.Data.Orders
 {
-    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Threading.Tasks;
+
+    using Microsoft.EntityFrameworkCore;
     using TelecomServiceSystem.Data.Common.Repositories;
     using TelecomServiceSystem.Data.Models;
     using TelecomServiceSystem.Data.Models.Enums;

@@ -102,7 +102,7 @@
                                                     <td>@address.Entrance</td>
                                                     <td>@address.Floor</td>
                                                     <td>@address.Apartment</td>
-                                                    @if (address.IsMainAddress)
+                                                    @if (address.IsMainAddress.HasValue && address.IsMainAddress == true)
                                                     {
                                                         <td>✓</td>
                                                     }

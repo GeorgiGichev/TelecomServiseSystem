@@ -42,7 +42,7 @@
         [Display(Name = "Apartment")]
         public int? Apartment { get; set; }
 
-        public bool IsMainAddress { get; set; }
+        public bool? IsMainAddress { get; set; }
 
         public string CustomerId { get; set; }
     }

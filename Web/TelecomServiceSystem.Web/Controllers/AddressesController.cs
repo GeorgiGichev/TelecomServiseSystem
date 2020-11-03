@@ -4,6 +4,7 @@
 
     using Microsoft.AspNetCore.Mvc;
     using TelecomServiceSystem.Services.Data.Addresses;
+    using TelecomServiceSystem.Web.ViewModels.Addresses;
     using TelecomServiceSystem.Web.ViewModels.Customers;
 
     public class AddressesController : BaseController
@@ -13,6 +14,19 @@
         public AddressesController(IAddressService addressService)
         {
             this.addressService = addressService;
+        }
+
+        public IActionResult Create()
+        {
+            var address = new CustomersAddressInputModel();
+            return this.PartialView("_CreatePartial", address);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CustomersAddressInputModel address)
+        {
+            await this.addressService.CreateAsync(address);
+            return this.PartialView("_CreatePartial", address);
         }
 
         public async Task<IActionResult> Edit(int id)
