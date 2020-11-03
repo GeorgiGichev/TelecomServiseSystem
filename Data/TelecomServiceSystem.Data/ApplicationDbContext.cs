@@ -23,6 +23,14 @@
         {
         }
 
+        public DbSet<Team> Teams { get; set; }
+
+        public DbSet<EnginieringTask> Tasks { get; set; }
+
+        public DbSet<City> Cities { get; set; }
+        
+        public DbSet<Country> Countries { get; set; }
+
         public DbSet<Address> Addresses { get; set; }
 
         public DbSet<Customer> Customers { get; set; }

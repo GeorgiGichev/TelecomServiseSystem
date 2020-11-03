@@ -1,10 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TelecomServiceSystem.Data.Models
+﻿namespace TelecomServiceSystem.Data.Models
 {
-    class City
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    using TelecomServiceSystem.Data.Common.Models;
+
+    public class City : BaseDeletableModel<int>
     {
+        public City()
+        {
+            this.Addresses = new HashSet<Address>();
+        }
+
+        [Required]
+        [MaxLength(50)]
+        public string Name { get; set; }
+
+        public int CountryId { get; set; }
+
+        public virtual Country Country { get; set; }
+
+        public virtual ICollection<Address> Addresses { get; set; }
     }
 }

@@ -20,6 +20,10 @@ namespace TelecomServiceSystem.Data.Models
             this.Orders = new HashSet<Order>();
         }
 
+        public int? TeamId { get; set; }
+
+        public virtual Team Team { get; set; }
+
         [Required]
         [MaxLength(20)]
         public string FirstName { get; set; }

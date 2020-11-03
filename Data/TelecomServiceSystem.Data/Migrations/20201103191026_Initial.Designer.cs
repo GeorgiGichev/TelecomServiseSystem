@@ -10,8 +10,8 @@ using TelecomServiceSystem.Data;
 namespace TelecomServiceSystem.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201018191514_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20201103191026_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -135,15 +135,8 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.Property<int?>("Apartment")
                         .HasColumnType("int");
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -164,6 +157,9 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsMainAddress")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -179,6 +175,8 @@ namespace TelecomServiceSystem.Data.Migrations
                         .HasMaxLength(100);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
 
                     b.HasIndex("CustomerId");
 
@@ -310,6 +308,9 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TeamId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
@@ -338,7 +339,76 @@ namespace TelecomServiceSystem.Data.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
+                    b.HasIndex("TeamId");
+
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("TelecomServiceSystem.Data.Models.City", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Cities");
+                });
+
+            modelBuilder.Entity("TelecomServiceSystem.Data.Models.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("TelecomServiceSystem.Data.Models.Customer", b =>
@@ -434,6 +504,40 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.ToTable("Devices");
                 });
 
+            modelBuilder.Entity("TelecomServiceSystem.Data.Models.EnginieringTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InstalationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("Tasks");
+                });
+
             modelBuilder.Entity("TelecomServiceSystem.Data.Models.Order", b =>
                 {
                     b.Property<string>("Id")
@@ -513,7 +617,7 @@ namespace TelecomServiceSystem.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddressId")
+                    b.Property<int?>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<int>("ContractDuration")
@@ -669,6 +773,37 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.ToTable("SimCards");
                 });
 
+            modelBuilder.Entity("TelecomServiceSystem.Data.Models.Team", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Teams");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("TelecomServiceSystem.Data.Models.ApplicationRole", null)
@@ -722,6 +857,12 @@ namespace TelecomServiceSystem.Data.Migrations
 
             modelBuilder.Entity("TelecomServiceSystem.Data.Models.Address", b =>
                 {
+                    b.HasOne("TelecomServiceSystem.Data.Models.City", "City")
+                        .WithMany("Addresses")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("TelecomServiceSystem.Data.Models.Customer", "Customer")
                         .WithMany("Addresses")
                         .HasForeignKey("CustomerId");
@@ -732,6 +873,28 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.HasOne("TelecomServiceSystem.Data.Models.ApplicationUser", "Manager")
                         .WithMany()
                         .HasForeignKey("ManagerId");
+
+                    b.HasOne("TelecomServiceSystem.Data.Models.Team", "Team")
+                        .WithMany("Employees")
+                        .HasForeignKey("TeamId");
+                });
+
+            modelBuilder.Entity("TelecomServiceSystem.Data.Models.City", b =>
+                {
+                    b.HasOne("TelecomServiceSystem.Data.Models.Country", "Country")
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TelecomServiceSystem.Data.Models.EnginieringTask", b =>
+                {
+                    b.HasOne("TelecomServiceSystem.Data.Models.Team", "Team")
+                        .WithMany("Tasks")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TelecomServiceSystem.Data.Models.Order", b =>
@@ -745,9 +908,7 @@ namespace TelecomServiceSystem.Data.Migrations
                 {
                     b.HasOne("TelecomServiceSystem.Data.Models.Address", "Address")
                         .WithMany("ServicesInfos")
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("AddressId");
 
                     b.HasOne("TelecomServiceSystem.Data.Models.Customer", "Customer")
                         .WithMany("ServicesInfo")
@@ -770,6 +931,15 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.HasOne("TelecomServiceSystem.Data.Models.ServiceNumber", "ServiseNumber")
                         .WithMany()
                         .HasForeignKey("ServiceNumberId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TelecomServiceSystem.Data.Models.Team", b =>
+                {
+                    b.HasOne("TelecomServiceSystem.Data.Models.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

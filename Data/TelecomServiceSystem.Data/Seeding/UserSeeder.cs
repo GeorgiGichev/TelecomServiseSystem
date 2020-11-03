@@ -3,9 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using TelecomServiceSystem.Common;
@@ -57,6 +59,7 @@
                 NormalizedUserName = "Petyr.Petrov",
                 Email = "Petyr.Petrov@TSS.com",
                 NormalizedEmail = "Petyr.Petrov@TSS.com",
+                TeamId = (await dbContext.Teams.FirstOrDefaultAsync(x => x.Employees.Count < 2)).Id,
                 EmailConfirmed = true,
             };
 

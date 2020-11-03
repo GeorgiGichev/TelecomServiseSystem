@@ -12,13 +12,9 @@
             this.ServicesInfos = new HashSet<ServiceInfo>();
         }
 
-        [Required]
-        [MaxLength(50)]
-        public string Country { get; set; }
+        public int CityId { get; set; }
 
-        [Required]
-        [MaxLength(50)]
-        public string City { get; set; }
+        public virtual City City { get; set; }
 
         [MaxLength(100)]
         public string Street { get; set; }

@@ -22,8 +22,7 @@
             {
                 new Address
                 {
-                    Country = "Bulgaria",
-                    City = "Varna",
+                    CityId = (await dbContext.Cities.FirstOrDefaultAsync(x => x.Name == "Varna")).Id,
                     Street = "Sv. Sv. Kiril i Metodii",
                     Neighborhood = "Asparuhovo",
                     Number = 41,
@@ -31,8 +30,7 @@
                 },
                 new Address
                 {
-                    Country = "Bulgaria",
-                    City = "Varna",
+                    CityId = (await dbContext.Cities.FirstOrDefaultAsync(x => x.Name == "Varna")).Id,
                     Street = "Narodni buditeli",
                     Neighborhood = "Asparuhovo",
                     Number = 80,
@@ -43,8 +41,7 @@
                 },
                 new Address
                 {
-                    Country = "Bulgaria",
-                    City = "Varna",
+                    CityId = (await dbContext.Cities.FirstOrDefaultAsync(x => x.Name == "Varna")).Id,
                     Street = "3-ta",
                     Neighborhood = "Druzhba",
                     Number = 50,
