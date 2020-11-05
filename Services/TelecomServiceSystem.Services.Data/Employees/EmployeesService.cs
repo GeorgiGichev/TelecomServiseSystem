@@ -21,6 +21,11 @@
             this.usersRepo = usersRepo;
         }
 
+        public Task AddToTeam<T>(T input)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task Edit<T>(T input)
         {
             var employeeToEdit = input.To<ApplicationUser>();
@@ -30,6 +35,7 @@
 
         public async Task<T> GetByIdAsync<T>(string id)
             => (await this.usersRepo.All().FirstOrDefaultAsync(e => e.Id == id)).To<T>();
+
 
         public async Task<IEnumerable<TOutput>> GetBySearchCriteriaAsync<TOutput, TQuery>(TQuery query)
         {

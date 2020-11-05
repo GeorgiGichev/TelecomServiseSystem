@@ -10,7 +10,7 @@ using TelecomServiceSystem.Data;
 namespace TelecomServiceSystem.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201103191026_Initial")]
+    [Migration("20201105133629_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -234,6 +234,9 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -319,6 +322,8 @@ namespace TelecomServiceSystem.Data.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
 
                     b.HasIndex("EGN")
                         .IsUnique();
@@ -870,6 +875,12 @@ namespace TelecomServiceSystem.Data.Migrations
 
             modelBuilder.Entity("TelecomServiceSystem.Data.Models.ApplicationUser", b =>
                 {
+                    b.HasOne("TelecomServiceSystem.Data.Models.City", "City")
+                        .WithMany("Employees")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("TelecomServiceSystem.Data.Models.ApplicationUser", "Manager")
                         .WithMany()
                         .HasForeignKey("ManagerId");

@@ -35,6 +35,7 @@
                 UserName = "Ivan.Ivanov",
                 Email = "Ivan.Ivanov@TSS.com",
                 EmailConfirmed = true,
+                CityId = (await dbContext.Cities.FirstOrDefaultAsync()).Id,
             };
 
             var admin = new ApplicationUser
@@ -47,6 +48,7 @@
                 UserName = "Georgi.Gichev",
                 Email = "Georgi.Gichev@TSS.com",
                 EmailConfirmed = true,
+                CityId = (await dbContext.Cities.FirstOrDefaultAsync()).Id,
             };
             var engeneer = new ApplicationUser
             {
@@ -61,6 +63,7 @@
                 NormalizedEmail = "Petyr.Petrov@TSS.com",
                 TeamId = (await dbContext.Teams.FirstOrDefaultAsync(x => x.Employees.Count < 2)).Id,
                 EmailConfirmed = true,
+                CityId = (await dbContext.Cities.FirstOrDefaultAsync()).Id,
             };
 
             await SeedUser(userManager, admin, UsersPassword, GlobalConstants.AdministratorRoleName);

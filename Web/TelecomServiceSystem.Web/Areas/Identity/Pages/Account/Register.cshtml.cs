@@ -16,7 +16,10 @@
     using Microsoft.AspNetCore.Mvc.RazorPages;
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
+    using TelecomServiceSystem.Common;
     using TelecomServiceSystem.Data.Models;
+    using TelecomServiceSystem.Services.Data.Addresses;
+    using TelecomServiceSystem.Web.ViewModels.Addresses;
 
     [AllowAnonymous]
     public class RegisterModel : PageModel
@@ -26,17 +29,20 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<RegisterModel> logger;
         private readonly IEmailSender emailSender;
+        private readonly IAddressService addressService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, 
+            IAddressService addressService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.logger = logger;
             this.emailSender = emailSender;
+            this.addressService = addressService;
         }
 
         [BindProperty]
@@ -89,10 +95,18 @@
             [RegularExpression(@"^Admin$|^Seller$|^Engeneer$", ErrorMessage = "Invalid role")]
             [Display(Name = "Role")]
             public string Role { get; set; }
+
+            public int CityId { get; set; }
+
+            public ICollection<CityViewModel> Cities { get; set; } = new HashSet<CityViewModel>();
         }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            this.Input = new InputModel
+            {
+                Cities = await this.addressService.GetCitiesByCountryAsync<CityViewModel>(GlobalConstants.CountryOfUsing) as ICollection<CityViewModel>,
+            };
             this.ReturnUrl = returnUrl;
             this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -111,6 +125,7 @@
                     MiddleName = this.Input.MiddleName,
                     LastName = this.Input.LastName,
                     EGN = this.Input.EGN,
+                    CityId = this.Input.CityId,
                 };
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
@@ -137,7 +152,7 @@
                     {
                         if (await this.userManager.IsInRoleAsync(user, "Engeneer"))
                         {
-                            return this.Redirect("/Teams/AddEmployee");
+                            return this.Redirect($"/Administration/Employee/AllFreeTeams?employeeId={user.Id}&cityId={user.CityId}");
                         }
 
                         return this.Redirect("/Administration/Employee");

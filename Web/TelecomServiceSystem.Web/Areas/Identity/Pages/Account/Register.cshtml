@@ -63,6 +63,15 @@
                                 </select>
                                 <span asp-validation-for="Input.Role" class="text-danger"></span>
                             </div>
+                            <div class="form-group col-md-6">
+                                <label class="required" asp-for="Input.CityId">City</label>
+                                <select class="col-md-6 form-control" asp-for="Input.CityId">
+                                    @foreach (var city in Model.Input.Cities)
+                                    {
+                                        <option value="@city.Id">@city.Name</option>
+                                    }
+                                </select>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Create</button>
                     </form>

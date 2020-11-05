@@ -10,6 +10,7 @@
         public City()
         {
             this.Addresses = new HashSet<Address>();
+            this.Employees = new HashSet<ApplicationUser>();
         }
 
         [Required]
@@ -21,5 +22,7 @@
         public virtual Country Country { get; set; }
 
         public virtual ICollection<Address> Addresses { get; set; }
+
+        public virtual ICollection<ApplicationUser> Employees { get; set; }
     }
 }

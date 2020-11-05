@@ -10,5 +10,7 @@
         Task<T> GetByIdAsync<T>(string id);
 
         Task Edit<T>(T input);
+
+        Task AddToTeam<T>(T input);
     }
 }

@@ -46,6 +46,10 @@ namespace TelecomServiceSystem.Data.Models
 
         public virtual ApplicationUser Manager { get; set; }
 
+        public int CityId { get; set; }
+
+        public virtual City City { get; set; }
+
         // Audit info
         public DateTime CreatedOn { get; set; }
 

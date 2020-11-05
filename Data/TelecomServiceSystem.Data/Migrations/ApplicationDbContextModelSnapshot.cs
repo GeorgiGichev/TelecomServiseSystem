@@ -232,6 +232,9 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -317,6 +320,8 @@ namespace TelecomServiceSystem.Data.Migrations
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
 
                     b.HasIndex("EGN")
                         .IsUnique();
@@ -868,6 +873,12 @@ namespace TelecomServiceSystem.Data.Migrations
 
             modelBuilder.Entity("TelecomServiceSystem.Data.Models.ApplicationUser", b =>
                 {
+                    b.HasOne("TelecomServiceSystem.Data.Models.City", "City")
+                        .WithMany("Employees")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("TelecomServiceSystem.Data.Models.ApplicationUser", "Manager")
                         .WithMany()
                         .HasForeignKey("ManagerId");
