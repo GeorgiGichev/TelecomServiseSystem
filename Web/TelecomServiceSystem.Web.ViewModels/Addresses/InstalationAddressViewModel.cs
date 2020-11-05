@@ -8,7 +8,7 @@
     {
         public string Id { get; set; }
 
-        public string City { get; set; }
+        public string CityName { get; set; }
 
         public string Street { get; set; }
 
@@ -29,9 +29,9 @@
             var street = this.Street != null ? $"str. {this.Street}" : string.Empty;
             var neighborhood = this.Neighborhood != null ? $"dist {this.Neighborhood}" : string.Empty;
             var entrance = this.Entrance != null ? this.Entrance : string.Empty;
-            var floor = this.Floor != null ? $"fl.{this.Floor.ToString()}" : string.Empty;
-            var apartment = this.Apartment != null ? $"ap.{this.Apartment.ToString()}" : string.Empty;
-            return $"{this.City}, {street}, {neighborhood}, {this.Number} {entrance} {floor} {apartment}";
+            var floor = this.Floor != null ? $"fl.{this.Floor}" : string.Empty;
+            var apartment = this.Apartment != null ? $"ap.{this.Apartment}" : string.Empty;
+            return $"{this.CityName}, {street}, {neighborhood}, {this.Number} {entrance} {floor} {apartment}";
         }
     }
 }

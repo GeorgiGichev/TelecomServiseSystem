@@ -5,9 +5,11 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using TelecomServiceSystem.Common;
     using TelecomServiceSystem.Services.Data.Addresses;
     using TelecomServiceSystem.Services.Data.Customers;
     using TelecomServiceSystem.Services.Mapping;
+    using TelecomServiceSystem.Web.ViewModels.Addresses;
     using TelecomServiceSystem.Web.ViewModels.Customers;
     using TelecomServiceSystem.Web.ViewModels.CustomersSearch;
 
@@ -25,7 +27,7 @@
         public async Task<IActionResult> Edit(string id)
         {
             var model = await this.customerService.GetByIdAsync<CustomerEditViewModel>(id);
-            model.Addresses = await this.addressService.GetByCustomerIdAsync<CustomersAddressInputModel>(id) as ICollection<CustomersAddressInputModel>;
+            model.Addresses = await this.addressService.GetByCustomerIdAsync<CustomerAddressViewModel>(id) as ICollection<CustomerAddressViewModel>;
             return this.View(model);
         }
 
@@ -38,14 +40,22 @@
             }
 
             await this.customerService.Edit<CustomerEditViewModel>(model);
-            model.Addresses = await this.addressService.GetByCustomerIdAsync<CustomersAddressInputModel>(model.Id) as ICollection<CustomersAddressInputModel>;
+            model.Addresses = await this.addressService.GetByCustomerIdAsync<CustomerAddressViewModel>(model.Id) as ICollection<CustomerAddressViewModel>;
 
             return this.View(model);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return this.View();
+            var model = new CreateCustomerInputModel
+            {
+                Address = new CustomersAddressInputModel
+                {
+                    Cities = await this.addressService.GetCitiesByCountryAsync<CityViewModel>(GlobalConstants.CountryOfUsing) as ICollection<CityViewModel>,
+                },
+            };
+
+            return this.View(model);
         }
 
         [HttpPost]

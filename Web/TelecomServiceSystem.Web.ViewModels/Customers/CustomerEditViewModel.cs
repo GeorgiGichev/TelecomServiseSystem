@@ -5,6 +5,7 @@
 
     using TelecomServiceSystem.Data.Models;
     using TelecomServiceSystem.Services.Mapping;
+    using TelecomServiceSystem.Web.ViewModels.Addresses;
 
     public class CustomerEditViewModel : IMapTo<Customer>, IMapFrom<Customer>
     {
@@ -39,6 +40,6 @@
         [Required]
         public string Phone { get; set; }
 
-        public ICollection<CustomersAddressInputModel> Addresses { get; set; }
+        public ICollection<CustomerAddressViewModel> Addresses { get; set; }
     }
 }

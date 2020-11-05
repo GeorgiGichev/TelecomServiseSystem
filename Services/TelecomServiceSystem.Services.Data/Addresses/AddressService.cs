@@ -12,10 +12,14 @@
     public class AddressService : IAddressService
     {
         private readonly IDeletableEntityRepository<Address> addressRepo;
+        private readonly IDeletableEntityRepository<Country> countryRepo;
+        private readonly IDeletableEntityRepository<City> cityRepo;
 
-        public AddressService(IDeletableEntityRepository<Address> addressRepo)
+        public AddressService(IDeletableEntityRepository<Address> addressRepo, IDeletableEntityRepository<Country> countryRepo, IDeletableEntityRepository<City> cityRepo)
         {
             this.addressRepo = addressRepo;
+            this.countryRepo = countryRepo;
+            this.cityRepo = cityRepo;
         }
 
         public async Task CreateAsync<T>(T model)
@@ -26,7 +30,7 @@
         }
 
         public async Task<T> GetByIdAsync<T>(int id)
-            => (await this.addressRepo.All().FirstOrDefaultAsync(a => a.Id == id)).To<T>();
+            => await this.addressRepo.All().Where(x => x.Id == id).To<T>().FirstOrDefaultAsync();
 
         public async Task<IEnumerable<T>> GetByCustomerIdAsync<T>(string customerId)
         {
@@ -49,6 +53,21 @@
             return await this.addressRepo.All()
                 .Where(x => x.CustomerId == customerId)
                 .To<T>().ToListAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetCitiesByCountryAsync<T>(string country)
+        {
+            return await this.cityRepo.All()
+                .Where(x => x.Country.Name == country)
+                .To<T>()
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetAllCountries<T>()
+        {
+            return await this.countryRepo.All()
+                .To<T>()
+                .ToListAsync();
         }
     }
 }

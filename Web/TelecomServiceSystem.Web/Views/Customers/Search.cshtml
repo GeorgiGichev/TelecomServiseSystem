@@ -3,7 +3,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-lg-7">
+        <div class="col-lg-12">
             <div class="card shadow-lg border-0 rounded-lg mt-5">
                 <div class="card-header"><h3 class="text-center font-weight-light my-4">Search Customers</h3></div>
                 <div class="card-body">
@@ -33,43 +33,40 @@
                                 <span asp-validation-for="@Model.Input.PersonalNumber" class="text-danger"></span>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">Search</button>
-                    </form>
-                </div>
-                <div class="col-md-6 col-md-offset-2">
-                    <section>
-                    </section>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>First Name</th>
-                                <th>Middle Name</th>
-                                <th>Last Name</th>
-                                <th>Personal Number</th>
-                                <th>Created On</th>
-                                <th>Deleted On</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th>First Name</th>
-                                <th>Middle Name</th>
-                                <th>Last Name</th>
-                                <th>Personal Number</th>
-                                <th>Created On</th>
-                                <th>Deleted On</th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            @foreach (var customer in Model.CustomersList)
-                            {
+                        <div class="form-row">
+                            <div class="col-md-10"></div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary btn-block">Search</button>
+                            </div>
+                        </div>
+                        <hr />
+                        <div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>First Name</th>
+                                                <th>Middle Name</th>
+                                                <th>Last Name</th>
+                                                <th>Personal Number</th>
+                                                <th>Created On</th>
+                                                <th>Deleted On</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>First Name</th>
+                                                <th>Middle Name</th>
+                                                <th>Last Name</th>
+                                                <th>Personal Number</th>
+                                                <th>Created On</th>
+                                                <th>Deleted On</th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            @foreach (var customer in Model.CustomersList)
+                                            {
                                 <tr>
                                     <td>@customer.FirstName</td>
                                     <td>@customer.MiddleName</td>
@@ -77,10 +74,19 @@
                                     <td><a asp-area="" asp-controller="Customers" asp-action="Edit" asp-route-id="@customer.Id">@customer.PersonalNumber</a></td>
                                     <td>@customer.CreatedOn</td>
                                     <td>@customer.DeletedOn</td>
-                                </tr>}
+                                </tr>
+}
 
-                        </tbody>
-                    </table>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-6 col-md-offset-2">
+                    <section>
+                    </section>
                 </div>
             </div>
         </div>

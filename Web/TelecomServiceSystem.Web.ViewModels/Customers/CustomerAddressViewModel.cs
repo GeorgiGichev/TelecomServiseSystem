@@ -3,16 +3,18 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using AutoMapper;
     using TelecomServiceSystem.Data.Models;
     using TelecomServiceSystem.Services.Mapping;
     using TelecomServiceSystem.Web.ViewModels.Addresses;
 
-    public class CustomersAddressInputModel : IMapTo<Address>, IMapFrom<Address>
+    public class CustomerAddressViewModel : IMapTo<Address>, IMapFrom<Address>
     {
         public int Id { get; set; }
 
-        public int CityId { get; set; }
+        [Required]
+        [MaxLength(50)]
+        [Display(Name = "City")]
+        public string CityName { get; set; }
 
         [Required]
         [MaxLength(100)]
@@ -40,7 +42,5 @@
         public bool IsMainAddress { get; set; }
 
         public string CustomerId { get; set; }
-
-        public ICollection<CityViewModel> Cities { get; set; }
     }
 }

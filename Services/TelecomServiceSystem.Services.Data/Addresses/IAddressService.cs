@@ -14,5 +14,9 @@
         Task EditAsync<T>(T input);
 
         Task<IEnumerable<T>> GetByCustomerId<T>(string customerId);
+
+        Task<IEnumerable<T>> GetCitiesByCountryAsync<T>(string country);
+
+        Task<IEnumerable<T>> GetAllCountries<T>();
     }
 }

@@ -6,7 +6,7 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-7">
+            <div class="col-lg-12">
                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Customer Account Info</h3></div>
                     <div class="card-body">
@@ -60,13 +60,13 @@
                             <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
                             <a class="btn btn-primary btn-block"
                                asp-area="" asp-controller="Customers" asp-action="Search">Close</a>
+                            <hr />
                             <div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
-                                                    <th>Country</th>
                                                     <th>City</th>
                                                     <th>Street</th>
                                                     <th>Neighborhood</th>
@@ -79,7 +79,6 @@
                                             </thead>
                                             <tfoot>
                                                 <tr>
-                                                    <th>Country</th>
                                                     <th>City</th>
                                                     <th>Street</th>
                                                     <th>Neighborhood</th>
@@ -94,15 +93,14 @@
                                                 @foreach (var address in Model.Addresses)
                                                 {
                                                 <tr>
-                                                    <td>@address.Country</td>
-                                                    <td>@address.City</td>
+                                                    <td>@address.CityName</td>
                                                     <td><a asp-area="" asp-controller="Addresses" asp-action="Edit" asp-route-id="@address.Id">@address.Street</a></td>
                                                     <td>@address.Neighborhood</td>
                                                     <td>@address.Number</td>
                                                     <td>@address.Entrance</td>
                                                     <td>@address.Floor</td>
                                                     <td>@address.Apartment</td>
-                                                    @if (address.IsMainAddress.HasValue && address.IsMainAddress == true)
+                                                    @if (address.IsMainAddress == true)
                                                     {
                                                         <td>✓</td>
                                                     }

@@ -11,5 +11,7 @@
         public const string EngeneerRoleName = "Engeneer";
 
         public const string NoAvailableSimMessage = "No available Simcards";
+
+        public const string CountryOfUsing = "Bulgaria";
     }
 }

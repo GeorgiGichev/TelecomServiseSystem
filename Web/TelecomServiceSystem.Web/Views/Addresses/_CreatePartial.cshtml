@@ -13,15 +13,15 @@
                                 <form asp-controller="Addresses" asp-action="Create" method="post" id="form">
                                     <div asp-validation-summary="All" class="text-danger"></div>
                                     <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label class="required" asp-for="@Model.Country"></label>
-                                            <input asp-for="@Model.Country" class="form-control" />
-                                            <span asp-validation-for="@Model.Country" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label class="required" asp-for="@Model.City"></label>
-                                            <input asp-for="@Model.City" class="form-control" />
-                                            <span asp-validation-for="@Model.City" class="text-danger"></span>
+                                        
+                                        <div class="form-group col-md-12">
+                                            <label class="col-md-6 required" asp-for="@Model.CityId">City</label>
+                                            <select class="col-md-6 form-control" id="cities" asp-for="@Model.CityId">
+                                                @foreach (var city in Model.Cities)
+                                                {
+                                                <option value="@city.Id">@city.Name</option>
+                                                }
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -61,7 +61,7 @@
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-save="modal" id="submit">Submit</button>
+                                <button type="button" class="btn btn-primary" data-save="modal" id="submit" data-dismiss="modal">Submit</button>
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Cloce</button>
                             </div>
                         </div>

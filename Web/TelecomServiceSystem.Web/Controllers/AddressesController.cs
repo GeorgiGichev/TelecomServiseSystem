@@ -1,8 +1,10 @@
 ﻿namespace TelecomServiceSystem.Web.Controllers
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using TelecomServiceSystem.Common;
     using TelecomServiceSystem.Services.Data.Addresses;
     using TelecomServiceSystem.Web.ViewModels.Addresses;
     using TelecomServiceSystem.Web.ViewModels.Customers;
@@ -16,9 +18,13 @@
             this.addressService = addressService;
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var address = new CustomersAddressInputModel();
+            var address = new CustomersAddressInputModel
+            {
+                Cities = await this.addressService.GetCitiesByCountryAsync<CityViewModel>(GlobalConstants.CountryOfUsing)
+                as ICollection<CityViewModel>,
+            };
             return this.PartialView("_CreatePartial", address);
         }
 
@@ -31,14 +37,14 @@
 
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await this.addressService.GetByIdAsync<CustomersAddressInputModel>(id);
+            var model = await this.addressService.GetByIdAsync<CustomerAddressViewModel>(id);
             return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(CustomersAddressInputModel model)
+        public async Task<IActionResult> Edit(CustomerAddressViewModel model)
         {
-            await this.addressService.EditAsync<CustomersAddressInputModel>(model);
+            await this.addressService.EditAsync<CustomerAddressViewModel>(model);
 
             return this.Redirect($"/Customers/Edit/{model.CustomerId}");
         }
