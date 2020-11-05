@@ -84,6 +84,11 @@
             [RegularExpression(@"^\d{10}$", ErrorMessage = "Invalid EGN")]
             [Display(Name = "EGN")]
             public string EGN { get; set; }
+
+            [Required]
+            [RegularExpression(@"^Admin$|^Seller$|^Engeneer$", ErrorMessage = "Invalid role")]
+            [Display(Name = "Role")]
+            public string Role { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -110,6 +115,7 @@
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
                 {
+                    await this.userManager.AddToRoleAsync(user, this.Input.Role);
                     this.logger.LogInformation("User created a new account with password.");
 
                     var code = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -129,8 +135,14 @@
                     }
                     else
                     {
-                        await this.signInManager.SignInAsync(user, isPersistent: false);
-                        return this.LocalRedirect(returnUrl);
+                        if (await this.userManager.IsInRoleAsync(user, "Engeneer"))
+                        {
+                            return this.Redirect("/Teams/AddEmployee");
+                        }
+
+                        return this.Redirect("/Administration/Employee");
+                        //await this.signInManager.SignInAsync(user, isPersistent: false);
+                        //return this.LocalRedirect(returnUrl);
                     }
                 }
 

@@ -53,6 +53,17 @@
                                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                             </div>
                         </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="required" asp-for="Input.Role"></label>
+                                <select class="col-md-6 form-control" id="serviceName" asp-for="Input.Role">
+                                    <option value="Admin">Administrator</option>
+                                    <option value="Seller">Seller</option>
+                                    <option value="Engeneer">Engeneer</option>
+                                </select>
+                                <span asp-validation-for="Input.Role" class="text-danger"></span>
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary btn-block">Create</button>
                     </form>
                 </div>

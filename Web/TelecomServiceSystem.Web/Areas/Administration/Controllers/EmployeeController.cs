@@ -30,6 +30,11 @@
         [HttpPost]
         public async Task<IActionResult> Index(SearchEmployeeViewModel model)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
             model.EmployeesList = await this.GetEmployeesAsync(model.Input);
             return this.View(model);
         }
