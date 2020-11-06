@@ -36,7 +36,6 @@
         public async Task<T> GetByIdAsync<T>(string id)
             => (await this.usersRepo.All().FirstOrDefaultAsync(e => e.Id == id)).To<T>();
 
-
         public async Task<IEnumerable<TOutput>> GetBySearchCriteriaAsync<TOutput, TQuery>(TQuery query)
         {
             IQueryable<ApplicationUser> employees = null;
@@ -55,22 +54,22 @@
 
             if (employee.FirstName != null)
             {
-                employees = employees.Where(e => e.FirstName == employee.FirstName);
+                employees = employees.Where(e => e.FirstName.ToLower().Contains(employee.FirstName.ToLower()));
             }
 
             if (employee.MiddleName != null)
             {
-                employees = employees.Where(e => e.MiddleName == employee.MiddleName);
+                employees = employees.Where(e => e.MiddleName.ToLower().Contains(employee.MiddleName.ToLower()));
             }
 
             if (employee.LastName != null)
             {
-                employees = employees.Where(e => e.LastName == employee.LastName);
+                employees = employees.Where(e => e.LastName.ToLower().Contains(employee.LastName.ToLower()));
             }
 
             if (employee.EGN != null)
             {
-                employees = employees.Where(e => e.EGN == employee.EGN);
+                employees = employees.Where(e => e.EGN.Contains(employee.EGN));
             }
 
             var result = await employees.To<TOutput>()

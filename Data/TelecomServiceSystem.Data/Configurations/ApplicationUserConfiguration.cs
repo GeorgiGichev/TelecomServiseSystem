@@ -37,5 +37,26 @@
                 .HasIndex(u => u.Email)
                 .IsUnique();
         }
+
+        public void Configure(EntityTypeBuilder<Customer> customer)
+        {
+            customer.HasIndex(c => c.Email)
+                .IsUnique();
+
+            customer.HasIndex(c => c.PersonalNumber)
+                .IsUnique();
+        }
+
+        public void Configure(EntityTypeBuilder<Order> order)
+        {
+            order.HasIndex(o => o.EnginieringTaskId)
+                .IsUnique();
+        }
+
+        public void Configure(EntityTypeBuilder<EnginieringTask> task)
+        {
+            task.HasIndex(t => t.OrderId)
+                .IsUnique();
+        }
     }
 }

@@ -6,7 +6,6 @@
 
     public class SimCard : BaseDeletableModel<int>
     {
-
         [Required]
         [MaxLength(22)]
         public string ICC { get; set; }

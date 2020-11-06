@@ -35,7 +35,7 @@
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender, 
+            IEmailSender emailSender,
             IAddressService addressService)
         {
             this.userManager = userManager;
@@ -156,8 +156,6 @@
                         }
 
                         return this.Redirect("/Administration/Employee");
-                        //await this.signInManager.SignInAsync(user, isPersistent: false);
-                        //return this.LocalRedirect(returnUrl);
                     }
                 }
 

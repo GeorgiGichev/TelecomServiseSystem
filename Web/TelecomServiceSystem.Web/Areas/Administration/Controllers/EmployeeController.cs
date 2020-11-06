@@ -64,10 +64,6 @@
             return this.View(model);
         }
 
-        private async Task<HashSet<SearhEmployeeOutputModel>> GetEmployeesAsync(SearchEmpoloyeeInputModel model)
-            => (await this.employeesService.GetBySearchCriteriaAsync<SearhEmployeeOutputModel, SearchEmpoloyeeInputModel>(model)).ToHashSet();
-
-        
         public async Task<IActionResult> AllFreeTeams(string employeeId, int cityId)
         {
             var model = new TeamAllViewModel
@@ -80,7 +76,6 @@
             return this.View(model);
         }
 
-        
         public async Task<IActionResult> AddToTeam(int teamId, string employeeId)
         {
             await this.teamsService.AddEmployee(teamId, employeeId);
@@ -91,7 +86,10 @@
         {
             await this.teamsService.CreateAsync(employeeId, cityId);
 
-            return this.Redirect($"/Administration/Employee/AllFreeTeams?employeeId={employeeId}&cityId={cityId}");
+            return this.RedirectToAction("Index");
         }
+
+        private async Task<HashSet<SearhEmployeeOutputModel>> GetEmployeesAsync(SearchEmpoloyeeInputModel model)
+          => (await this.employeesService.GetBySearchCriteriaAsync<SearhEmployeeOutputModel, SearchEmpoloyeeInputModel>(model)).ToHashSet();
     }
 }

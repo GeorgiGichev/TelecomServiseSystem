@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace TelecomServiceSystem.Web.ViewModels.Administration.Administration
+﻿namespace TelecomServiceSystem.Web.ViewModels.Administration.Administration
 {
+    using System.Collections.Generic;
+
     public class TeamAllViewModel
     {
         public int CityId { get; set; }

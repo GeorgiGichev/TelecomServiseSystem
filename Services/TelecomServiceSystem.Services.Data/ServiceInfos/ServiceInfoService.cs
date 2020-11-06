@@ -29,8 +29,7 @@
             await this.serviseInfoRepo.AddAsync(serviceInfoToAdd);
             await this.serviseInfoRepo.SaveChangesAsync();
 
-            return serviceInfoToAdd;//await this.serviseInfoRepo.All()
-                //.FirstOrDefaultAsync(si => si.OrderId == orderId);
+            return serviceInfoToAdd;
         }
 
         public async Task<T> GetByOrderId<T>(string orderId)

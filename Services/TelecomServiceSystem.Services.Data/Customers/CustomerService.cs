@@ -45,22 +45,22 @@
 
             if (customer.FirstName != null)
             {
-                customers = customers.Where(c => c.FirstName == customer.FirstName);
+                customers = customers.Where(c => c.FirstName.ToLower().Contains(customer.FirstName.ToLower()));
             }
 
             if (customer.MiddleName != null)
             {
-                customers = customers.Where(c => c.MiddleName == customer.MiddleName);
+                customers = customers.Where(c => c.MiddleName.ToLower().Contains(customer.MiddleName.ToLower()));
             }
 
             if (customer.LastName != null)
             {
-                customers = customers.Where(c => c.LastName == customer.LastName);
+                customers = customers.Where(c => c.LastName.ToLower().Contains(customer.LastName.ToLower()));
             }
 
             if (customer.PersonalNumber != null)
             {
-                customers = customers.Where(c => c.PersonalNumber == customer.PersonalNumber);
+                customers = customers.Where(c => c.PersonalNumber.ToLower().Contains(customer.PersonalNumber.ToLower()));
             }
 
             var result = await customers.To<TOutput>()

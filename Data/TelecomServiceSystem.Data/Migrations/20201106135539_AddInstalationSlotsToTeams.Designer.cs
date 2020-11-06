@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TelecomServiceSystem.Data;
 
 namespace TelecomServiceSystem.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201106135539_AddInstalationSlotsToTeams")]
+    partial class AddInstalationSlotsToTeams
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -578,7 +580,7 @@ namespace TelecomServiceSystem.Data.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("InstalationSlots");
+                    b.ToTable("InstalationSlot");
                 });
 
             modelBuilder.Entity("TelecomServiceSystem.Data.Models.Order", b =>

@@ -4,16 +4,14 @@
 
     using TelecomServiceSystem.Data.Common.Models;
 
-    public class EnginieringTask : BaseDeletableModel<int>
+    public class InstalationSlot : BaseDeletableModel<int>
     {
-        public string OrderId { get; set; }
-
-        public Order Order { get; set; }
-
         public int TeamId { get; set; }
 
         public virtual Team Team { get; set; }
 
-        public DateTime InstalationDate { get; set; }
+        public DateTime StartingTime { get; set; }
+
+        public DateTime EndingTime { get; set; }
     }
 }

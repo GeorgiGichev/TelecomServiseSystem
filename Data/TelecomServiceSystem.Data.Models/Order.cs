@@ -24,6 +24,10 @@
 
         public Status Status { get; set; }
 
+        public int? EnginieringTaskId { get; set; }
+
+        public virtual EnginieringTask EnginieringTask { get; set; }
+
         public virtual ICollection<ServiceInfo> ServicesInfos { get; set; }
     }
 }

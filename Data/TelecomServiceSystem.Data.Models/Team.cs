@@ -14,6 +14,7 @@
             this.Employees = new HashSet<ApplicationUser>();
             this.Tasks = new HashSet<EnginieringTask>();
             this.TeamCapacity = TeamCap;
+            this.InstalationSlots = new HashSet<InstalationSlot>();
         }
 
         public int TeamCapacity { get; }
@@ -25,5 +26,7 @@
         public virtual ICollection<ApplicationUser> Employees { get; set; }
 
         public virtual ICollection<EnginieringTask> Tasks { get; set; }
+
+        public virtual ICollection<InstalationSlot> InstalationSlots { get; set; }
     }
 }

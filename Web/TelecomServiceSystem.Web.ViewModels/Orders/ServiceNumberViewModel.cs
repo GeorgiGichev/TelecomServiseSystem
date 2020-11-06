@@ -1,6 +1,5 @@
 ﻿namespace TelecomServiceSystem.Web.ViewModels.Orders
 {
-    using System.Collections.Generic;
     using TelecomServiceSystem.Data.Models;
     using TelecomServiceSystem.Services.Mapping;
 

@@ -23,12 +23,14 @@
         {
         }
 
+        public DbSet<InstalationSlot> InstalationSlots { get; set; }
+
         public DbSet<Team> Teams { get; set; }
 
         public DbSet<EnginieringTask> Tasks { get; set; }
 
         public DbSet<City> Cities { get; set; }
-        
+
         public DbSet<Country> Countries { get; set; }
 
         public DbSet<Address> Addresses { get; set; }
@@ -70,6 +72,11 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<EnginieringTask>()
+                .HasOne(t => t.Order)
+                .WithOne(o => o.EnginieringTask)
+                .HasForeignKey<Order>(o => o.EnginieringTaskId);
+
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 
