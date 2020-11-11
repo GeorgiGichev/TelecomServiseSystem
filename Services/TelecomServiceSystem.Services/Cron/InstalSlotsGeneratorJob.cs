@@ -6,7 +6,7 @@
 
     public class InstalSlotsGeneratorJob
     {
-        public const string CronSchedule = "0 0 28 12 *";
+        public const string CronSchedule = "59 12 31 12 *";
         private readonly ITeamsService teamsService;
 
         public InstalSlotsGeneratorJob(ITeamsService teamsService)

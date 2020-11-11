@@ -35,56 +35,59 @@
                     <div class="nav">
                         @if (this.SignInManager.IsSignedIn(this.User))
                         {
-                            <div class="sb-sidenav-menu-heading">Search</div>
-                            if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                            if (this.User.IsInRole(GlobalConstants.SellerRoleName) ||
+                                this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                             {
+                                <div class="sb-sidenav-menu-heading">Search</div>
+                                if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                                {
                                 <a class="nav-link" asp-area="Administration" asp-controller="Employee" asp-action="Index">
                                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                     Employees
                                 </a>
-                            }
+                                }
 
-                            if (this.User.IsInRole(GlobalConstants.SellerRoleName) ||
-                                this.User.IsInRole(GlobalConstants.AdministratorRoleName))
-                            {
+                            
                                 <a class="nav-link" asp-area="" asp-controller="Customers" asp-action="Search">
                                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                     Customers
                                 </a>
+                                <a class="nav-link" href="index.html">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    Orders
+                                </a>
                             }
-
-                            <a class="nav-link" href="index.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Orders
-                            </a>
                         }
                         @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName)
-                             || this.User.IsInRole(GlobalConstants.SellerRoleName))
+                           || this.User.IsInRole(GlobalConstants.SellerRoleName))
                         {
-                        
-                                <div class="sb-sidenav-menu-heading">Create</div>
-                                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
-                                {
-                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">
-                                        <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                        New Employee
-                                    </a>
-                                }
 
-                                <a class="nav-link" asp-area="" asp-controller="Customers" asp-action="Create">
+                            <div class="sb-sidenav-menu-heading">Create</div>
+                            @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                            {
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">
                                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                    New Customer
+                                    New Employee
                                 </a>
+                            }
+
+                            <a class="nav-link" asp-area="" asp-controller="Customers" asp-action="Create">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                New Customer
+                            </a>
                         }
-                        <div class="sb-sidenav-menu-heading">Addons</div>
-                        <a class="nav-link" href="charts.html">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Charts
-                        </a>
-                        <a class="nav-link" href="tables.html">
-                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                            Tables
-                        </a>
+                        @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || this.User.IsInRole(GlobalConstants.EngeneerRoleName))
+                        {
+                            <div class="sb-sidenav-menu-heading">Engeniering</div>
+                            <a class="nav-link" asp-area="Engeniering" asp-controller="Engeniering" asp-action="AllTasks">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                All Tasks
+                            </a>
+                            <a class="nav-link" href="tables.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Tables
+                            </a>
+                        }
                     </div>
                 </div>
             </nav>

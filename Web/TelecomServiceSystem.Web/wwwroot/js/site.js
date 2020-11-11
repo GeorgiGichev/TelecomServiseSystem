@@ -22,9 +22,49 @@ $(function () {
         $.post(actionUrl, sendData).done(function (data) {
             PlaceHolderElement.find('.modal').modal('hide');
             GetAddresses();
-        })
+        });
+        
     })
 });
+
+function GetFreeSlots() {
+    const element = document.getElementById("address");
+    const selectedAddress = element.options[element.selectedIndex].value;
+    console.log(selectedAddress);
+    const slotsSelect = document.getElementById("slots");
+    var i, L = slotsSelect.options.length - 1;
+    for (i = L; i >= 0; i--) {
+        slotsSelect.remove(i);
+    };
+    if (selectedAddress != null && selectedAddress != '') {
+        $.ajax({
+            type: "GET",
+            url: "/Tasks/GetFreeSlotsAsJson?addressId=" + selectedAddress,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: selectedAddress,
+            contentType: "json; charset=utf-8",
+            success: function (slots) {
+                if (slots != null && !jQuery.isEmptyObject(slots)) {
+                    document.createElement("option");
+                    document.createTextNode("");
+                    $.each(slots, function (index, slot) {
+                        var option = document.createElement("option");
+                        option.setAttribute("value", slot.id);
+                        var text = document.createTextNode(slot.fullInfo);
+                        option.appendChild(text);
+                        slotsSelect.appendChild(option);
+                    });
+                };
+            },
+            failure: function (response) {
+                alert(response);
+            }
+        });
+    }
+};
 
 function GetFreeNumbers() {
     const element = document.getElementById("serviceName");
@@ -66,6 +106,10 @@ function GetFreeNumbers() {
 
 function GetAddresses() {
     const element = document.getElementById("address");
+    var i, L = element.options.length - 1;
+    for (i = L; i >= 0; i--) {
+        element.remove(i);
+    };
     const customerId = document.getElementById("customer").value;
     if (customerId != null || customerId != '') {
         $.ajax({
@@ -89,6 +133,7 @@ function GetAddresses() {
                         element.appendChild(option);
                     });
                 };
+                GetFreeSlots();
             },
             failure: function (response) {
                 alert(response);

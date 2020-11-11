@@ -10,6 +10,7 @@
     using TelecomServiceSystem.Services.Data.ServiceInfos;
     using TelecomServiceSystem.Services.Data.ServiceNumber;
     using TelecomServiceSystem.Services.Data.Services;
+    using TelecomServiceSystem.Services.Data.Tasks;
     using TelecomServiceSystem.Services.HtmlToPDF;
     using TelecomServiceSystem.Services.ViewRrender;
     using TelecomServiceSystem.Web.Infrastructure.Extensions;
@@ -28,8 +29,9 @@
         private readonly IWebHostEnvironment environment;
         private readonly ICustomerService customerService;
         private readonly IAddressService addressService;
+        private readonly ITasksService tasksService;
 
-        public OrdersController(IOrderService orderService, IServiceService serviceService, IServiceNumberService numberService, IServiceInfoService serviceInfoService, IViewRenderService viewRenderService, IHtmlToPdfConverter htmlToPdfConverter, IWebHostEnvironment environment, ICustomerService customerService, IAddressService addressService)
+        public OrdersController(IOrderService orderService, IServiceService serviceService, IServiceNumberService numberService, IServiceInfoService serviceInfoService, IViewRenderService viewRenderService, IHtmlToPdfConverter htmlToPdfConverter, IWebHostEnvironment environment, ICustomerService customerService, IAddressService addressService, ITasksService tasksService)
         {
             this.orderService = orderService;
             this.serviceService = serviceService;
@@ -40,6 +42,7 @@
             this.environment = environment;
             this.customerService = customerService;
             this.addressService = addressService;
+            this.tasksService = tasksService;
         }
 
         public IActionResult ChooseServiceType(string customerId)
@@ -118,8 +121,6 @@
                     },
                     model.MobileServiceInfo);
 
-                model.OrderId = model.MobileServiceInfo.OrderId;
-
                 await this.orderService.FinishOrderAsync<MobileServiceInfoViewModel>(model.MobileServiceInfo);
             }
             else
@@ -132,7 +133,7 @@
                     },
                     model.FixedServiceInfo);
 
-                model.OrderId = model.FixedServiceInfo.OrderId;
+                await this.tasksService.CreateAsync(model.FixedServiceInfo.OrderId, model.InstalationSlotId);
             }
         }
     }

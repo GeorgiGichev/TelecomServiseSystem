@@ -18,5 +18,7 @@
         Task<IEnumerable<T>> GetCitiesByCountryAsync<T>(string country);
 
         Task<IEnumerable<T>> GetAllCountries<T>();
+
+        Task<int> GetCityIdByAddressId(int addressId);
     }
 }

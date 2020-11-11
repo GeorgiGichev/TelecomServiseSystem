@@ -5,6 +5,12 @@
 
     public interface ITasksService
     {
-        Task<IEnumerable<T>> GetFreeSlotsByCityId<T>(int cityId);
+        Task<IEnumerable<T>> GetFreeSlotsByAddressId<T>(int addressId);
+
+        Task CreateAsync(string orderId, int slotId);
+
+        Task<IEnumerable<T>> GetAllAsync<T>();
+
+        Task<IEnumerable<T>> GetByUserIdAsync<T>(string userId);
     }
 }

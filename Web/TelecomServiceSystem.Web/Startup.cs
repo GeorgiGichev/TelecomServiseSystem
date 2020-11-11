@@ -32,6 +32,7 @@
     using TelecomServiceSystem.Services.Data.ServiceInfos;
     using TelecomServiceSystem.Services.Data.ServiceNumber;
     using TelecomServiceSystem.Services.Data.Services;
+    using TelecomServiceSystem.Services.Data.Tasks;
     using TelecomServiceSystem.Services.Data.Teams;
     using TelecomServiceSystem.Services.HtmlToPDF;
     using TelecomServiceSystem.Services.Mapping;
@@ -103,6 +104,7 @@
             services.AddTransient<IServiceNumberService, ServiceNumbersService>();
             services.AddTransient<IServiceInfoService, ServiceInfoService>();
             services.AddTransient<ITeamsService, TeamService>();
+            services.AddTransient<ITasksService, TasksService>();
             services.AddScoped<IViewRenderService, ViewRenderService>();
             services.AddScoped<IHtmlToPdfConverter, HtmlToPdfConverter>();
         }

@@ -41,6 +41,6 @@
 
         public string CustomerId { get; set; }
 
-        public ICollection<CityViewModel> Cities { get; set; }
+        public ICollection<CityViewModel> Cities { get; set; } = new HashSet<CityViewModel>();
     }
 }

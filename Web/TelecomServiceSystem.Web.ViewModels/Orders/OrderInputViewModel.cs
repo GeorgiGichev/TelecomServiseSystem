@@ -8,6 +8,8 @@
 
         public string ServiceType { get; set; }
 
+        public int InstalationSlotId { get; set; }
+
         public MobileServiceInfoViewModel MobileServiceInfo { get; set; }
 
         public FixedServiceInfiViewModel FixedServiceInfo { get; set; }

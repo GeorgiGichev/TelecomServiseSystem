@@ -48,6 +48,13 @@
                                 <button type="button" class="btn btn-primary col-md-4" data-toggle="ajax-modal" data-target="#addAddress" data-url="@Url.ActionLink("Create", "Addresses")">Add address</button>
                             </div>
                         </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-8">
+                                <label class="col-md-10 required" asp-for="@Model.InstalationSlotId">Instalation slot</label>
+                                <select class="col-md-10 form-control" id="slots" asp-for="@Model.InstalationSlotId">
+                                </select>
+                            </div>
+                        </div>
                         <button class="btn btn-primary btn-block" asp-controller="Orders" asp-action="GetPdf" formtarget="_blank">Generate contract</button>
                         <button type="submit" class="btn btn-primary btn-block">Submit</button>
                     </form>
@@ -66,10 +73,14 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <script>
-    window.addEventListener('load', (event) => { GetFreeNumbers(), GetAddresses() });
+    window.addEventListener('load', (event) => { GetFreeNumbers(), GetAddresses()});
 </script>
 
 <script>
     document.getElementById('serviceName').onchange = function () { GetFreeNumbers() };
+</script>
+
+<script>
+    document.getElementById('address').onchange = function () { GetFreeSlots() };
 </script>
 
