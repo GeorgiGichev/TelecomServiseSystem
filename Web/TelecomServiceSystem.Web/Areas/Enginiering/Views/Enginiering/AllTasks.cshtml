@@ -17,25 +17,22 @@
                                             <th>Task Id</th>
                                             <th>Instalation Date</th>
                                             <th>Team</th>
-                                            <th>Complete</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>City</th>
+                                            <th>Task Id</th>
+                                            <th>Instalation Date</th>
                                             <th>Team</th>
-                                            <th>Free positions</th>
-                                            <th>Add to team</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         @foreach (var task in Model)
                                         {
                                          <tr>
-                                             <td>@task.Id</td>
+                                             <td><a asp-area="Enginiering" asp-controller="Enginiering" asp-action="InstalationInfo" asp-route-orderId="@task.OrderId">@task.Id</a></td>
                                              <td>@task.InstalationDate</td>
                                              <td>@task.TeamName</td>
-                                             <td><a class="btn btn-primary" asp-controller="Engeniering" asp-action="CompleteInstalation" asp-route-orderId="@task.OrderId">Complete instalation</a></td>
                                          </tr>}
                                     </tbody>
                                 </table>

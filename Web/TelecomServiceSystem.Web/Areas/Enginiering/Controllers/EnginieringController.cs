@@ -14,15 +14,15 @@
     using TelecomServiceSystem.Web.ViewModels.Orders;
     using TelecomServiceSystem.Web.ViewModels.Tasks;
 
-    [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + GlobalConstants.EngeneerRoleName)]
-    [Area("Engeniering")]
-    public class EngenieringController : BaseController
+    [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + GlobalConstants.EnginierRoleName)]
+    [Area("Enginiering")]
+    public class EnginieringController : BaseController
     {
         private readonly ITasksService taskService;
         private readonly IOrderService orderService;
         private readonly IServiceInfoService serviceInfoService;
 
-        public EngenieringController(ITasksService taskService, IOrderService orderService, IServiceInfoService serviceInfoService)
+        public EnginieringController(ITasksService taskService, IOrderService orderService, IServiceInfoService serviceInfoService)
         {
             this.taskService = taskService;
             this.orderService = orderService;
@@ -46,9 +46,15 @@
 
         public async Task<IActionResult> CompleteInstalation(string orderId)
         {
-            var model = await this.serviceInfoService.GetByOrderId<FixedServiceInfiViewModel>(orderId);
+            var model = await this.serviceInfoService.GetByOrderIdAsync<FixedServiceInfiViewModel>(orderId);
             await this.orderService.FinishOrderAsync<FixedServiceInfiViewModel>(model);
             return this.RedirectToAction(nameof(this.AllTasks));
+        }
+
+        public async Task<IActionResult> InstalationInfo(string orderId)
+        {
+            var model = await this.serviceInfoService.GetByOrderIdAsync<InstallationInfoViewModel>(orderId);
+            return this.View(model);
         }
     }
 }

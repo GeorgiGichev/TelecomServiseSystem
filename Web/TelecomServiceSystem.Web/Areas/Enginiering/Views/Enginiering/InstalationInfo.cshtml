@@ -1,0 +1,33 @@
+﻿@model TelecomServiceSystem.Web.ViewModels.Tasks.InstallationInfoViewModel
+
+@{ this.ViewData["Title"] = "Installation Info"; }
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header"><h3 class="text-center font-weight-light my-4">Instalation info</h3></div>
+                <div class="card-body">
+                    <div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <p>Customer :<h5> @Model.CustomerFirstName @Model.CustomerLastName</h5></p>
+                            </div>
+                            <div class="form-row">
+                                <p>Address: <h5> @Model.AddressCityName, str.@Model.AddressStreet, dist.@Model.AddressNeighborhood, №@Model.AddressNumber, @Model.AddressEntrance, fl.@Model.AddressFloor, ap.@Model.AddressApartment</h5></p>
+                            </div>
+                            <div class="form-row">
+                                <p>Installation service:<h5> @Model.ServiceName</h5></p>
+                            </div>
+                            <div class="form-row">
+                                <p>Service number: <h5> @Model.ServiceNumberNumber</h5></p>
+                            </div>
+                            <a class="btn btn-primary" asp-area="Enginiering" asp-controller="Enginiering" asp-action="CompleteInstalation" asp-route-orderId="@Model.OrderId">Complete instalation</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

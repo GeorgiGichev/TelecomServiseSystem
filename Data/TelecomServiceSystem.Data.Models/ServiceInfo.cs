@@ -25,10 +25,10 @@
 
         public virtual Service Service { get; set; }
 
-        [ForeignKey(nameof(ServiseNumber))]
+        [ForeignKey(nameof(ServiceNumber))]
         public int ServiceNumberId { get; set; }
 
-        public virtual ServiceNumber ServiseNumber { get; set; }
+        public virtual ServiceNumber ServiceNumber { get; set; }
 
         public string ICC { get; set; }
 

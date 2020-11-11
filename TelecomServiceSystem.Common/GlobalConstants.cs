@@ -8,7 +8,7 @@
 
         public const string SellerRoleName = "Seller";
 
-        public const string EngeneerRoleName = "Engeneer";
+        public const string EnginierRoleName = "Enginier";
 
         public const string NoAvailableSimMessage = "No available Simcards";
 

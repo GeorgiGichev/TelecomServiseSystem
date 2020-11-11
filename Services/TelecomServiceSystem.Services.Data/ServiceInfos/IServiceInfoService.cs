@@ -10,7 +10,7 @@
 
         Task<string> GetICC();
 
-        Task<T> GetByOrderId<T>(string orderId);
+        Task<T> GetByOrderIdAsync<T>(string orderId);
 
         Task SetServiceAsActiveAsync(int serviceInfoId);
     }

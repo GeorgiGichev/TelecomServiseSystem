@@ -32,11 +32,12 @@
             return serviceInfoToAdd;
         }
 
-        public async Task<T> GetByOrderId<T>(string orderId)
+        public async Task<T> GetByOrderIdAsync<T>(string orderId)
         {
-            return (await this.serviseInfoRepo.All()
-                .FirstOrDefaultAsync(si => si.OrderId == orderId))
-                .To<T>();
+            return await this.serviseInfoRepo.All()
+                .Where(si => si.OrderId == orderId)
+                .To<T>()
+                .FirstOrDefaultAsync();
         }
 
         public async Task<string> GetICC()
