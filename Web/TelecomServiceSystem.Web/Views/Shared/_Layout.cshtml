@@ -52,7 +52,7 @@
                                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                     Customers
                                 </a>
-                                <a class="nav-link" href="index.html">
+                                <a class="nav-link" asp-controller="Orders" asp-action="Tracking">
                                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                     Orders
                                 </a>
@@ -76,16 +76,12 @@
                                 New Customer
                             </a>
                         }
-                        @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || this.User.IsInRole(GlobalConstants.EnginierRoleName))
+                        @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || this.User.IsInRole(GlobalConstants.EngineerRoleName))
                         {
                             <div class="sb-sidenav-menu-heading">Enginiering</div>
-                            <a class="nav-link" asp-area="Enginiering" asp-controller="Enginiering" asp-action="AllTasks">
+                            <a class="nav-link" asp-area="Engineering" asp-controller="Engineering" asp-action="AllTasks">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 All Tasks
-                            </a>
-                            <a class="nav-link" href="tables.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tables
                             </a>
                         }
                     </div>

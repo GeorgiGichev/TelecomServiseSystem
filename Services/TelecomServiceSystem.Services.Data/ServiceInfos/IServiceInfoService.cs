@@ -1,5 +1,6 @@
 ﻿namespace TelecomServiceSystem.Services.Data.ServiceInfos
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using TelecomServiceSystem.Data.Models;
@@ -13,5 +14,7 @@
         Task<T> GetByOrderIdAsync<T>(string orderId);
 
         Task SetServiceAsActiveAsync(int serviceInfoId);
+
+        Task<IEnumerable<TOutput>> GetBySearchCriteriaAsync<TOutput, TQuery>(TQuery query);
     }
 }

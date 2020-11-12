@@ -1,6 +1,7 @@
 ﻿namespace TelecomServiceSystem.Services.Data.ServiceInfos
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -8,7 +9,9 @@
     using TelecomServiceSystem.Common;
     using TelecomServiceSystem.Data.Common.Repositories;
     using TelecomServiceSystem.Data.Models;
+    using TelecomServiceSystem.Data.Models.Enums;
     using TelecomServiceSystem.Services.Mapping;
+    using TelecomServiceSystem.Services.Models;
 
     public class ServiceInfoService : IServiceInfoService
     {
@@ -66,6 +69,45 @@
             }
 
             await this.serviseInfoRepo.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<TOutput>> GetBySearchCriteriaAsync<TOutput, TQuery>(TQuery query)
+        {
+            IQueryable<ServiceInfo> orders = this.serviseInfoRepo.All();
+
+            var order = query.To<InputOrderSearchModel>();
+
+            if (order.Status != null)
+            {
+                orders = orders.Where(c => c.Order.Status == Enum.Parse<Status>(order.Status));
+            }
+
+            if (order.ServiceType != null)
+            {
+                orders = orders.Where(c => c.Service.ServiceType == Enum.Parse<ServiceType>(order.ServiceType));
+            }
+
+            if (order.FinishedOn.HasValue)
+            {
+                var date = order.FinishedOn.Value.Date;
+                orders = orders.Where(c => c.Order.FinishedOn.Value.Date == date);
+            }
+
+            if (order.CreatedOn.HasValue)
+            {
+                var date = order.CreatedOn.Value.Date;
+                orders = orders.Where(c => c.Order.CreatedOn.Date == date);
+            }
+
+            if (order.ServiceName != null)
+            {
+                orders = orders.Where(c => c.Service.Name.ToLower().Contains(order.ServiceName.ToLower()));
+            }
+
+            var result = await orders.To<TOutput>()
+                .ToListAsync();
+
+            return result;
         }
     }
 }

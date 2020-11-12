@@ -14,15 +14,15 @@
     using TelecomServiceSystem.Web.ViewModels.Orders;
     using TelecomServiceSystem.Web.ViewModels.Tasks;
 
-    [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + GlobalConstants.EnginierRoleName)]
-    [Area("Enginiering")]
-    public class EnginieringController : BaseController
+    [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + GlobalConstants.EngineerRoleName)]
+    [Area("Engineering")]
+    public class EngineeringController : BaseController
     {
         private readonly ITasksService taskService;
         private readonly IOrderService orderService;
         private readonly IServiceInfoService serviceInfoService;
 
-        public EnginieringController(ITasksService taskService, IOrderService orderService, IServiceInfoService serviceInfoService)
+        public EngineeringController(ITasksService taskService, IOrderService orderService, IServiceInfoService serviceInfoService)
         {
             this.taskService = taskService;
             this.orderService = orderService;

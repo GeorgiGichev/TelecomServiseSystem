@@ -50,7 +50,7 @@
                 EmailConfirmed = true,
                 CityId = (await dbContext.Cities.FirstOrDefaultAsync()).Id,
             };
-            var enginier = new ApplicationUser
+            var engineer = new ApplicationUser
             {
                 FirstName = "Petyr",
                 MiddleName = "P",
@@ -68,7 +68,7 @@
 
             await SeedUser(userManager, admin, UsersPassword, GlobalConstants.AdministratorRoleName);
             await SeedUser(userManager, seller, UsersPassword, GlobalConstants.SellerRoleName);
-            await SeedUser(userManager, enginier, UsersPassword, GlobalConstants.EnginierRoleName);
+            await SeedUser(userManager, engineer, UsersPassword, GlobalConstants.EngineerRoleName);
         }
 
         private static async Task SeedUser(UserManager<ApplicationUser> userManager, ApplicationUser user, string password, string roleName)

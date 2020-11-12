@@ -1,9 +1,12 @@
 ﻿namespace TelecomServiceSystem.Web.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
+    using TelecomServiceSystem.Common;
     using TelecomServiceSystem.Services.Data.Addresses;
     using TelecomServiceSystem.Services.Data.Customers;
     using TelecomServiceSystem.Services.Data.Orders;
@@ -17,6 +20,7 @@
     using TelecomServiceSystem.Web.ViewModels.Addresses;
     using TelecomServiceSystem.Web.ViewModels.Customers;
     using TelecomServiceSystem.Web.ViewModels.Orders;
+    using TelecomServiceSystem.Web.ViewModels.Orders.Search;
 
     public class OrdersController : BaseController
     {
@@ -108,6 +112,35 @@
             var fileContents = this.htmlToPdfConverter.Convert(this.environment.ContentRootPath, htmlData, "A4", "Portrait");
             return this.File(fileContents, "application/pdf");
         }
+
+        public async Task<IActionResult> Tracking()
+        {
+            string userId = null;
+            if (this.User.IsInRole(GlobalConstants.SellerRoleName))
+            {
+                userId = this.User.GetId();
+            }
+
+            var model = new SearchOrderModel
+            {
+                Orders = await this.GetCustomersAsync(new SearchOrderInputModel
+                {
+                    UserId = userId,
+                }),
+            };
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Tracking(SearchOrderModel model)
+        {
+            model.Orders = await this.GetCustomersAsync(model.InputModel);
+            return this.View(model);
+        }
+
+        private async Task<HashSet<SearchOrderViewModel>> GetCustomersAsync(SearchOrderInputModel model)
+            => (await this.serviceInfoService.GetBySearchCriteriaAsync<SearchOrderViewModel, SearchOrderInputModel>(model)).ToHashSet();
 
         private async Task CreateOrder(string serviceType, OrderInputViewModel model)
         {

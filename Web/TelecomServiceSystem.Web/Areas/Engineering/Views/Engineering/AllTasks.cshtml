@@ -30,7 +30,7 @@
                                         @foreach (var task in Model)
                                         {
                                          <tr>
-                                             <td><a asp-area="Enginiering" asp-controller="Enginiering" asp-action="InstalationInfo" asp-route-orderId="@task.OrderId">@task.Id</a></td>
+                                             <td><a asp-area="Engineering" asp-controller="Engineering" asp-action="InstalationInfo" asp-route-orderId="@task.OrderId">@task.Id</a></td>
                                              <td>@task.InstalationDate</td>
                                              <td>@task.TeamName</td>
                                          </tr>}
