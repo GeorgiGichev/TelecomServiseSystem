@@ -103,7 +103,7 @@
             string customerId = model.ServiceType == "mobile" ? model.MobileServiceInfo.CustomerId : model.FixedServiceInfo.CustomerId;
             return this.RedirectToAction("AllByCustomer", "Services", new
             {
-                CustomerId = customerId,
+                Id = customerId,
             });
         }
 

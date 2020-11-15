@@ -26,5 +26,18 @@
 
             return this.View(model);
         }
+
+        public async Task<IActionResult> Cancellation(int serviceInfoId)
+        {
+            var model = await this.serviceInfoService.GetByIdAsync<ServiceCancelationViewModel>(serviceInfoId);
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Cancellation(ServiceCancelationViewModel model)
+        {
+            await this.serviceInfoService.ContractCancel(model.Id);
+            return this.Redirect($"/Services/AllByCustomer/{model.CustomerId}");
+        }
     }
 }

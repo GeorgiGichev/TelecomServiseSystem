@@ -1,4 +1,13 @@
 ﻿@{
     this.Layout = "_Layout";
- }
-<app><component type="typeof(App)" render-mode="ServerPrerendered"/></app>
+}
+<app><component type="typeof(App)" render-mode="ServerPrerendered" /></app>
+
+<script>
+    window.NavigationManagerExtensions = {};
+    window.NavigationManagerExtensions.openInNewWindow = (url, message) => {
+        var newwindow = window.open('', '_blank');
+        newwindow.document.write(message);
+        newwindow.location.href = url;
+    }
+</script>

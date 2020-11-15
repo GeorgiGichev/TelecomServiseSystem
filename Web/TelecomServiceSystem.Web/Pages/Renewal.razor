@@ -3,29 +3,50 @@
 @inject TelecomServiceSystem.Services.Data.ServiceInfos.IServiceInfoService serviceInfo
 @inject TelecomServiceSystem.Services.Data.Services.IServiceService serviceService
 @inject NavigationManager NavManager;
+@inject IJSRuntime jsRuntime
 @using TelecomServiceSystem.Web.Pages.Utilities
 
 @if (this.InputModel == null)
 {
-  <p>Loading...</p>
+    <p>Loading...</p>
 }
 else
 {
-    <EditForm Model="this.InputModel" OnValidSubmit="this.Submit">
-        <CustomInputSelect @bind-Value="this.InputModel.ServiceId">
-            @foreach (var service in this.Services)
-            {
-                <option value="@service.Id">@service.Name</option>
-            }
-        </CustomInputSelect>
-        <CustomInputSelect @bind-Value="this.InputModel.ContractDuration">
-            <option value="12">12</option>
-            <option value="24">24</option>
-        </CustomInputSelect>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </EditForm>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Contract renewal</h3></div>
+                    <div class="card-body">
+                        <EditForm Model="this.InputModel" OnValidSubmit="this.Submit">
+                            <div class="form-row">
+                                <CustomInputSelect @bind-Value="this.InputModel.ServiceId" class="form-control col-md-4">
+                                    @foreach (var service in this.Services)
+                                        {
+                                        <option value="@service.Id">@service.Name</option>
+                                        }
+                                </CustomInputSelect>
+                                <div class="col-md-1"></div>
+                                <CustomInputSelect @bind-Value="this.InputModel.ContractDuration" class="form-control col-md-4">
+                                    <option value="12">12</option>
+                                    <option value="24">24</option>
+                                </CustomInputSelect>
+                                <div class="col-md-1"></div>
+                                <a class="btn btn-primary text-light" @onclick="this.GetPdf">Generate contract</a>
+                            </div>
+                            <hr />
+                            <div class="form-row">
+                               
+                                <div class="col-md-1"></div>
+                                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                            </div>
+                        </EditForm>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
-
 
 
 
@@ -39,9 +60,14 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        this.InputModel = await this.serviceInfo.GetById<ServiceInputModel>(this.Id);
+        this.InputModel = await this.serviceInfo.GetByIdAsync<ServiceInputModel>(this.Id);
 
         this.Services = await this.serviceService.GetServiceNamesByType<ServiceViewModelBlazor>(this.InputModel.ServiceServiceType);
+    }
+
+    private async Task GetPdf()
+    {
+        await NavManager.NavigateToNewWindowAsync(jsRuntime, $"/Orders/GetPdf/{this.Id}", "");
     }
 
     private async Task Submit()
@@ -49,4 +75,7 @@ else
         await this.serviceInfo.Renew<ServiceInputModel>(this.InputModel);
         NavManager.NavigateTo($"/Services/AllByCustomer/{this.InputModel.CustomerId}", true);
     }
+
 }
+
+

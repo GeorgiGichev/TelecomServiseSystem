@@ -38,6 +38,8 @@
 
         public DateTime Expirеs { get; set; }
 
+        public DateTime? CancellationDate { get; set; }
+
         public bool IsActive { get; set; }
 
         [ForeignKey(nameof(Address))]

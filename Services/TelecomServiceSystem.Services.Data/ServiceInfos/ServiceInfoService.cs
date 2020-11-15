@@ -10,6 +10,7 @@
     using TelecomServiceSystem.Data.Common.Repositories;
     using TelecomServiceSystem.Data.Models;
     using TelecomServiceSystem.Data.Models.Enums;
+    using TelecomServiceSystem.Services.Data.ServiceNumber;
     using TelecomServiceSystem.Services.Mapping;
     using TelecomServiceSystem.Services.Models;
 
@@ -17,11 +18,13 @@
     {
         private readonly IDeletableEntityRepository<ServiceInfo> serviseInfoRepo;
         private readonly IDeletableEntityRepository<SimCard> simRepo;
+        private readonly IServiceNumberService serviceNumberService;
 
-        public ServiceInfoService(IDeletableEntityRepository<ServiceInfo> serviseInfoRepo, IDeletableEntityRepository<SimCard> simRepo)
+        public ServiceInfoService(IDeletableEntityRepository<ServiceInfo> serviseInfoRepo, IDeletableEntityRepository<SimCard> simRepo, IServiceNumberService serviceNumberService)
         {
             this.serviseInfoRepo = serviseInfoRepo;
             this.simRepo = simRepo;
+            this.serviceNumberService = serviceNumberService;
         }
 
         public async Task<ServiceInfo> CreateAsync<T>(string orderId, T model)
@@ -123,7 +126,7 @@
                 .ToListAsync();
         }
 
-        public async Task<T> GetById<T>(int id)
+        public async Task<T> GetByIdAsync<T>(int id)
         {
             return await this.serviseInfoRepo.All().Where(x => x.Id == id)
                 .To<T>()
@@ -136,6 +139,16 @@
             var service = await this.serviseInfoRepo.All().FirstOrDefaultAsync(a => a.Id == serviceInput.Id);
             service.Expirеs = DateTime.UtcNow.AddMonths(serviceInput.ContractDuration);
             await this.serviseInfoRepo.UpdateModel(service, model);
+        }
+
+        public async Task ContractCancel(int id)
+        {
+            var service = await this.serviseInfoRepo.All().FirstOrDefaultAsync(x => x.Id == id);
+            service.IsActive = false;
+            service.CancellationDate = DateTime.UtcNow;
+            await this.serviceNumberService.SetNumberAsFreeAsync(service.ServiceNumberId);
+            this.serviseInfoRepo.Update(service);
+            await this.serviseInfoRepo.SaveChangesAsync();
         }
     }
 }

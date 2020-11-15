@@ -49,7 +49,7 @@
                                     <td style="color:@service.Color">@service.CreatedOn.ToShortDateString()</td>
                                     <td style="color:@service.Color">@service.ModifiedOn.ToShortDateString()</td>
                                     <td style="color:@service.Color">@service.Expirеs.ToShortDateString()</td>
-                                    <td><a class="btn btn-success @service.Disabled" href="/Renewal/@service.Id">Renewal</a><a class="btn btn-danger">Cancelation</a></td>
+                                    <td><a class="btn btn-success @service.Disabled" href="/Renewal/@service.Id">Renewal</a><a class="btn btn-danger" asp-controller="Services" asp-action="Cancellation" asp-route-serviceInfoId="@service.Id">Cancelation</a></td>
                                 </tr>
 }
 

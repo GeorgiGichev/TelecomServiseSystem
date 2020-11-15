@@ -19,8 +19,10 @@
 
         Task<IEnumerable<T>> GetAllByCustomerIdAsync<T>(string customerId);
 
-        Task<T> GetById<T>(int id);
+        Task<T> GetByIdAsync<T>(int id);
 
         Task Renew<T>(T model);
+
+        Task ContractCancel(int id);
     }
 }

@@ -44,6 +44,14 @@
                 .ToListAsync();
         }
 
+        public async Task SetNumberAsFreeAsync(int numberId)
+        {
+            var number = await this.numbersRepo.All().FirstOrDefaultAsync(x => x.Id == numberId);
+            number.IsFree = true;
+            this.numbersRepo.Update(number);
+            await this.numbersRepo.SaveChangesAsync();
+        }
+
         public async Task SetNumberAsHiredAsync(int numberId)
         {
             var number = await this.numbersRepo.All().FirstOrDefaultAsync(n => n.Id == numberId);

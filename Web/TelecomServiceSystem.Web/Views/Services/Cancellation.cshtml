@@ -1,0 +1,54 @@
+﻿@model TelecomServiceSystem.Web.ViewModels.Services.ServiceCancelationViewModel
+@{ this.ViewData["Title"] = "Contract cancellation"; }
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header"><h3 class="text-center font-weight-light my-4">Contract cancellation</h3></div>
+                <div class="card-body">
+                    <form method="post">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label asp-for="@Model.ServiceNumberNumber">Number</label>
+                                <input asp-for="@Model.ServiceNumberNumber" class="form-control" disabled />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="@Model.ServiceName">Service</label>
+                                <input asp-for="@Model.ServiceName" class="form-control" disabled />
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label asp-for="@Model.ServicePrice">Price</label>
+                                <input asp-for="@Model.ServicePrice" class="form-control" disabled />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Expirеs</label>
+                                <input type="date" asp-for="@Model.Expirеs" class="form-control" disabled />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <input type="hidden" asp-for="@Model.Id" class="form-control" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input type="hidden" asp-for="@Model.CustomerId" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary" asp-controller="Orders" asp-action="GetPdf" formtarget="_blank">Generate document</button>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-danger">Cancellation</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

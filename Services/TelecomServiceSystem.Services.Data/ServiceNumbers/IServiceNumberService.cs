@@ -8,5 +8,7 @@
         Task<IEnumerable<T>> GetFreeNumbersAsync<T>(string serviceType, string serviceName);
 
         Task SetNumberAsHiredAsync(int numberId);
+
+        Task SetNumberAsFreeAsync(int numberId);
     }
 }
