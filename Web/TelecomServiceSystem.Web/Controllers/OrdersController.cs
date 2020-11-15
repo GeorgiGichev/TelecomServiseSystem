@@ -101,8 +101,10 @@
         {
             await this.CreateOrder(model.ServiceType, model);
             string customerId = model.ServiceType == "mobile" ? model.MobileServiceInfo.CustomerId : model.FixedServiceInfo.CustomerId;
-            var customerModel = await this.customerService.GetByIdAsync<CustomerEditViewModel>(customerId);
-            return this.RedirectToAction("Edit", "Customers", customerModel);
+            return this.RedirectToAction("AllByCustomer", "Services", new
+            {
+                CustomerId = customerId,
+            });
         }
 
         public async Task<IActionResult> GetPdf(OrderViewModel input)
@@ -135,6 +137,13 @@
         [HttpPost]
         public async Task<IActionResult> Tracking(SearchOrderModel model)
         {
+            string userId = null;
+            if (this.User.IsInRole(GlobalConstants.SellerRoleName))
+            {
+                userId = this.User.GetId();
+            }
+
+            model.InputModel.UserId = userId;
             model.Orders = await this.GetCustomersAsync(model.InputModel);
             return this.View(model);
         }

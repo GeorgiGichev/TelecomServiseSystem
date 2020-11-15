@@ -1,0 +1,52 @@
+﻿@page "/Renewal/{Id:int}"
+@using TelecomServiceSystem.Web.ViewModels.Services
+@inject TelecomServiceSystem.Services.Data.ServiceInfos.IServiceInfoService serviceInfo
+@inject TelecomServiceSystem.Services.Data.Services.IServiceService serviceService
+@inject NavigationManager NavManager;
+@using TelecomServiceSystem.Web.Pages.Utilities
+
+@if (this.InputModel == null)
+{
+  <p>Loading...</p>
+}
+else
+{
+    <EditForm Model="this.InputModel" OnValidSubmit="this.Submit">
+        <CustomInputSelect @bind-Value="this.InputModel.ServiceId">
+            @foreach (var service in this.Services)
+            {
+                <option value="@service.Id">@service.Name</option>
+            }
+        </CustomInputSelect>
+        <CustomInputSelect @bind-Value="this.InputModel.ContractDuration">
+            <option value="12">12</option>
+            <option value="24">24</option>
+        </CustomInputSelect>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </EditForm>
+}
+
+
+
+
+@code{
+    public ServiceInputModel InputModel { get; set; }
+
+    [Parameter]
+    public int Id { get; set; }
+
+    public IEnumerable<ServiceViewModelBlazor> Services { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.InputModel = await this.serviceInfo.GetById<ServiceInputModel>(this.Id);
+
+        this.Services = await this.serviceService.GetServiceNamesByType<ServiceViewModelBlazor>(this.InputModel.ServiceServiceType);
+    }
+
+    private async Task Submit()
+    {
+        await this.serviceInfo.Renew<ServiceInputModel>(this.InputModel);
+        NavManager.NavigateTo($"/Services/AllByCustomer/{this.InputModel.CustomerId}", true);
+    }
+}

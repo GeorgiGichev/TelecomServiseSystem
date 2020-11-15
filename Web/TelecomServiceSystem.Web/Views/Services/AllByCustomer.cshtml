@@ -1,0 +1,71 @@
+﻿@model TelecomServiceSystem.Web.ViewModels.Services.ServicesCustomerViewModel
+@{ this.ViewData["Title"] = "Services"; }
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <partial name="_Buttons" model="@Model.CustomerId">
+                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Services</h3></div>
+                    <div class="card-body">
+                        <a class="btn btn-primary" asp-area="" asp-controller="Orders" asp-action="ChooseServiceType" asp-route-customerId="@Model.CustomerId">+ Create new service</a>
+                        <div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Number</th>
+                                                <th>Tariff plan</th>
+                                                <th>Contract</th>
+                                                <th>Price</th>
+                                                <th>Created on</th>
+                                                <th>Last modified</th>
+                                                <th>Expires</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Number</th>
+                                                <th>Tariff plan</th>
+                                                <th>Contract</th>
+                                                <th>Price</th>
+                                                <th>Created on</th>
+                                                <th>Last modified</th>
+                                                <th>Expires</th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            @foreach (var service in Model.Services)
+                                            {
+                                                
+                                <tr>
+                                    <td style="color:@service.Color">@service.ServiceNumberNumber</td>
+                                    <td style="color:@service.Color">@service.ServiceName</td>
+                                    <td style="color:@service.Color">@service.ContractDuration</td>
+                                    <td style="color:@service.Color">@service.ServicePrice</td>
+                                    <td style="color:@service.Color">@service.CreatedOn.ToShortDateString()</td>
+                                    <td style="color:@service.Color">@service.ModifiedOn.ToShortDateString()</td>
+                                    <td style="color:@service.Color">@service.Expirеs.ToShortDateString()</td>
+                                    <td><a class="btn btn-success @service.Disabled" href="/Renewal/@service.Id">Renewal</a><a class="btn btn-danger">Cancelation</a></td>
+                                </tr>
+}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 col-md-offset-2">
+                        <section>
+                        </section>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+

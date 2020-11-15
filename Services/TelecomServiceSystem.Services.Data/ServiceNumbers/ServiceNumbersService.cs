@@ -38,7 +38,7 @@
             }
 
             return await this.numbersRepo.All()
-                .Where(n => n.IsFree && n.Number.StartsWith(startOfNumber))
+                .Where(n => n.IsFree && n.Number.StartsWith(startOfNumber) && !n.ServiceInfos.Any())
                 .Take(10)
                 .To<T>()
                 .ToListAsync();

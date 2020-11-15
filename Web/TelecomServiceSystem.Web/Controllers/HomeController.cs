@@ -23,5 +23,10 @@
             return this.View(
                 new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
         }
+
+        public IActionResult Blazor()
+        {
+            return this.View("_Host");
+        }
     }
 }

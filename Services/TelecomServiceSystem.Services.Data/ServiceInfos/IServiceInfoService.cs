@@ -16,5 +16,11 @@
         Task SetServiceAsActiveAsync(int serviceInfoId);
 
         Task<IEnumerable<TOutput>> GetBySearchCriteriaAsync<TOutput, TQuery>(TQuery query);
+
+        Task<IEnumerable<T>> GetAllByCustomerIdAsync<T>(string customerId);
+
+        Task<T> GetById<T>(int id);
+
+        Task Renew<T>(T model);
     }
 }

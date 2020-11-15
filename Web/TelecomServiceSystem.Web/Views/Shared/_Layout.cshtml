@@ -10,9 +10,10 @@
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
 
     <link href="~/css/styles.css" rel="stylesheet" asp-append-version="true" />
-    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true"/>
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" asp-append-version="true" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous" asp-append-version="true"></script>
+    <base href="~/">
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -41,13 +42,13 @@
                                 <div class="sb-sidenav-menu-heading">Search</div>
                                 if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                                 {
-                                <a class="nav-link" asp-area="Administration" asp-controller="Employee" asp-action="Index">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                    Employees
-                                </a>
+                                    <a class="nav-link" asp-area="Administration" asp-controller="Employee" asp-action="Index">
+                                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                        Employees
+                                    </a>
                                 }
 
-                            
+
                                 <a class="nav-link" asp-area="" asp-controller="Customers" asp-action="Search">
                                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                     Customers
@@ -59,7 +60,7 @@
                             }
                         }
                         @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName)
-                           || this.User.IsInRole(GlobalConstants.SellerRoleName))
+                          || this.User.IsInRole(GlobalConstants.SellerRoleName))
                         {
 
                             <div class="sb-sidenav-menu-heading">Create</div>
@@ -121,6 +122,8 @@
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous" asp-append-version="true"></script>
     <script src="~/js/datatables-demo.js" asp-append-version="true"></script>
     <script src="~/js/scripts.js" asp-append-version="true"></script>
+    <script src="_framework/blazor.server.js"></script>
     @this.RenderSection("Scripts", required: false)
 </body>
 </html>
+

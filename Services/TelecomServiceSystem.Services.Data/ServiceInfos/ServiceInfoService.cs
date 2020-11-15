@@ -77,37 +77,65 @@
 
             var order = query.To<InputOrderSearchModel>();
 
+            if (order.UserId != null)
+            {
+                orders = orders.Where(o => o.Order.UserId == order.UserId);
+            }
+
             if (order.Status != null)
             {
-                orders = orders.Where(c => c.Order.Status == Enum.Parse<Status>(order.Status));
+                orders = orders.Where(o => o.Order.Status == Enum.Parse<Status>(order.Status));
             }
 
             if (order.ServiceType != null)
             {
-                orders = orders.Where(c => c.Service.ServiceType == Enum.Parse<ServiceType>(order.ServiceType));
+                orders = orders.Where(o => o.Service.ServiceType == Enum.Parse<ServiceType>(order.ServiceType));
             }
 
             if (order.FinishedOn.HasValue)
             {
                 var date = order.FinishedOn.Value.Date;
-                orders = orders.Where(c => c.Order.FinishedOn.Value.Date == date);
+                orders = orders.Where(o => o.Order.FinishedOn.Value.Date == date);
             }
 
             if (order.CreatedOn.HasValue)
             {
                 var date = order.CreatedOn.Value.Date;
-                orders = orders.Where(c => c.Order.CreatedOn.Date == date);
+                orders = orders.Where(o => o.Order.CreatedOn.Date == date);
             }
 
             if (order.ServiceName != null)
             {
-                orders = orders.Where(c => c.Service.Name.ToLower().Contains(order.ServiceName.ToLower()));
+                orders = orders.Where(o => o.Service.Name.ToLower().Contains(order.ServiceName.ToLower()));
             }
 
             var result = await orders.To<TOutput>()
                 .ToListAsync();
 
             return result;
+        }
+
+        public async Task<IEnumerable<T>> GetAllByCustomerIdAsync<T>(string customerId)
+        {
+            return await this.serviseInfoRepo.All()
+                .Where(s => s.CustomerId == customerId && s.IsActive)
+                .To<T>()
+                .ToListAsync();
+        }
+
+        public async Task<T> GetById<T>(int id)
+        {
+            return await this.serviseInfoRepo.All().Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task Renew<T>(T model)
+        {
+            var serviceInput = model.To<ServiceInfo>();
+            var service = await this.serviseInfoRepo.All().FirstOrDefaultAsync(a => a.Id == serviceInput.Id);
+            service.Expirеs = DateTime.UtcNow.AddMonths(serviceInput.ContractDuration);
+            await this.serviseInfoRepo.UpdateModel(service, model);
         }
     }
 }
