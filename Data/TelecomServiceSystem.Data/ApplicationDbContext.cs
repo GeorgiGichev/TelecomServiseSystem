@@ -23,6 +23,8 @@
         {
         }
 
+        public DbSet<Bill> Bills { get; set; }
+
         public DbSet<InstalationSlot> InstalationSlots { get; set; }
 
         public DbSet<Team> Teams { get; set; }

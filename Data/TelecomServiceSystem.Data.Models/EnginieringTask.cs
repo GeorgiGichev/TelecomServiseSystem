@@ -8,7 +8,7 @@
     {
         public string OrderId { get; set; }
 
-        public Order Order { get; set; }
+        public virtual Order Order { get; set; }
 
         public int TeamId { get; set; }
 

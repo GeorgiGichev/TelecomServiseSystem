@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TelecomServiceSystem.Data;
 
 namespace TelecomServiceSystem.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201116120128_AddBillTable")]
+    partial class AddBillTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -383,7 +385,7 @@ namespace TelecomServiceSystem.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Bills");
+                    b.ToTable("Bill");
                 });
 
             modelBuilder.Entity("TelecomServiceSystem.Data.Models.City", b =>

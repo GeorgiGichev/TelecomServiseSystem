@@ -27,6 +27,7 @@
                     Neighborhood = "Asparuhovo",
                     Number = 41,
                     CustomerId = (await dbContext.Customers.FirstOrDefaultAsync(c => c.FirstName == "Георги")).Id,
+                    IsMainAddress = true,
                 },
                 new Address
                 {
@@ -46,6 +47,7 @@
                     Neighborhood = "Druzhba",
                     Number = 50,
                     CustomerId = (await dbContext.Customers.FirstOrDefaultAsync(c => c.FirstName == "Иван")).Id,
+                    IsMainAddress = true,
                 },
             };
             await dbContext.Addresses.AddRangeAsync(addresses);

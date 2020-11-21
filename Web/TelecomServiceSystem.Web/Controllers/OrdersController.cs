@@ -18,7 +18,6 @@
     using TelecomServiceSystem.Services.ViewRrender;
     using TelecomServiceSystem.Web.Infrastructure.Extensions;
     using TelecomServiceSystem.Web.ViewModels.Addresses;
-    using TelecomServiceSystem.Web.ViewModels.Customers;
     using TelecomServiceSystem.Web.ViewModels.Orders;
     using TelecomServiceSystem.Web.ViewModels.Orders.Search;
 
@@ -109,8 +108,8 @@
 
         public async Task<IActionResult> GetPdf(OrderViewModel input)
         {
-            // var model = this.serviceInfoService.GetByOrderId(input);
-            var htmlData = await this.viewRenderService.RenderToStringAsync("~/Views/Orders/GetPdf.cshtml", input);
+            //var model = this.serviceInfoService.GetByOrderId(input);
+            var htmlData = await this.viewRenderService.RenderToStringAsync("~/Views/Orders/GetPdf.cshtml", null);
             var fileContents = this.htmlToPdfConverter.Convert(this.environment.ContentRootPath, htmlData, "A4", "Portrait");
             return this.File(fileContents, "application/pdf");
         }

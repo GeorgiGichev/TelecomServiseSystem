@@ -12,5 +12,7 @@
         Task<T> GetByIdAsync<T>(string id);
 
         Task Edit<T>(T input);
+
+        Task<IEnumerable<T>> GetAllForBilling<T>();
     }
 }

@@ -19,6 +19,7 @@
             this.Id = Guid.NewGuid().ToString();
             this.ServicesInfo = new HashSet<ServiceInfo>();
             this.Addresses = new HashSet<Address>();
+            this.Bills = new HashSet<Bill>();
         }
 
         [Required]
@@ -45,5 +46,7 @@
         public virtual ICollection<Address> Addresses { get; set; }
 
         public virtual ICollection<ServiceInfo> ServicesInfo { get; set; }
+
+        public virtual ICollection<Bill> Bills { get; set; }
     }
 }

@@ -7,5 +7,7 @@
     public interface IHtmlToPdfConverter
     {
         byte[] Convert(string basePath, string htmlCode, string formatType, string orientationType);
+
+        byte[] ConvertToImage(string basePath, string htmlCode, string formatType, string orientationType);
     }
 }

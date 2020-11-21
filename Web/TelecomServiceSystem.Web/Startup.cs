@@ -3,6 +3,7 @@
     using System;
     using System.Reflection;
 
+    using CloudinaryDotNet;
     using Hangfire;
     using Hangfire.Dashboard;
     using Hangfire.SqlServer;
@@ -23,9 +24,12 @@
     using TelecomServiceSystem.Data.Models;
     using TelecomServiceSystem.Data.Repositories;
     using TelecomServiceSystem.Data.Seeding;
+    using TelecomServiceSystem.Services.Billing;
+    using TelecomServiceSystem.Services.CloudinaryService;
     using TelecomServiceSystem.Services.Cron;
     using TelecomServiceSystem.Services.Data;
     using TelecomServiceSystem.Services.Data.Addresses;
+    using TelecomServiceSystem.Services.Data.Bills;
     using TelecomServiceSystem.Services.Data.Customers;
     using TelecomServiceSystem.Services.Data.Employees;
     using TelecomServiceSystem.Services.Data.Orders;
@@ -37,6 +41,7 @@
     using TelecomServiceSystem.Services.HtmlToPDF;
     using TelecomServiceSystem.Services.Mapping;
     using TelecomServiceSystem.Services.Messaging;
+    using TelecomServiceSystem.Services.Models;
     using TelecomServiceSystem.Services.ViewRrender;
     using TelecomServiceSystem.Web.ViewModels;
 
@@ -52,6 +57,14 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Account account = new Account(
+                this.configuration["Cloudinary:AppName"],
+                this.configuration["Cloudinary:AppKey"],
+                this.configuration["Cloudinary:AppSecret"]);
+
+            Cloudinary cloudinary = new Cloudinary(account);
+            services.AddSingleton(cloudinary);
+
             services.AddHangfire(
                 config => config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                     .UseSimpleAssemblyNameTypeSerializer().UseRecommendedSerializerSettings().UseSqlServerStorage(
@@ -95,7 +108,7 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IEmailSender>(serviceProvider => new SendGridEmailSender(this.configuration["SendGridKey"]));
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IEmployeesService, EmployeesService>();
             services.AddTransient<ICustomerService, CustomerService>();
@@ -106,14 +119,17 @@
             services.AddTransient<IServiceInfoService, ServiceInfoService>();
             services.AddTransient<ITeamsService, TeamService>();
             services.AddTransient<ITasksService, TasksService>();
-            services.AddScoped<IViewRenderService, ViewRenderService>();
-            services.AddScoped<IHtmlToPdfConverter, HtmlToPdfConverter>();
+            services.AddTransient<IUploadService, UploadService>();
+            services.AddTransient<IBillingService, BillingService>();
+            services.AddTransient<IBillsService, BillsService>();
+            services.AddTransient<IViewRenderService, ViewRenderService>();
+            services.AddTransient<IHtmlToPdfConverter, HtmlToPdfConverter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IRecurringJobManager recurringJobManager)
         {
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly, typeof(InputCustomerSearchModel).GetTypeInfo().Assembly);
 
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())

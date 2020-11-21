@@ -1,5 +1,6 @@
 ﻿namespace TelecomServiceSystem.Services.Data.Customers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -32,6 +33,11 @@
             var customerToEdit = input.To<Customer>();
             var customer = await this.GetByIdAsync<Customer>(customerToEdit.Id);
             await this.customerRepo.UpdateModel(customer, input);
+        }
+
+        public async Task<IEnumerable<T>> GetAllForBilling<T>()
+        {
+            return await this.customerRepo.All().Where(x => x.ServicesInfo.Any(y => y.IsActive)).To<T>().ToListAsync();
         }
 
         public async Task<T> GetByIdAsync<T>(string id)

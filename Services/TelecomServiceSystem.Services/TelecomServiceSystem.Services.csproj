@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Cloudinary.Core" Version="1.31.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.2.0" />
-    <PackageReference Include="PhantomJS" Version="2.1.1" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.164" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TelecomServiceSystem.Services.Data\TelecomServiceSystem.Services.Data.csproj" />
+    <ProjectReference Include="..\TelecomServiceSystem.Services.Messaging\TelecomServiceSystem.Services.Messaging.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,14 +1,29 @@
 ﻿namespace TelecomServiceSystem.Web.Controllers
 {
     using System.Diagnostics;
+    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using TelecomServiceSystem.Services.Billing;
+    using TelecomServiceSystem.Services.Data.Bills;
     using TelecomServiceSystem.Web.ViewModels;
 
     public class HomeController : BaseController
     {
-        public IActionResult Index()
+        private readonly IBillingService billingService;
+        private readonly IBillsService billsService;
+
+        public HomeController(IBillingService billingService, IBillsService billsService)
         {
+            this.billingService = billingService;
+            this.billsService = billsService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            await this.billsService.Create("123", "123");
+            await this.billingService.CreateAsync();
+
             return this.View();
         }
 
