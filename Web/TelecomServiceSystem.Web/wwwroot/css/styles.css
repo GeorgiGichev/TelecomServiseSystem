@@ -209,6 +209,7 @@ svg {
 table {
     border-radius: 10px;
     overflow: hidden;
+    
     border-collapse: collapse;
 }
 
