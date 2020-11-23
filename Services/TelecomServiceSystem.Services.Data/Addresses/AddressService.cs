@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
+    using TelecomServiceSystem.Common;
     using TelecomServiceSystem.Data.Common.Repositories;
     using TelecomServiceSystem.Data.Models;
     using TelecomServiceSystem.Services.Mapping;
@@ -75,6 +76,17 @@
         {
             var address = await this.addressRepo.All().FirstOrDefaultAsync(x => x.Id == addressId);
             return address.CityId;
+        }
+
+        public async Task AddNewCity<T>(T model)
+        {
+            var city = model.To<City>();
+            city.CountryId = (await this.countryRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.Name == GlobalConstants.CountryOfUsing)).Id;
+            if (await this.cityRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.Name == city.Name) == null)
+            {
+                await this.cityRepo.AddAsync(city);
+                await this.cityRepo.SaveChangesAsync();
+            }
         }
     }
 }

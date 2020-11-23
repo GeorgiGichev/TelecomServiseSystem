@@ -27,5 +27,26 @@
                .To<T>()
                .ToListAsync();
         }
+
+        public async Task Create<T>(T model)
+        {
+            var service = model.To<Service>();
+            if (await this.serviceRepo.AllAsNoTracking()
+                .FirstOrDefaultAsync(x => x.Name == service.Name) == null)
+            {
+                await this.serviceRepo.AddAsync(service);
+                await this.serviceRepo.SaveChangesAsync();
+            }
+        }
+
+        public async Task<IEnumerable<string>> GetAllTypes()
+        {
+            var result = await this.serviceRepo.AllAsNoTracking()
+                .Select(x => x.ServiceType.ToString())
+                .Distinct()
+                .ToListAsync();
+
+            return result;
+        }
     }
 }

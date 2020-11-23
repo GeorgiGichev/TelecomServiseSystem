@@ -9,8 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
 
-        <link href="~/css/styles.css" rel="stylesheet" asp-append-version="true" />
-        <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/styles.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" asp-append-version="true" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous" asp-append-version="true"></script>
     <base href="~/">
@@ -60,7 +60,7 @@
                             }
                         }
                         @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName)
-                          || this.User.IsInRole(GlobalConstants.SellerRoleName))
+                      || this.User.IsInRole(GlobalConstants.SellerRoleName))
                         {
 
                             <div class="sb-sidenav-menu-heading">Create</div>
@@ -76,6 +76,18 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                 New Customer
                             </a>
+
+                            @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                            {
+                                <a class="nav-link" asp-area="" asp-controller="Addresses" asp-action="CreateCity">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                    Add City
+                                </a>
+                                <a class="nav-link" asp-area="" asp-controller="Services" asp-action="Create">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                    Add Service
+                                </a>
+                            }
                         }
                         @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName) || this.User.IsInRole(GlobalConstants.EngineerRoleName))
                         {

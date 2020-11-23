@@ -21,8 +21,7 @@
 
         public async Task<IActionResult> Index()
         {
-            await this.billsService.Create("123", "123");
-            await this.billingService.CreateAsync();
+            //await this.billingService.CreateAsync();
 
             return this.View();
         }

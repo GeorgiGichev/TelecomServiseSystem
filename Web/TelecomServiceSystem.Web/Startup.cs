@@ -99,6 +99,7 @@
                     }).AddRazorRuntimeCompilation();
             services.AddServerSideBlazor();
             services.AddRazorPages();
+            services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddSingleton(this.configuration);
 
@@ -142,7 +143,7 @@
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {
@@ -179,6 +180,7 @@
         private void SeedHangfireJobs(IRecurringJobManager recurringJobManager)
         {
             recurringJobManager.AddOrUpdate<InstalSlotsGeneratorJob>("InstalationSlotGetterJob", x => x.GenerateSlots(), InstalSlotsGeneratorJob.CronSchedule);
+            recurringJobManager.AddOrUpdate<InvoicesCreatorJob>("InvoicesCreatorJob", x => x.GenerateBills(), InvoicesCreatorJob.CronSchedule);
         }
 
         private class HangfireAuthorizationFilter : IDashboardAuthorizationFilter

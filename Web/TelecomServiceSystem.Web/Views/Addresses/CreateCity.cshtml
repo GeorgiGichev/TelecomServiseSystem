@@ -1,0 +1,29 @@
+﻿@model TelecomServiceSystem.Web.ViewModels.Addresses.CityInputModel
+@{ this.ViewData["Title"] = "Add city"; }
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header"><h3 class="text-center font-weight-light my-4">Add city</h3></div>
+                <div class="card-body">
+                    <form asp-route-returnUrl="" method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="required" asp-for="@Model.Name">City</label>
+                                <input asp-for="@Model.Name" class="form-control" />
+                                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary float-right col-md-3">Create</button>
+                    </form>
+                </div>
+                <div class="col-md-6 col-md-offset-2">
+                    <section>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

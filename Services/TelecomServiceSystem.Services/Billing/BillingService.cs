@@ -41,15 +41,31 @@
 
             foreach (var customer in customers)
             {
-                customer.ServicesInfo = customer.ServicesInfo.Where(x => x.IsActive).ToHashSet();
+                var prevMonth = DateTime.UtcNow.Month != 1 ? DateTime.UtcNow.Month - 1 : 12;
+                customer.ServicesInfo = customer.ServicesInfo.Where(x => x.IsActive || (x.CancellationDate.HasValue && x.CancellationDate.Value.Month == prevMonth)).ToHashSet();
+
+                foreach (var service in customer.ServicesInfo)
+                {
+                    var fullPrice = service.ServicePrice;
+                    var daysInMonth = DateTime.DaysInMonth(DateTime.UtcNow.Year, prevMonth);
+                    if (service.IsActive && service.CreatedOn.Month == prevMonth)
+                    {
+                        service.ServicePrice = (fullPrice / daysInMonth) * (daysInMonth - service.CreatedOn.Day);
+                    }
+                    else if (service.CancellationDate.HasValue)
+                    {
+                        service.ServicePrice = (fullPrice / daysInMonth) * service.CancellationDate.Value.Day;
+                    }
+                }
+
                 var htmlData = await this.viewRenderService.RenderToStringAsync("~/Views/Bills/Bill.cshtml", customer);
                 var fileContents = this.htmlToPdfConverter.ConvertToImage(Environment.CurrentDirectory, htmlData, "A4", "Portrait");
 
                 var url = await this.uploadService.UploadBillAsync(fileContents);
 
                 await this.billsService.Create(customer.Id, url);
-
-                await this.emailSender.SendEmailAsync("CustomerService@TSS.com", "CustomerService", customer.Email, "New Invoice", $"<p>Your monthly invoice is available. You can see it at {url} </p>");
+                //TODO: not working
+                await this.emailSender.SendEmailAsync("georgi.gichev87@gmail.com", "CustomerService", customer.Email, "New Invoice", $"<p>Your monthly invoice is available. You can see it at {url} </p>");
             }
         }
     }

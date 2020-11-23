@@ -6,5 +6,9 @@
     public interface IServiceService
     {
         Task<IEnumerable<T>> GetServiceNamesByType<T>(string type);
+
+        Task Create<T>(T model);
+
+        Task<IEnumerable<string>> GetAllTypes();
     }
 }

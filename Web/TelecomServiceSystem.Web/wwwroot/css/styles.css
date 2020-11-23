@@ -207,7 +207,10 @@ svg {
 }
 
 table {
-  border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+   
+    border-collapse: collapse;
 }
 
 caption {
@@ -219,7 +222,10 @@ caption {
 }
 
 th {
-  text-align: inherit;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    background-color: dodgerblue;
+    text-align: inherit;
 }
 
 label {

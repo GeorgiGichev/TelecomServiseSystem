@@ -3,5 +3,5 @@
 <div class="btn-group" role="group" aria-label="Basic example">
     <a class="btn btn-primary" asp-controller="Customers" asp-action="Edit" asp-route-Id="@Model">Customer</a>
     <a class="btn btn-primary" asp-controller="Services" asp-action="AllByCustomer" asp-route-Id="@Model">Services</a>
-    <a class="btn btn-primary" asp-controller="Services" asp-action="AllByCustomer" asp-route-customerId="@Model">Billing account</a>
+    <a class="btn btn-primary" asp-controller="Invoices" asp-action="All" asp-route-customerId="@Model">Billing account</a>
 </div>

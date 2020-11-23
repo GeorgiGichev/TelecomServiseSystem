@@ -5,15 +5,18 @@
 
     using Microsoft.AspNetCore.Mvc;
     using TelecomServiceSystem.Services.Data.ServiceInfos;
+    using TelecomServiceSystem.Services.Data.Services;
     using TelecomServiceSystem.Web.ViewModels.Services;
 
     public class ServicesController : BaseController
     {
         private readonly IServiceInfoService serviceInfoService;
+        private readonly IServiceService serviceService;
 
-        public ServicesController(IServiceInfoService serviceInfoService)
+        public ServicesController(IServiceInfoService serviceInfoService, IServiceService serviceService)
         {
             this.serviceInfoService = serviceInfoService;
+            this.serviceService = serviceService;
         }
 
         public async Task<IActionResult> AllByCustomer(string id)
@@ -36,8 +39,33 @@
         [HttpPost]
         public async Task<IActionResult> Cancellation(ServiceCancelationViewModel model)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
             await this.serviceInfoService.ContractCancel(model.Id);
             return this.Redirect($"/Services/AllByCustomer/{model.CustomerId}");
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            var model = new ServiceCreateInputModel
+            {
+                Types = await this.serviceService.GetAllTypes() as ICollection<string>,
+            };
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(ServiceCreateInputModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            await this.serviceService.Create<ServiceCreateInputModel>(model);
+            return this.Redirect("/Home/Index");
         }
     }
 }

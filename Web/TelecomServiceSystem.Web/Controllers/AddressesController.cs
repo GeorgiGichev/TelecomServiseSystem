@@ -48,5 +48,17 @@
 
             return this.Redirect($"/Customers/Edit/{model.CustomerId}");
         }
+
+        public IActionResult CreateCity()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCity(CityInputModel model)
+        {
+            await this.addressService.AddNewCity<CityInputModel>(model);
+            return this.Redirect($"/Home/Index");
+        }
     }
 }

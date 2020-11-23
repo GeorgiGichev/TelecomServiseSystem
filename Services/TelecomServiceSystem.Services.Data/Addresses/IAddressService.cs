@@ -20,5 +20,7 @@
         Task<IEnumerable<T>> GetAllCountries<T>();
 
         Task<int> GetCityIdByAddressId(int addressId);
+
+        Task AddNewCity<T>(T model);
     }
 }

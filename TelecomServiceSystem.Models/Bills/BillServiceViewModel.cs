@@ -16,5 +16,11 @@
         public decimal ServicePrice { get; set; }
 
         public bool IsActive { get; set; }
+
+        public DateTime? CancellationDate { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime Expires { get; set; }
     }
 }
