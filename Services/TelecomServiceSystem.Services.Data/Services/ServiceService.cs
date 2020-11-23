@@ -45,7 +45,6 @@
                 .Select(x => x.ServiceType.ToString())
                 .Distinct()
                 .ToListAsync();
-
             return result;
         }
     }
