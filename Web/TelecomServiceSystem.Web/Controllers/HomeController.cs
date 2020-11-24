@@ -21,8 +21,7 @@
 
         public async Task<IActionResult> Index()
         {
-            //await this.billingService.CreateAsync();
-
+            await this.billingService.CreateAsync();
             return this.View();
         }
 

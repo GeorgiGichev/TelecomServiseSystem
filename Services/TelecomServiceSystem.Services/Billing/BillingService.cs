@@ -64,8 +64,7 @@
                 var url = await this.uploadService.UploadBillAsync(fileContents);
 
                 await this.billsService.Create(customer.Id, url);
-                //TODO: not working
-                await this.emailSender.SendEmailAsync("georgi.gichev87@gmail.com", "CustomerService", customer.Email, "New Invoice", $"<p>Your monthly invoice is available. You can see it at {url} </p>");
+                await this.emailSender.SendEmailAsync("georgi.gichev87@gmail.com", "CustomerService.TSS", customer.Email, "New Invoice", $"<p>Your monthly invoice is available. You can see it at <a href=\"{url}\">{url}</a></p>");
             }
         }
     }
