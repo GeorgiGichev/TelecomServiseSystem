@@ -48,7 +48,7 @@
 
         public async Task<string> GetICC()
         {
-            if (this.simRepo.All().Count() == 0)
+            if (this.simRepo.All().Any())
             {
                 return GlobalConstants.NoAvailableSimMessage;
             }

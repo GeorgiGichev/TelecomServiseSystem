@@ -6,6 +6,7 @@
 
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.SignalR;
     using TelecomServiceSystem.Common;
     using TelecomServiceSystem.Services.Data.Addresses;
     using TelecomServiceSystem.Services.Data.Customers;
@@ -16,6 +17,7 @@
     using TelecomServiceSystem.Services.Data.Tasks;
     using TelecomServiceSystem.Services.HtmlToPDF;
     using TelecomServiceSystem.Services.ViewRrender;
+    using TelecomServiceSystem.Web.Hubs;
     using TelecomServiceSystem.Web.Infrastructure.Extensions;
     using TelecomServiceSystem.Web.ViewModels.Addresses;
     using TelecomServiceSystem.Web.ViewModels.Orders;
@@ -30,11 +32,11 @@
         private readonly IViewRenderService viewRenderService;
         private readonly IHtmlToPdfConverter htmlToPdfConverter;
         private readonly IWebHostEnvironment environment;
-        private readonly ICustomerService customerService;
         private readonly IAddressService addressService;
         private readonly ITasksService tasksService;
+        private readonly IHubContext<TaskHub, ITaskHub> context;
 
-        public OrdersController(IOrderService orderService, IServiceService serviceService, IServiceNumberService numberService, IServiceInfoService serviceInfoService, IViewRenderService viewRenderService, IHtmlToPdfConverter htmlToPdfConverter, IWebHostEnvironment environment, ICustomerService customerService, IAddressService addressService, ITasksService tasksService)
+        public OrdersController(IOrderService orderService, IServiceService serviceService, IServiceNumberService numberService, IServiceInfoService serviceInfoService, IViewRenderService viewRenderService, IHtmlToPdfConverter htmlToPdfConverter, IWebHostEnvironment environment, IAddressService addressService, ITasksService tasksService, IHubContext<TaskHub, ITaskHub> context)
         {
             this.orderService = orderService;
             this.serviceService = serviceService;
@@ -43,9 +45,9 @@
             this.viewRenderService = viewRenderService;
             this.htmlToPdfConverter = htmlToPdfConverter;
             this.environment = environment;
-            this.customerService = customerService;
             this.addressService = addressService;
             this.tasksService = tasksService;
+            this.context = context;
         }
 
         public IActionResult ChooseServiceType(string customerId)
@@ -108,7 +110,7 @@
 
         public async Task<IActionResult> GetPdf(OrderViewModel input)
         {
-            //var model = this.serviceInfoService.GetByOrderId(input);
+            // var model = this.serviceInfoService.GetByOrderId(input);
             var htmlData = await this.viewRenderService.RenderToStringAsync("~/Views/Orders/GetPdf.cshtml", null);
             var fileContents = this.htmlToPdfConverter.Convert(this.environment.ContentRootPath, htmlData, "A4", "Portrait");
             return this.File(fileContents, "application/pdf");
@@ -175,6 +177,7 @@
                     model.FixedServiceInfo);
 
                 await this.tasksService.CreateAsync(model.FixedServiceInfo.OrderId, model.InstalationSlotId);
+                await this.context.Clients.All.ReceiveTasksUpdate();
             }
         }
     }

@@ -31,7 +31,7 @@
 
         public async Task<IActionResult> AllTasks()
         {
-            IEnumerable<TaskViewModel> model = null;
+            IEnumerable<TaskViewModel> model;
             if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
             {
                 model = await this.taskService.GetAllAsync<TaskViewModel>();
@@ -42,6 +42,21 @@
             }
 
             return this.View(model);
+        }
+
+        public async Task<IActionResult> AllTasksAsJson()
+        {
+            IEnumerable<TaskViewModel> model;
+            if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+            {
+                model = await this.taskService.GetAllAsync<TaskViewModel>();
+            }
+            else
+            {
+                model = await this.taskService.GetByUserIdAsync<TaskViewModel>(this.User.GetId());
+            }
+
+            return this.Json(model);
         }
 
         public async Task<IActionResult> CompleteInstalation(string orderId)

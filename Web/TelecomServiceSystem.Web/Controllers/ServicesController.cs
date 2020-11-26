@@ -43,6 +43,7 @@
             {
                 return this.View(model);
             }
+
             await this.serviceInfoService.ContractCancel(model.Id);
             return this.Redirect($"/Services/AllByCustomer/{model.CustomerId}");
         }

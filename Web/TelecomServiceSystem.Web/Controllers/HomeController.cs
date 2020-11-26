@@ -4,24 +4,12 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
-    using TelecomServiceSystem.Services.Billing;
-    using TelecomServiceSystem.Services.Data.Bills;
     using TelecomServiceSystem.Web.ViewModels;
 
     public class HomeController : BaseController
     {
-        private readonly IBillingService billingService;
-        private readonly IBillsService billsService;
-
-        public HomeController(IBillingService billingService, IBillsService billsService)
+        public IActionResult Index()
         {
-            this.billingService = billingService;
-            this.billsService = billsService;
-        }
-
-        public async Task<IActionResult> Index()
-        {
-            await this.billingService.CreateAsync();
             return this.View();
         }
 

@@ -24,4 +24,8 @@
     <ProjectReference Include="..\..\TelecomServiceSystem.Models\TelecomServiceSystem.Services.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SignalR\" />
+  </ItemGroup>
+
 </Project>

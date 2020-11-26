@@ -1,18 +1,14 @@
 ﻿namespace TelecomServiceSystem.Services.Billing
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using TelecomServiceSystem.Data.Common.Repositories;
-    using TelecomServiceSystem.Data.Models;
+
     using TelecomServiceSystem.Services.CloudinaryService;
     using TelecomServiceSystem.Services.Data.Bills;
     using TelecomServiceSystem.Services.Data.Customers;
     using TelecomServiceSystem.Services.HtmlToPDF;
-    using TelecomServiceSystem.Services.Mapping;
     using TelecomServiceSystem.Services.Messaging;
-    using TelecomServiceSystem.Services.Models;
     using TelecomServiceSystem.Services.Models.Bills;
     using TelecomServiceSystem.Services.ViewRrender;
 

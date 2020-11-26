@@ -3,6 +3,7 @@
 
 // Write your JavaScript code.
 
+
 $(function () {
     var PlaceHolderElement = $('#PlaceHolder');
     const customer = document.querySelector('#customer')
@@ -18,12 +19,11 @@ $(function () {
         var form = $(this).parents('.modal').find('form');
         var actionUrl = form.attr('action');
         var sendData = form.serialize() + '&CustomerId=' + customer.value;
-        console.log(sendData);
         $.post(actionUrl, sendData).done(function (data) {
             PlaceHolderElement.find('.modal').modal('hide');
             GetAddresses();
         });
-        
+
     })
 });
 

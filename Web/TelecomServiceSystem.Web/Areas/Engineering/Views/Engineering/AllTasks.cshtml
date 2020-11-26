@@ -26,14 +26,14 @@
                                             <th>Team</th>
                                         </tr>
                                     </tfoot>
-                                    <tbody>
+                                    <tbody id="tableBody">
                                         @foreach (var task in Model)
                                         {
-                                         <tr>
-                                             <td><a asp-area="Engineering" asp-controller="Engineering" asp-action="InstalationInfo" asp-route-orderId="@task.OrderId">@task.Id</a></td>
-                                             <td>@task.InstalationDate</td>
-                                             <td>@task.TeamName</td>
-                                         </tr>}
+                            <tr>
+                                <td><a asp-area="Engineering" asp-controller="Engineering" asp-action="InstalationInfo" asp-route-orderId="@task.OrderId">@task.Id</a></td>
+                                <td>@task.InstalationDate</td>
+                                <td>@task.TeamName</td>
+                            </tr>}
                                     </tbody>
                                 </table>
                             </div>
@@ -42,10 +42,10 @@
 
                 </div>
                 <div class="col-md-6 col-md-offset-2">
-                    <section>
-                    </section>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script src="~/lib/signalr/dist/browser/signalr.min.js" asp-append-version="true"></script>
+<script src="~/js/signalR.js" asp-append-version="true"></script>

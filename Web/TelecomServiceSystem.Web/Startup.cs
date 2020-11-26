@@ -43,6 +43,7 @@
     using TelecomServiceSystem.Services.Messaging;
     using TelecomServiceSystem.Services.Models;
     using TelecomServiceSystem.Services.ViewRrender;
+    using TelecomServiceSystem.Web.Hubs;
     using TelecomServiceSystem.Web.ViewModels;
 
     public class Startup
@@ -57,6 +58,7 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add cloudinary
             Account account = new Account(
                 this.configuration["Cloudinary:AppName"],
                 this.configuration["Cloudinary:AppKey"],
@@ -65,6 +67,14 @@
             Cloudinary cloudinary = new Cloudinary(account);
             services.AddSingleton(cloudinary);
 
+            // Add SignalR
+            services.AddSignalR(
+                opttions =>
+                {
+                    opttions.EnableDetailedErrors = true;
+                }).AddMessagePackProtocol();
+
+            // Add Hangfire
             services.AddHangfire(
                 config => config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                     .UseSimpleAssemblyNameTypeSerializer().UseRecommendedSerializerSettings().UseSqlServerStorage(
@@ -123,8 +133,11 @@
             services.AddTransient<IUploadService, UploadService>();
             services.AddTransient<IBillingService, BillingService>();
             services.AddTransient<IBillsService, BillsService>();
-            services.AddTransient<IViewRenderService, ViewRenderService>();
-            services.AddTransient<IHtmlToPdfConverter, HtmlToPdfConverter>();
+            services.AddScoped<TaskHub>();
+
+            // Phantomjs services
+            services.AddScoped<IViewRenderService, ViewRenderService>();
+            services.AddScoped<IHtmlToPdfConverter, HtmlToPdfConverter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -169,6 +182,7 @@
             app.UseEndpoints(
                 endpoints =>
                     {
+                        endpoints.MapHub<TaskHub>("/taskhub");
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();

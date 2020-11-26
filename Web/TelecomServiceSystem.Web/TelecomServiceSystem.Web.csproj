@@ -19,6 +19,7 @@
     <PackageReference Include="Hangfire.Core" Version="1.7.18" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.7.18" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -88,6 +89,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\RazorComponents\" />
+    <Folder Include="wwwroot\lib\signalr\" />
   </ItemGroup>
 </Project>

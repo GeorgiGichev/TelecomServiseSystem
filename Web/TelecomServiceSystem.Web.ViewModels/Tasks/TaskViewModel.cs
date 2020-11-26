@@ -11,6 +11,8 @@
 
         public DateTime InstalationDate { get; set; }
 
+        public string InstalationDateAsString => this.InstalationDate.ToString("dd-MMM-yy HH:mm:ss");
+
         public string OrderId { get; set; }
 
         public string TeamCityName { get; set; }
