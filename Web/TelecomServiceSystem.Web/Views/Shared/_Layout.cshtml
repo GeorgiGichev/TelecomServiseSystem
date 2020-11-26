@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
 
+    <link href="~/lib/fontawesome/css/all.css" rel="stylesheet" asp-append-version="true"/>
     <link href="~/css/styles.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" asp-append-version="true" />
@@ -43,18 +44,18 @@
                                 if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                                 {
                                     <a class="nav-link" asp-area="Administration" asp-controller="Employee" asp-action="Index">
-                                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                        <div class="sb-nav-link-icon"><i class="fas fa-address-book"></i></div>
                                         Employees
                                     </a>
                                 }
 
 
                                 <a class="nav-link" asp-area="" asp-controller="Customers" asp-action="Search">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                     Customers
                                 </a>
                                 <a class="nav-link" asp-area="" asp-controller="Orders" asp-action="Tracking">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    <div class="sb-nav-link-icon"><i class="fas fa-folder-open"></i></div>
                                     Orders
                                 </a>
                             }
@@ -67,24 +68,24 @@
                             @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                             {
                                 <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                    <div class="sb-nav-link-icon"><i class="fas fa-user-plus"></i></div>
                                     New Employee
                                 </a>
                             }
 
                             <a class="nav-link" asp-area="" asp-controller="Customers" asp-action="Create">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-user-plus"></i></div>
                                 New Customer
                             </a>
 
                             @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                             {
                                 <a class="nav-link" asp-area="" asp-controller="Addresses" asp-action="CreateCity">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                    <div class="sb-nav-link-icon"><i class="fas fa-city"></i></div>
                                     Add City
                                 </a>
                                 <a class="nav-link" asp-area="" asp-controller="Services" asp-action="Create">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                    <div class="sb-nav-link-icon"><i class="fas fa-mobile-alt"></i></div>
                                     Add Service
                                 </a>
                             }
@@ -93,7 +94,7 @@
                         {
                             <div class="sb-sidenav-menu-heading">Enginiering</div>
                             <a class="nav-link" asp-area="Engineering" asp-controller="Engineering" asp-action="AllTasks">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-tools"></i></div>
                                 All Tasks
                             </a>
                         }
