@@ -5,15 +5,17 @@
     <div class="row justify-content-center">
         <div class="col-lg-12">
             <div class="row justify-content-center">
-                <div class="card shadow-lg border-0 rounded-lg mt-5 col-5" style="width:400px">
-                    <img class="card-img-top" src="" alt="Card image">
+                <div class="card shadow-lg border rounded-lg mt-5 col-5 bg-dark" style="width:400px">
+                    <br />
+                    <img class="card-img-top card-img-bottom" src="~/Images/digital-advantage.jpg" alt="Card image">
                     <div class="card-body">
                         <a asp-controller="Orders" asp-action="Create" asp-route-customerId="@Model.CustomerId" asp-route-serviceType="mobile" class="btn btn-primary">Mobile services</a>
                     </div>
                 </div>
                 <div class="col-2"></div>
-                <div class="card shadow-lg border-0 rounded-lg mt-5 col-5" style="width:400px">
-                    <img class="card-img-top" src="img_avatar1.png" alt="Card image">
+                <div class="card shadow-lg border rounded-lg mt-5 col-5 bg-dark" style="width: 400px">
+                    <br />
+                    <img class="card-img-top card-img-bottom" src="~/Images/header2.jpg" alt="Card image">
                     <div class="card-body">
                         <a asp-controller="Orders" asp-action="Create" asp-route-customerId="@Model.CustomerId" asp-route-serviceType="fix" class="btn btn-primary">Fixed services</a>
                     </div>

@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using TelecomServiceSystem.Services.CloudinaryService;
     using TelecomServiceSystem.Services.Data.Employees;
     using TelecomServiceSystem.Services.Data.Teams;
     using TelecomServiceSystem.Web.Controllers;
@@ -16,11 +17,13 @@
     {
         private readonly IEmployeesService employeesService;
         private readonly ITeamsService teamsService;
+        private readonly IUploadService uploadService;
 
-        public EmployeeController(IEmployeesService employeesService, ITeamsService teamsService)
+        public EmployeeController(IEmployeesService employeesService, ITeamsService teamsService, IUploadService uploadService)
         {
             this.employeesService = employeesService;
             this.teamsService = teamsService;
+            this.uploadService = uploadService;
         }
 
         public async Task<IActionResult> Index()
@@ -59,6 +62,7 @@
                 return this.View(model);
             }
 
+            model.PictureURL = await this.uploadService.UploadImageAsync(model.NewImage);
             await this.employeesService.Edit<EditViewModel>(model);
 
             return this.View(model);

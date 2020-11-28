@@ -1,5 +1,6 @@
 ﻿namespace TelecomServiceSystem.Web.ViewModels.Administration.Employees
 {
+    using Microsoft.AspNetCore.Http;
     using System;
     using System.ComponentModel.DataAnnotations;
 
@@ -31,6 +32,12 @@
         [Display(Name = "EGN")]
         public string EGN { get; set; }
 
+        public string PhoneNumber { get; set; }
+
+        public string PictureURL { get; set; }
+
         public DateTime CreatedOn { get; set; }
+
+        public IFormFile NewImage { get; set; }
     }
 }

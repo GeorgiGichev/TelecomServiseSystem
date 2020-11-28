@@ -4,13 +4,29 @@
     ViewData["Title"] = "Create new user";
 }
 
+<style>
+    #lab {
+        background-color: dodgerblue;
+        color: white;
+        padding: 0.5rem;
+        font-family: sans-serif;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        margin-top: 1rem;
+    }
+
+    #file-chosen {
+        margin-left: 0.3rem;
+        font-family: sans-serif;
+    }
+</style>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-7">
             <div class="card shadow-lg border-0 rounded-lg mt-5">
                 <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Employee</h3></div>
                 <div class="card-body">
-                    <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <form asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -56,7 +72,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label class="required" asp-for="Input.Role"></label>
-                                <select class="col-md-6 form-control" id="serviceName" asp-for="Input.Role">
+                                <select class="col-md-12 form-control" id="serviceName" asp-for="Input.Role">
                                     <option value="Admin">Administrator</option>
                                     <option value="Seller">Seller</option>
                                     <option value="Engeneer">Engeneer</option>
@@ -65,13 +81,26 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="required" asp-for="Input.CityId">City</label>
-                                <select class="col-md-6 form-control" asp-for="Input.CityId">
+                                <select class="col-md-12 form-control" asp-for="Input.CityId">
                                     @foreach (var city in Model.Input.Cities)
                                     {
                                         <option value="@city.Id">@city.Name</option>
                                     }
                                 </select>
                             </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label class="required" asp-for="Input.Phone"></label>
+                                <input asp-for="Input.Phone" class="form-control" />
+                                <span asp-validation-for="Input.Phone" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="label" id="lab" asp-for="Input.Image" class="required">Upload image</label>
+                            <input Id="label" class="form-control-file" asp-for="Input.Image" type="file" hidden>
+                            <span id="file-chosen">No file chosen</span>
+                            <span asp-validation-for="Input.Image" class="text-danger"></span>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Create</button>
                     </form>
@@ -86,5 +115,13 @@
 </div>
 
 @section Scripts {
+<script>
+    const actualBtn = document.getElementById('label');
+    const fileChosen = document.getElementById('file-chosen');
+
+    actualBtn.addEventListener('change', function () {
+        fileChosen.textContent = this.files[0].name
+    })
+</script>
     <partial name="_ValidationScriptsPartial" />
 }

@@ -2,53 +2,91 @@
 
 @{ this.ViewData["Title"] = "Edit Employees"; }
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-12">
-                <div class="card shadow-lg border-0 rounded-lg mt-5">
-                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Edit Employee`s Account</h3></div>
-                    <div class="card-body">
-                        <form asp-route-returnUrl="" asp-action="edit" method="post">
-                            <div asp-validation-summary="All" class="text-danger"></div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label asp-for="FirstName"></label>
+<style>
+    #lab {
+        background-color: dodgerblue;
+        color: white;
+        padding: 0.5rem;
+        font-family: sans-serif;
+        border-radius: 0.3rem;
+        cursor: pointer;
+        margin-top: 1rem;
+    }
+
+    #file-chosen {
+        margin-left: 0.3rem;
+        font-family: sans-serif;
+    }
+</style>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header"><h3 class="text-center font-weight-light my-4">Edit Employee`s Account</h3></div>
+                <div class="card-body">
+                    <form asp-route-returnUrl="" asp-action="edit" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6 float-left">
+                                <div class="form-group col-md-10">
+                                    <label class="required" asp-for="FirstName"></label>
                                     <input asp-for="FirstName" class="form-control" />
                                     <span asp-validation-for="FirstName" class="text-danger"></span>
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-10">
                                     <label asp-for="MiddleName"></label>
                                     <input asp-for="MiddleName" class="form-control" />
                                     <span asp-validation-for="MiddleName" class="text-danger"></span>
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label asp-for="LastName"></label>
+                                <div class="form-group col-md-10">
+                                    <label class="required" asp-for="LastName"></label>
                                     <input asp-for="LastName" class="form-control" />
                                     <span asp-validation-for="LastName" class="text-danger"></span>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label asp-for="EGN"></label>
+                                <div class="form-group col-md-10">
+                                    <label class="required" asp-for="EGN"></label>
                                     <input asp-for="EGN" class="form-control" />
                                     <span asp-validation-for="EGN" class="text-danger"></span>
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-10">
+                                    <label asp-for="PhoneNumber"></label>
+                                    <input asp-for="PhoneNumber" class="form-control" />
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-10">
                                     <label asp-for="CreatedOn"></label>
                                     <input asp-for="CreatedOn" class="form-control" disabled />
                                     <span asp-validation-for="CreatedOn" class="text-danger"></span>
                                 </div>
                             </div>
-                                <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
-                                <a class="btn btn-primary btn-block"
-                                   asp-area="Administration" asp-controller="Employee" asp-action="Index">Back</a>
-                        </form>
-                    </div>
-                    <div class="col-md-6 col-md-offset-2">
-                        <section>
-                        </section>
-                    </div>
+                            <div class="form-group col-md-6 float-right">
+                                <img class="card-img-top card-img-bottom" src="@Model.PictureURL" alt="Image" width="400" height="500">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="label" id="lab" asp-for="NewImage" class="required">Change image</label>
+                            <input Id="label" class="form-control-file" asp-for="NewImage" type="file" hidden>
+                            <span id="file-chosen">No file chosen</span>
+                            <span asp-validation-for="NewImage" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+                        <a class="btn btn-primary btn-block"
+                           asp-area="Administration" asp-controller="Employee" asp-action="Index">Back</a>
+                    </form>
+                </div>
+                <div class="col-md-6 col-md-offset-2">
+                    <section>
+                    </section>
                 </div>
             </div>
         </div>
-    </div>
+    </div><script>
+    const actualBtn = document.getElementById('label');
+    const fileChosen = document.getElementById('file-chosen');
+
+    actualBtn.addEventListener('change', function () {
+        fileChosen.textContent = this.files[0].name
+    })
+</script>
+</div>
