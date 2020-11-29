@@ -18,12 +18,13 @@
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
     using TelecomServiceSystem.Common;
+    using TelecomServiceSystem.Common.Validators;
     using TelecomServiceSystem.Data.Models;
     using TelecomServiceSystem.Services.CloudinaryService;
     using TelecomServiceSystem.Services.Data.Addresses;
     using TelecomServiceSystem.Web.ViewModels.Addresses;
 
-    [AllowAnonymous]
+    [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> signInManager;
@@ -178,6 +179,8 @@
             public string Phone { get; set; }
 
             [Required]
+            [AllowedExtensions(new string[] { ".jpeg", ".png", ".jpg" })]
+            [MaxFileSize(4 * 1024 * 1024)]
             public IFormFile Image { get; set; }
 
             public ICollection<CityViewModel> Cities { get; set; } = new HashSet<CityViewModel>();

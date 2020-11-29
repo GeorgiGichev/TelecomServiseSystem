@@ -22,5 +22,7 @@
         Task<int> GetCityIdByAddressId(int addressId);
 
         Task AddNewCity<T>(T model);
+
+        Task<bool> CityExist(int id);
     }
 }

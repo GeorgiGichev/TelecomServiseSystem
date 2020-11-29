@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\TelecomServiceSystem.Data.Models\TelecomServiceSystem.Data.Models.csproj" />
     <ProjectReference Include="..\..\Services\TelecomServiceSystem.Services.Mapping\TelecomServiceSystem.Services.Mapping.csproj" />
+    <ProjectReference Include="..\..\TelecomServiceSystem.Common\TelecomServiceSystem.Common.csproj" />
     <ProjectReference Include="..\..\TelecomServiceSystem.Models\TelecomServiceSystem.Services.Models.csproj" />
   </ItemGroup>
 

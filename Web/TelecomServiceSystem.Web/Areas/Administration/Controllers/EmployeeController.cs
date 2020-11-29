@@ -6,6 +6,7 @@
 
     using Microsoft.AspNetCore.Mvc;
     using TelecomServiceSystem.Services.CloudinaryService;
+    using TelecomServiceSystem.Services.Data.Addresses;
     using TelecomServiceSystem.Services.Data.Employees;
     using TelecomServiceSystem.Services.Data.Teams;
     using TelecomServiceSystem.Web.Controllers;
@@ -18,12 +19,14 @@
         private readonly IEmployeesService employeesService;
         private readonly ITeamsService teamsService;
         private readonly IUploadService uploadService;
+        private readonly IAddressService addressService;
 
-        public EmployeeController(IEmployeesService employeesService, ITeamsService teamsService, IUploadService uploadService)
+        public EmployeeController(IEmployeesService employeesService, ITeamsService teamsService, IUploadService uploadService, IAddressService addressService)
         {
             this.employeesService = employeesService;
             this.teamsService = teamsService;
             this.uploadService = uploadService;
+            this.addressService = addressService;
         }
 
         public async Task<IActionResult> Index()
@@ -62,7 +65,11 @@
                 return this.View(model);
             }
 
-            model.PictureURL = await this.uploadService.UploadImageAsync(model.NewImage);
+            if (model.NewImage != null)
+            {
+                model.PictureURL = await this.uploadService.UploadImageAsync(model.NewImage);
+            }
+
             await this.employeesService.Edit<EditViewModel>(model);
 
             return this.View(model);
@@ -88,6 +95,11 @@
 
         public async Task<IActionResult> CreateTeam(string employeeId, int cityId)
         {
+            if (!await this.employeesService.Exist(employeeId) || !await this.addressService.CityExist(cityId))
+            {
+                return this.NotFound();
+            }
+
             await this.teamsService.CreateAsync(employeeId, cityId);
 
             return this.RedirectToAction("Index");

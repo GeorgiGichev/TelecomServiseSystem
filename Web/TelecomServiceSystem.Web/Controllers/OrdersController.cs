@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.SignalR;
@@ -23,6 +23,7 @@
     using TelecomServiceSystem.Web.ViewModels.Orders;
     using TelecomServiceSystem.Web.ViewModels.Orders.Search;
 
+    [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + GlobalConstants.SellerRoleName)]
     public class OrdersController : BaseController
     {
         private readonly IOrderService orderService;
@@ -35,8 +36,9 @@
         private readonly IAddressService addressService;
         private readonly ITasksService tasksService;
         private readonly IHubContext<TaskHub, ITaskHub> context;
+        private readonly ICustomerService customerService;
 
-        public OrdersController(IOrderService orderService, IServiceService serviceService, IServiceNumberService numberService, IServiceInfoService serviceInfoService, IViewRenderService viewRenderService, IHtmlToPdfConverter htmlToPdfConverter, IWebHostEnvironment environment, IAddressService addressService, ITasksService tasksService, IHubContext<TaskHub, ITaskHub> context)
+        public OrdersController(IOrderService orderService, IServiceService serviceService, IServiceNumberService numberService, IServiceInfoService serviceInfoService, IViewRenderService viewRenderService, IHtmlToPdfConverter htmlToPdfConverter, IWebHostEnvironment environment, IAddressService addressService, ITasksService tasksService, IHubContext<TaskHub, ITaskHub> context, ICustomerService customerService)
         {
             this.orderService = orderService;
             this.serviceService = serviceService;
@@ -48,10 +50,16 @@
             this.addressService = addressService;
             this.tasksService = tasksService;
             this.context = context;
+            this.customerService = customerService;
         }
 
-        public IActionResult ChooseServiceType(string customerId)
+        public async Task<IActionResult> ChooseServiceType(string customerId)
         {
+            if (!await this.customerService.Exist(customerId))
+            {
+                return this.NotFound();
+            }
+
             var model = new ChooseServiceViewModel { CustomerId = customerId };
             return this.View(model);
         }
@@ -64,12 +72,22 @@
 
         public async Task<IActionResult> AddressesAsJson(string customerId)
         {
+            if (!await this.customerService.Exist(customerId))
+            {
+                return this.NotFound();
+            }
+
             var addresses = await this.addressService.GetByCustomerId<InstalationAddressViewModel>(customerId);
             return this.Json(addresses);
         }
 
         public async Task<IActionResult> Create(string customerId, string serviceType)
         {
+            if (!await this.customerService.Exist(customerId))
+            {
+                return this.NotFound();
+            }
+
             var model = new OrderInputViewModel
             {
                 ServiceType = serviceType,
@@ -100,6 +118,11 @@
         [HttpPost]
         public async Task<IActionResult> Create(OrderInputViewModel model)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model.ServiceType, model);
+            }
+
             await this.CreateOrder(model.ServiceType, model);
             string customerId = model.ServiceType == "mobile" ? model.MobileServiceInfo.CustomerId : model.FixedServiceInfo.CustomerId;
             return this.RedirectToAction("AllByCustomer", "Services", new

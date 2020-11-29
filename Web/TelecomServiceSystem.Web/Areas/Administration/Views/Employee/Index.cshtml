@@ -34,6 +34,11 @@
                                 <span asp-validation-for="@Model.Input.EGN" class="text-danger"></span>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Input.IsDeleted"></label>
+                            <input type="checkbox" asp-for="@Model.Input.IsDeleted"/>
+                            <span asp-validation-for="@Model.Input.IsDeleted" class="text-danger"></span>
+                        </div>
                         <div class="form-row">
                             <div class=" col-md-10"></div>
                             <div class="col-md-2">
@@ -72,11 +77,10 @@
                                     <td>@employee.FirstName</td>
                                     <td>@employee.MiddleName</td>
                                     <td>@employee.LastName</td>
-                                    <td><a asp-area="Administration" asp-controller="Employee" asp-action="Edit" asp-route-id="@employee.Id">@employee.EGN</a></td>
+                                    <td><a id="button" asp-area="Administration" asp-controller="Employee" asp-action="Edit" asp-route-id="@employee.Id">@employee.EGN</a></td>
                                     <td>@employee.CreatedOn</td>
                                     <td>@employee.DeletedOn</td>
                                 </tr>}
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -85,12 +89,8 @@
                     </form>
                 </div>
                 <div class="col-md-6 col-md-offset-2">
-                    <section>
-                    </section>
                 </div>
             </div>
         </div>
-
-        
     </div>
 </div>

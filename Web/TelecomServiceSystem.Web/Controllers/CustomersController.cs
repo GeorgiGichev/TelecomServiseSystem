@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using TelecomServiceSystem.Common;
     using TelecomServiceSystem.Services.Data.Addresses;
@@ -13,6 +13,7 @@
     using TelecomServiceSystem.Web.ViewModels.Customers;
     using TelecomServiceSystem.Web.ViewModels.CustomersSearch;
 
+    [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + GlobalConstants.SellerRoleName)]
     public class CustomersController : BaseController
     {
         private readonly ICustomerService customerService;

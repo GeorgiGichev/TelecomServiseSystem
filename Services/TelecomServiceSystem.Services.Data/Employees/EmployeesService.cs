@@ -33,6 +33,11 @@
             await this.usersRepo.UpdateModel(employee, input);
         }
 
+        public async Task<bool> Exist(string id)
+        {
+            return await this.usersRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.Id == id) == null ? false : true;
+        }
+
         public async Task<T> GetByIdAsync<T>(string id)
             => (await this.usersRepo.All().FirstOrDefaultAsync(e => e.Id == id)).To<T>();
 

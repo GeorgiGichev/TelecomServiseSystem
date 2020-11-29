@@ -48,7 +48,7 @@
 
         public async Task<string> GetICC()
         {
-            if (this.simRepo.All().Any())
+            if (!this.simRepo.All().Any())
             {
                 return GlobalConstants.NoAvailableSimMessage;
             }
@@ -149,6 +149,18 @@
             await this.serviceNumberService.SetNumberAsFreeAsync(service.ServiceNumberId);
             this.serviseInfoRepo.Update(service);
             await this.serviseInfoRepo.SaveChangesAsync();
+        }
+
+        public async Task<bool> ExistByOrderId(string orderId)
+        {
+            return await this.serviseInfoRepo.AllAsNoTracking()
+                .FirstOrDefaultAsync(x => x.OrderId == orderId) == null ? false : true;
+        }
+
+        public async Task<bool> ExistById(int id)
+        {
+            return await this.serviseInfoRepo.AllAsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id) == null ? false : true;
         }
     }
 }

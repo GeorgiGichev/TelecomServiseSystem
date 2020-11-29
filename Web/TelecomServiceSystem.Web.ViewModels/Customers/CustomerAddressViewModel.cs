@@ -26,6 +26,8 @@
         [Display(Name = "Neighborhood")]
         public string Neighborhood { get; set; }
 
+        [Required]
+        [Range(1, int.MaxValue)]
         [Display(Name = "Number")]
         public int Number { get; set; }
 
@@ -42,5 +44,7 @@
         public bool IsMainAddress { get; set; }
 
         public string CustomerId { get; set; }
+
+        public int CityId { get; set; }
     }
 }

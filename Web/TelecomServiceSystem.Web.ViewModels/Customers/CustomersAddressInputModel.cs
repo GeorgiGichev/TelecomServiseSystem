@@ -24,6 +24,8 @@
         [Display(Name = "Neighborhood")]
         public string Neighborhood { get; set; }
 
+        [Required]
+        [Range(1, int.MaxValue)]
         [Display(Name = "Number")]
         public int Number { get; set; }
 

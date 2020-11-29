@@ -14,5 +14,7 @@
         Task Edit<T>(T input);
 
         Task<IEnumerable<T>> GetAllForBilling<T>();
+
+        Task<bool> Exist(string id);
     }
 }

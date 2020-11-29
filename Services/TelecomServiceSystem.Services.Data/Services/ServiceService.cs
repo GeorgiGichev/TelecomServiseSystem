@@ -32,7 +32,7 @@
         {
             var service = model.To<Service>();
             if (await this.serviceRepo.AllAsNoTracking()
-                .FirstOrDefaultAsync(x => x.Name == service.Name) == null)
+                .FirstOrDefaultAsync(x => x.Name.ToLower() == service.Name.ToLower()) == null)
             {
                 await this.serviceRepo.AddAsync(service);
                 await this.serviceRepo.SaveChangesAsync();

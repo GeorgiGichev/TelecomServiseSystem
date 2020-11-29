@@ -12,5 +12,7 @@
         public string LastName { get; set; }
 
         public string EGN { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

@@ -61,6 +61,11 @@
 
         public async Task<IActionResult> CompleteInstalation(string orderId)
         {
+            if (!await this.serviceInfoService.ExistByOrderId(orderId))
+            {
+                return this.NotFound();
+            }
+
             var model = await this.serviceInfoService.GetByOrderIdAsync<FixedServiceInfiViewModel>(orderId);
             await this.orderService.FinishOrderAsync<FixedServiceInfiViewModel>(model);
             return this.RedirectToAction(nameof(this.AllTasks));

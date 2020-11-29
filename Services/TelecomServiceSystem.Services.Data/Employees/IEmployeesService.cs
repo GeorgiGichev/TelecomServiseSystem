@@ -12,5 +12,7 @@
         Task Edit<T>(T input);
 
         Task AddToTeam<T>(T input);
+
+        Task<bool> Exist(string id);
     }
 }

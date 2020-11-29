@@ -24,5 +24,9 @@
         Task Renew<T>(T model);
 
         Task ContractCancel(int id);
+
+        Task<bool> ExistByOrderId(string orderId);
+
+        Task<bool> ExistById(int id);
     }
 }
