@@ -77,7 +77,7 @@
                 return this.NotFound();
             }
 
-            var addresses = await this.addressService.GetByCustomerId<InstalationAddressViewModel>(customerId);
+            var addresses = await this.addressService.GetByCustomerIdAsync<InstalationAddressViewModel>(customerId);
             return this.Json(addresses);
         }
 

@@ -50,8 +50,8 @@
         {
             var addressInput = input.To<Address>();
             var mainAddress = await this.addressRepo.AllAsNoTracking()
-                .FirstOrDefaultAsync(x => x.IsMainAddress);
-            if (mainAddress != null && addressInput.IsMainAddress)
+                .FirstOrDefaultAsync(x => x.CustomerId == addressInput.CustomerId && x.IsMainAddress);
+            if (mainAddress != null && mainAddress.Id != addressInput.Id && addressInput.IsMainAddress)
             {
                 addressInput.IsMainAddress = false;
             }
@@ -61,36 +61,29 @@
             await this.addressRepo.UpdateModel(address, addressInput);
         }
 
-        public async Task<IEnumerable<T>> GetByCustomerId<T>(string customerId)
-        {
-            return await this.addressRepo.All()
-                .Where(x => x.CustomerId == customerId)
-                .To<T>().ToListAsync();
-        }
-
         public async Task<IEnumerable<T>> GetCitiesByCountryAsync<T>(string country)
         {
-            return await this.cityRepo.All()
+            var result = this.cityRepo.All()
                 .Where(x => x.Country.Name == country)
-                .To<T>()
-                .ToListAsync();
+                .To<T>();
+
+            var res = await result.ToListAsync();
+            return result;
         }
 
-        public async Task<IEnumerable<T>> GetAllCountries<T>()
-        {
-            return await this.countryRepo.All()
-                .To<T>()
-                .ToListAsync();
-        }
-
-        public async Task<int> GetCityIdByAddressId(int addressId)
+        public async Task<int> GetCityIdByAddressIdAsync(int addressId)
         {
             var address = await this.addressRepo.All()
                 .FirstOrDefaultAsync(x => x.Id == addressId);
+            if (address == null)
+            {
+                return 0;
+            }
+
             return address.CityId;
         }
 
-        public async Task AddNewCity<T>(T model)
+        public async Task AddNewCityAsync<T>(T model)
         {
             var city = model.To<City>();
             city.CountryId = (await this.countryRepo.AllAsNoTracking()
@@ -103,7 +96,7 @@
             }
         }
 
-        public async Task<bool> CityExist(int id)
+        public async Task<bool> CityExistAsync(int id)
         {
             return await this.cityRepo.AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id) == null ? false : true;

@@ -49,8 +49,6 @@
 
         public DbSet<SimCard> SimCards { get; set; }
 
-        public DbSet<Setting> Settings { get; set; }
-
         public DbSet<ServiceNumber> ServiceNumbers { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);

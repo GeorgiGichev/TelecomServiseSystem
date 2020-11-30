@@ -71,7 +71,7 @@
             string customerId = await this.customerService.CreateAsync<CustomerInputModel>(customer);
             var address = model.Address;
             address.CustomerId = customerId;
-            await this.addressService.CreateAsync(address);
+            await this.addressService.CreateAsync<CustomersAddressInputModel>(address);
             return this.RedirectToAction("Search");
         }
 

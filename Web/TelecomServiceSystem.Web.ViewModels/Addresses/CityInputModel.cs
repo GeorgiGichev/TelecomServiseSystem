@@ -5,7 +5,7 @@
     using TelecomServiceSystem.Data.Models;
     using TelecomServiceSystem.Services.Mapping;
 
-    public class CityInputModel : IMapTo<City>
+    public class CityInputModel : IMapTo<City>, IMapFrom<City>
     {
         [Required]
         [MaxLength(50)]

@@ -29,6 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\TelecomServiceSystem.Data\TelecomServiceSystem.Data.csproj" />
     <ProjectReference Include="..\..\Services\TelecomServiceSystem.Services.Data\TelecomServiceSystem.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Web\TelecomServiceSystem.Web.ViewModels\TelecomServiceSystem.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

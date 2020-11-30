@@ -39,7 +39,6 @@
                               new AddresSeeder(),
                               new RolesSeeder(),
                               new UserSeeder(),
-                              new SettingsSeeder(),
                               new SimSeeder(),
                           };
 

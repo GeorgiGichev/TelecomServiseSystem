@@ -66,7 +66,7 @@
 
         public async Task<IEnumerable<T>> GetFreeSlotsByAddressId<T>(int addressId)
         {
-            var cityId = await this.addressService.GetCityIdByAddressId(addressId);
+            var cityId = await this.addressService.GetCityIdByAddressIdAsync(addressId);
             var result = await this.slotRepo.All()
                 .OrderBy(x => x.StartingTime)
                 .Where(x => x.StartingTime.Date > DateTime.UtcNow.Date && x.StartingTime.Date <= DateTime.UtcNow.AddDays(11).Date && x.Team.CityId == cityId && !x.Team.Tasks.Any(t => t.InstalationDate == x.StartingTime))

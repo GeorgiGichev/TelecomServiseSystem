@@ -75,7 +75,7 @@
                 return this.View(model);
             }
 
-            await this.addressService.AddNewCity<CityInputModel>(model);
+            await this.addressService.AddNewCityAsync<CityInputModel>(model);
             return this.Redirect($"/Home/Index");
         }
     }

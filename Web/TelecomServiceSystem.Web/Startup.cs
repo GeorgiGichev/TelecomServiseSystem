@@ -120,7 +120,6 @@
 
             // Application services
             services.AddTransient<IEmailSender>(serviceProvider => new SendGridEmailSender(this.configuration["SendGridKey"]));
-            services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IEmployeesService, EmployeesService>();
             services.AddTransient<ICustomerService, CustomerService>();
             services.AddTransient<IAddressService, AddressService>();

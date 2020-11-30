@@ -95,7 +95,7 @@
 
         public async Task<IActionResult> CreateTeam(string employeeId, int cityId)
         {
-            if (!await this.employeesService.Exist(employeeId) || !await this.addressService.CityExist(cityId))
+            if (!await this.employeesService.Exist(employeeId) || !await this.addressService.CityExistAsync(cityId))
             {
                 return this.NotFound();
             }

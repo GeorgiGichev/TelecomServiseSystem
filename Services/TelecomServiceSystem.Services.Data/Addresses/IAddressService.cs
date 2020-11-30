@@ -13,16 +13,12 @@
 
         Task EditAsync<T>(T input);
 
-        Task<IEnumerable<T>> GetByCustomerId<T>(string customerId);
-
         Task<IEnumerable<T>> GetCitiesByCountryAsync<T>(string country);
 
-        Task<IEnumerable<T>> GetAllCountries<T>();
+        Task<int> GetCityIdByAddressIdAsync(int addressId);
 
-        Task<int> GetCityIdByAddressId(int addressId);
+        Task AddNewCityAsync<T>(T model);
 
-        Task AddNewCity<T>(T model);
-
-        Task<bool> CityExist(int id);
+        Task<bool> CityExistAsync(int id);
     }
 }
