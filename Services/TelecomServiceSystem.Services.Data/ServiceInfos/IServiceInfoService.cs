@@ -9,7 +9,7 @@
     {
         Task<ServiceInfo> CreateAsync<T>(string orderId, T model);
 
-        Task<string> GetICC();
+        Task<string> GetICCAsync();
 
         Task<T> GetByOrderIdAsync<T>(string orderId);
 
@@ -21,12 +21,12 @@
 
         Task<T> GetByIdAsync<T>(int id);
 
-        Task Renew<T>(T model);
+        Task RenewAsync<T>(T model);
 
-        Task ContractCancel(int id);
+        Task ContractCancelAsync(int id);
 
-        Task<bool> ExistByOrderId(string orderId);
+        Task<bool> ExistByOrderIdAsync(string orderId);
 
-        Task<bool> ExistById(int id);
+        Task<bool> ExistByIdAsync(int id);
     }
 }

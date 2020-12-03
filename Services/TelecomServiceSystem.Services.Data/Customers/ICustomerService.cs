@@ -11,10 +11,10 @@
 
         Task<T> GetByIdAsync<T>(string id);
 
-        Task Edit<T>(T input);
+        Task EditAsync<T>(T input);
 
-        Task<IEnumerable<T>> GetAllForBilling<T>();
+        Task<IEnumerable<T>> GetAllForBillingAsync<T>();
 
-        Task<bool> Exist(string id);
+        Task<bool> ExistAsync(string id);
     }
 }

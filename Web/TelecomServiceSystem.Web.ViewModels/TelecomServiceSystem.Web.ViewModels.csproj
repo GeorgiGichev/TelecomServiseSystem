@@ -24,6 +24,7 @@
     <ProjectReference Include="..\..\Services\TelecomServiceSystem.Services.Mapping\TelecomServiceSystem.Services.Mapping.csproj" />
     <ProjectReference Include="..\..\TelecomServiceSystem.Common\TelecomServiceSystem.Common.csproj" />
     <ProjectReference Include="..\..\TelecomServiceSystem.Models\TelecomServiceSystem.Services.Models.csproj" />
+    <ProjectReference Include="..\..\Tests\TelecomServiceSystem.Services.Data.Tests\TelecomServiceSystem.Services.Data.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

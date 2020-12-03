@@ -40,13 +40,13 @@
 
         public async Task<T> GetByOrderIdAsync<T>(string orderId)
         {
-            return await this.serviseInfoRepo.All()
+            var result = (await this.serviseInfoRepo.All()
                 .Where(si => si.OrderId == orderId)
-                .To<T>()
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync()).To<T>();
+            return result;
         }
 
-        public async Task<string> GetICC()
+        public async Task<string> GetICCAsync()
         {
             if (!this.simRepo.All().Any())
             {
@@ -57,6 +57,7 @@
               .FirstOrDefaultAsync();
 
             this.simRepo.Delete(sim);
+            await this.simRepo.SaveChangesAsync();
             return sim.ICC;
         }
 
@@ -112,7 +113,8 @@
                 orders = orders.Where(o => o.Service.Name.ToLower().Contains(order.ServiceName.ToLower()));
             }
 
-            var result = await orders.To<TOutput>()
+            var result = await orders
+                .To<TOutput>()
                 .ToListAsync();
 
             return result;
@@ -133,7 +135,7 @@
                 .FirstOrDefaultAsync();
         }
 
-        public async Task Renew<T>(T model)
+        public async Task RenewAsync<T>(T model)
         {
             var serviceInput = model.To<ServiceInfo>();
             var service = await this.serviseInfoRepo.All().FirstOrDefaultAsync(a => a.Id == serviceInput.Id);
@@ -141,7 +143,7 @@
             await this.serviseInfoRepo.UpdateModel(service, model);
         }
 
-        public async Task ContractCancel(int id)
+        public async Task ContractCancelAsync(int id)
         {
             var service = await this.serviseInfoRepo.All().FirstOrDefaultAsync(x => x.Id == id);
             service.IsActive = false;
@@ -151,13 +153,13 @@
             await this.serviseInfoRepo.SaveChangesAsync();
         }
 
-        public async Task<bool> ExistByOrderId(string orderId)
+        public async Task<bool> ExistByOrderIdAsync(string orderId)
         {
             return await this.serviseInfoRepo.AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.OrderId == orderId) == null ? false : true;
         }
 
-        public async Task<bool> ExistById(int id)
+        public async Task<bool> ExistByIdAsync(int id)
         {
             return await this.serviseInfoRepo.AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id) == null ? false : true;

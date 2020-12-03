@@ -26,7 +26,15 @@
 
         public async Task CreateAsync<T>(T model)
         {
+            var mainAddress = await this.addressRepo.All()
+                .FirstOrDefaultAsync(x => x.IsMainAddress);
             var address = model.To<Address>();
+            if (mainAddress != null && address.IsMainAddress)
+            {
+                mainAddress.IsMainAddress = false;
+                this.addressRepo.Update(mainAddress);
+            }
+
             await this.addressRepo.AddAsync(address);
             await this.addressRepo.SaveChangesAsync();
         }
@@ -49,11 +57,12 @@
         public async Task EditAsync<T>(T input)
         {
             var addressInput = input.To<Address>();
-            var mainAddress = await this.addressRepo.AllAsNoTracking()
+            var mainAddress = await this.addressRepo.All()
                 .FirstOrDefaultAsync(x => x.CustomerId == addressInput.CustomerId && x.IsMainAddress);
             if (mainAddress != null && mainAddress.Id != addressInput.Id && addressInput.IsMainAddress)
             {
-                addressInput.IsMainAddress = false;
+                mainAddress.IsMainAddress = false;
+                this.addressRepo.Update(mainAddress);
             }
 
             var address = await this.addressRepo.All()
@@ -63,11 +72,11 @@
 
         public async Task<IEnumerable<T>> GetCitiesByCountryAsync<T>(string country)
         {
-            var result = this.cityRepo.All()
+            var result = await this.cityRepo.All()
                 .Where(x => x.Country.Name == country)
-                .To<T>();
+                .To<T>()
+                .ToListAsync();
 
-            var res = await result.ToListAsync();
             return result;
         }
 

@@ -21,19 +21,14 @@
             this.usersRepo = usersRepo;
         }
 
-        public Task AddToTeam<T>(T input)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task Edit<T>(T input)
+        public async Task EditAsync<T>(T input)
         {
             var employeeToEdit = input.To<ApplicationUser>();
             var employee = await this.GetByIdAsync<ApplicationUser>(employeeToEdit.Id);
             await this.usersRepo.UpdateModel(employee, input);
         }
 
-        public async Task<bool> Exist(string id)
+        public async Task<bool> ExistAsync(string id)
         {
             return await this.usersRepo.AllAsNoTracking().FirstOrDefaultAsync(x => x.Id == id) == null ? false : true;
         }

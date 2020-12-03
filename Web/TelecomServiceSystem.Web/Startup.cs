@@ -38,6 +38,7 @@
     using TelecomServiceSystem.Services.Data.Services;
     using TelecomServiceSystem.Services.Data.Tasks;
     using TelecomServiceSystem.Services.Data.Teams;
+    using TelecomServiceSystem.Services.Data.Tests.TestsModels;
     using TelecomServiceSystem.Services.HtmlToPDF;
     using TelecomServiceSystem.Services.Mapping;
     using TelecomServiceSystem.Services.Messaging;
@@ -90,7 +91,8 @@
                         }));
 
             services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
+                options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection"))
+                .EnableSensitiveDataLogging());
 
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
@@ -142,7 +144,9 @@
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IRecurringJobManager recurringJobManager)
         {
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly, typeof(InputCustomerSearchModel).GetTypeInfo().Assembly);
+            AutoMapperConfig.RegisterMappings(
+                typeof(ErrorViewModel).GetTypeInfo().Assembly,
+                typeof(InputCustomerSearchModel).GetTypeInfo().Assembly);
 
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())

@@ -1,11 +1,11 @@
 ﻿namespace TelecomServiceSystem.Services.Data.Bills
 {
-    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
     using TelecomServiceSystem.Data.Common.Repositories;
     using TelecomServiceSystem.Data.Models;
     using TelecomServiceSystem.Services.Mapping;
@@ -19,7 +19,7 @@
             this.billRepo = billRepo;
         }
 
-        public async Task Create(string customerId, string url)
+        public async Task CreateAsync(string customerId, string url)
         {
             var bill = new Bill
             {

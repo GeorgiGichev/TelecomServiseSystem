@@ -35,7 +35,7 @@
 
         public async Task<IActionResult> Cancellation(int serviceInfoId)
         {
-            if (!await this.serviceInfoService.ExistById(serviceInfoId))
+            if (!await this.serviceInfoService.ExistByIdAsync(serviceInfoId))
             {
                 return this.NotFound();
             }
@@ -52,7 +52,7 @@
                 return this.View(model);
             }
 
-            await this.serviceInfoService.ContractCancel(model.Id);
+            await this.serviceInfoService.ContractCancelAsync(model.Id);
             return this.Redirect($"/Services/AllByCustomer/{model.CustomerId}");
         }
 

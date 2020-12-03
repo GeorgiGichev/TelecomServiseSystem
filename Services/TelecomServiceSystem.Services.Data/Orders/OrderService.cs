@@ -14,13 +14,13 @@
     public class OrderService : IOrderService
     {
         private readonly IDeletableEntityRepository<Order> orderRepo;
-        private readonly IServiceInfoService seriveInfoService;
+        private readonly IServiceInfoService serviceInfoService;
         private readonly IServiceNumberService serviceNumberService;
 
-        public OrderService(IDeletableEntityRepository<Order> orderRepo, IServiceInfoService seriveInfoService, IServiceNumberService serviceNumberService)
+        public OrderService(IDeletableEntityRepository<Order> orderRepo, IServiceInfoService serviceInfoService, IServiceNumberService serviceNumberService)
         {
             this.orderRepo = orderRepo;
-            this.seriveInfoService = seriveInfoService;
+            this.serviceInfoService = serviceInfoService;
             this.serviceNumberService = serviceNumberService;
         }
 
@@ -34,7 +34,7 @@
             };
             await this.orderRepo.AddAsync(orderToAdd);
             await this.orderRepo.SaveChangesAsync();
-            var info = await this.seriveInfoService.CreateAsync(orderToAdd.Id, serviceInfo);
+            var info = await this.serviceInfoService.CreateAsync(orderToAdd.Id, serviceInfo);
 
             return info.To<Toutput>();
         }
@@ -47,7 +47,7 @@
             order.FinishedOn = DateTime.UtcNow;
             this.orderRepo.Update(order);
             await this.serviceNumberService.SetNumberAsHiredAsync(infoModel.ServiceNumberId);
-            await this.seriveInfoService.SetServiceAsActiveAsync(infoModel.Id);
+            await this.serviceInfoService.SetServiceAsActiveAsync(infoModel.Id);
         }
     }
 }

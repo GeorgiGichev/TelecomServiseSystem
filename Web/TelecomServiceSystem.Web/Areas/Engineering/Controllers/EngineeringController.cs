@@ -9,14 +9,13 @@
     using TelecomServiceSystem.Services.Data.Orders;
     using TelecomServiceSystem.Services.Data.ServiceInfos;
     using TelecomServiceSystem.Services.Data.Tasks;
+    using TelecomServiceSystem.Web.Areas.Engineering.Controllers;
     using TelecomServiceSystem.Web.Controllers;
     using TelecomServiceSystem.Web.Infrastructure.Extensions;
     using TelecomServiceSystem.Web.ViewModels.Orders;
     using TelecomServiceSystem.Web.ViewModels.Tasks;
 
-    [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + GlobalConstants.EngineerRoleName)]
-    [Area("Engineering")]
-    public class EngineeringController : BaseController
+    public class EngineeringController : EngineeringBaseController
     {
         private readonly ITasksService taskService;
         private readonly IOrderService orderService;
@@ -61,7 +60,7 @@
 
         public async Task<IActionResult> CompleteInstalation(string orderId)
         {
-            if (!await this.serviceInfoService.ExistByOrderId(orderId))
+            if (!await this.serviceInfoService.ExistByOrderIdAsync(orderId))
             {
                 return this.NotFound();
             }

@@ -70,7 +70,7 @@
                 model.PictureURL = await this.uploadService.UploadImageAsync(model.NewImage);
             }
 
-            await this.employeesService.Edit<EditViewModel>(model);
+            await this.employeesService.EditAsync<EditViewModel>(model);
 
             return this.View(model);
         }
@@ -95,7 +95,7 @@
 
         public async Task<IActionResult> CreateTeam(string employeeId, int cityId)
         {
-            if (!await this.employeesService.Exist(employeeId) || !await this.addressService.CityExistAsync(cityId))
+            if (!await this.employeesService.ExistAsync(employeeId) || !await this.addressService.CityExistAsync(cityId))
             {
                 return this.NotFound();
             }

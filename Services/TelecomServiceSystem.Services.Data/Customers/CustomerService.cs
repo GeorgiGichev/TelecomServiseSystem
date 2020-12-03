@@ -28,21 +28,21 @@
             return customerToAdd.Id;
         }
 
-        public async Task Edit<T>(T input)
+        public async Task EditAsync<T>(T input)
         {
             var customerToEdit = input.To<Customer>();
             var customer = await this.GetByIdAsync<Customer>(customerToEdit.Id);
             await this.customerRepo.UpdateModel(customer, input);
         }
 
-        public async Task<bool> Exist(string id)
+        public async Task<bool> ExistAsync(string id)
         {
             return await this.customerRepo.AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id) == null ?
                 false : true;
         }
 
-        public async Task<IEnumerable<T>> GetAllForBilling<T>()
+        public async Task<IEnumerable<T>> GetAllForBillingAsync<T>()
         {
             return await this.customerRepo.All().Where(x => x.ServicesInfo.Any(y => y.IsActive)).To<T>().ToListAsync();
         }

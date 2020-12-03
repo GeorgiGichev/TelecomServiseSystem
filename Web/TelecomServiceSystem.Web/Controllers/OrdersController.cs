@@ -55,7 +55,7 @@
 
         public async Task<IActionResult> ChooseServiceType(string customerId)
         {
-            if (!await this.customerService.Exist(customerId))
+            if (!await this.customerService.ExistAsync(customerId))
             {
                 return this.NotFound();
             }
@@ -72,7 +72,7 @@
 
         public async Task<IActionResult> AddressesAsJson(string customerId)
         {
-            if (!await this.customerService.Exist(customerId))
+            if (!await this.customerService.ExistAsync(customerId))
             {
                 return this.NotFound();
             }
@@ -83,7 +83,7 @@
 
         public async Task<IActionResult> Create(string customerId, string serviceType)
         {
-            if (!await this.customerService.Exist(customerId))
+            if (!await this.customerService.ExistAsync(customerId))
             {
                 return this.NotFound();
             }
@@ -100,7 +100,7 @@
                 model.Numbers = await this.numberService.GetFreeNumbersAsync<ServiceNumberViewModel>(serviceType, null);
                 model.MobileServiceInfo = new MobileServiceInfoViewModel
                 {
-                    ICC = await this.serviceInfoService.GetICC(),
+                    ICC = await this.serviceInfoService.GetICCAsync(),
                     CustomerId = customerId,
                 };
 

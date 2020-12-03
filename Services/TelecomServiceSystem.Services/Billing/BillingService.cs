@@ -33,7 +33,7 @@
 
         public async Task CreateAsync()
         {
-            var customers = await this.customerService.GetAllForBilling<BillViewModel>();
+            var customers = await this.customerService.GetAllForBillingAsync<BillViewModel>();
 
             foreach (var customer in customers)
             {
@@ -59,7 +59,7 @@
 
                 var url = await this.uploadService.UploadBillAsync(fileContents);
 
-                await this.billsService.Create(customer.Id, url);
+                await this.billsService.CreateAsync(customer.Id, url);
                 await this.emailSender.SendEmailAsync("georgi.gichev87@gmail.com", "CustomerService.TSS", customer.Email, "New Invoice", $"<p>Your monthly invoice is available. You can see it at <a href=\"{url}\">{url}</a></p>");
             }
         }

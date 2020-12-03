@@ -40,7 +40,7 @@
                 return this.View(model);
             }
 
-            await this.customerService.Edit<CustomerEditViewModel>(model);
+            await this.customerService.EditAsync<CustomerEditViewModel>(model);
             model.Addresses = await this.addressService.GetByCustomerIdAsync<CustomerAddressViewModel>(model.Id) as ICollection<CustomerAddressViewModel>;
 
             return this.View(model);

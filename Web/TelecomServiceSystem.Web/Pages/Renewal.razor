@@ -72,7 +72,7 @@ else
 
     private async Task Submit()
     {
-        await this.serviceInfo.Renew<ServiceInputModel>(this.InputModel);
+        await this.serviceInfo.RenewAsync<ServiceInputModel>(this.InputModel);
         NavManager.NavigateTo($"/Services/AllByCustomer/{this.InputModel.CustomerId}", true);
     }
 
