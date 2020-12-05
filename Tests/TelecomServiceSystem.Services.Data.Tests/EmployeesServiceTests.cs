@@ -44,7 +44,7 @@
             Assert.Single(customers);
             Assert.Collection(
                 customers,
-                x => x.EGN = "1234567890");
+                x => Assert.Equal("1234567890", x.EGN));
         }
 
         [Fact]
@@ -77,7 +77,7 @@
             Assert.Single(customers);
             Assert.Collection(
                 customers,
-                x => x.FirstName = "ivan");
+                x => Assert.Equal("ivan", x.FirstName));
         }
 
         [Fact]
@@ -110,7 +110,7 @@
             Assert.Single(customers);
             Assert.Collection(
                 customers,
-                x => x.MiddleName = "ivanov");
+                x => Assert.Equal("ivanov", x.MiddleName));
         }
 
         [Fact]
@@ -143,7 +143,7 @@
             Assert.Single(customers);
             Assert.Collection(
                 customers,
-                x => x.LastName = "ivanov");
+                x => Assert.Equal("ivanov", x.LastName));
         }
 
         [Fact]
@@ -184,7 +184,7 @@
             Assert.Single(customers);
             Assert.Collection(
                 customers,
-                x => x.LastName = "ivanov");
+                x => Assert.Equal("ivanov", x.LastName));
         }
 
         [Fact]
@@ -225,7 +225,7 @@
             Assert.Single(customers);
             Assert.Collection(
                 customers,
-                x => x.LastName = "goshov");
+                x => Assert.Equal("goshov", x.LastName));
         }
 
         [Fact]

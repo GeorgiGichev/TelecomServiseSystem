@@ -22,7 +22,7 @@
             this.empRepo = empRepo;
         }
 
-        public async Task AddEmployee(int teamId, string employeeId)
+        public async Task AddEmployeeAsync(int teamId, string employeeId)
         {
             var team = await this.teamRepo.All().FirstOrDefaultAsync(t => t.Id == teamId);
             var employee = await this.empRepo.All().FirstOrDefaultAsync(e => e.Id == employeeId);
@@ -44,14 +44,14 @@
             await this.teamRepo.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllTeams<T>()
+        public async Task<IEnumerable<T>> GetAllTeamsAsync<T>()
         {
             return await this.teamRepo.All()
                 .To<T>()
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetByCityId<T>(int cityId)
+        public async Task<IEnumerable<T>> GetByCityIdAsync<T>(int cityId)
         {
             return await this.teamRepo.All()
                 .Where(t => t.CityId == cityId)
@@ -59,12 +59,12 @@
                 .ToListAsync();
         }
 
-        public async Task<T> GetFreeTeamByCityId<T>(int cityId)
+        public async Task<T> GetFreeTeamByCityIdAsync<T>(int cityId)
         {
-            return await this.teamRepo.All().To<T>().FirstOrDefaultAsync();
+            return await this.teamRepo.All().Where(x => x.CityId == cityId).To<T>().FirstOrDefaultAsync();
         }
 
-        public async Task AddSlotsToTeams()
+        public async Task AddSlotsToTeamsAsync()
         {
             var teamsToAdd = this.teamRepo.All();
 

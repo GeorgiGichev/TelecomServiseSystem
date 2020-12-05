@@ -19,7 +19,11 @@
         private readonly IDeletableEntityRepository<EnginieringTask> taskRepo;
         private readonly IDeletableEntityRepository<Order> orderRepo;
 
-        public TasksService(IDeletableEntityRepository<InstalationSlot> slotRepo, IAddressService addressService, IDeletableEntityRepository<EnginieringTask> taskRepo, IDeletableEntityRepository<Order> orderRepo)
+        public TasksService(
+            IDeletableEntityRepository<InstalationSlot> slotRepo,
+            IAddressService addressService,
+            IDeletableEntityRepository<EnginieringTask> taskRepo,
+            IDeletableEntityRepository<Order> orderRepo)
         {
             this.slotRepo = slotRepo;
             this.addressService = addressService;
@@ -64,7 +68,7 @@
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetFreeSlotsByAddressId<T>(int addressId)
+        public async Task<IEnumerable<T>> GetFreeSlotsByAddressIdAsync<T>(int addressId)
         {
             var cityId = await this.addressService.GetCityIdByAddressIdAsync(addressId);
             var result = await this.slotRepo.All()

@@ -61,7 +61,7 @@
         {
             var model = new ServiceCreateInputModel
             {
-                Types = await this.serviceService.GetAllTypes() as ICollection<string>,
+                Types = await this.serviceService.GetAllTypesAsync() as ICollection<string>,
             };
             return this.View(model);
         }
@@ -75,7 +75,7 @@
                 return this.View(model);
             }
 
-            await this.serviceService.Create<ServiceCreateInputModel>(model);
+            await this.serviceService.CreateAsync<ServiceCreateInputModel>(model);
             return this.Redirect("/Home/Index");
         }
     }

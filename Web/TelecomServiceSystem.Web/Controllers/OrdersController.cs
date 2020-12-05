@@ -93,7 +93,7 @@
                 ServiceType = serviceType,
             };
 
-            model.Services = await this.serviceService.GetServiceNamesByType<ServiceViewModel>(serviceType);
+            model.Services = await this.serviceService.GetServiceNamesByTypeAsync<ServiceViewModel>(serviceType);
 
             if (serviceType == "mobile")
             {

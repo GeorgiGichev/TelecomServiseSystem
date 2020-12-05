@@ -16,7 +16,7 @@
 
         public async Task GenerateSlots()
         {
-            await this.teamsService.AddSlotsToTeams();
+            await this.teamsService.AddSlotsToTeamsAsync();
         }
     }
 }

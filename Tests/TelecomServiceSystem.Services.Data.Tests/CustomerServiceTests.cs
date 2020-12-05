@@ -188,7 +188,7 @@
 
             var model = new CustomerSearchModel
             {
-                FirstName = "Ivan",
+                FirstName = "ivan",
             };
 
             var customers = await service.GetBySearchCriteriaAsync<CustomerModel, CustomerSearchModel>(model);
@@ -196,7 +196,7 @@
             Assert.Single(customers);
             Assert.Collection(
                 customers,
-                x => x.FirstName = "Ivan");
+                x => Assert.Equal("ivan", x.FirstName));
         }
 
         [Fact]
@@ -228,7 +228,7 @@
             Assert.Single(customers);
             Assert.Collection(
                 customers,
-                x => x.MiddleName = "Ivanov");
+                x => Assert.Equal("ivanov", x.MiddleName));
         }
 
         [Fact]
@@ -260,7 +260,7 @@
             Assert.Single(customers);
             Assert.Collection(
                 customers,
-                x => x.LastName = "Ivanov");
+                x => Assert.Equal("ivanov", x.LastName));
         }
 
         [Fact]
@@ -292,7 +292,7 @@
             Assert.Single(customers);
             Assert.Collection(
                 customers,
-                x => x.PersonalNumber = "1234567890");
+                x => Assert.Equal("1234567890", x.PersonalNumber));
         }
     }
 }

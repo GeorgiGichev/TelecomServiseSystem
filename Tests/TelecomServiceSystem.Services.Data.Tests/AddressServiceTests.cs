@@ -410,7 +410,7 @@
             var cities = await service.GetCitiesByCountryAsync<CityModel>(GlobalConstants.CountryOfUsing);
             Assert.Collection(
                 cities,
-                x => x.Name = "Varna");
+                x => Assert.Equal("Varna", x.Name));
             Assert.Single(cities);
         }
     }

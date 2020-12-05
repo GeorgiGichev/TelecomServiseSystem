@@ -81,7 +81,7 @@
             {
                 CityId = cityId,
                 EmployeeId = employeeId,
-                Teams = await this.teamsService.GetByCityId<TeamViewModel>(cityId) as ICollection<TeamViewModel>,
+                Teams = await this.teamsService.GetByCityIdAsync<TeamViewModel>(cityId) as ICollection<TeamViewModel>,
             };
 
             return this.View(model);
@@ -89,7 +89,7 @@
 
         public async Task<IActionResult> AddToTeam(int teamId, string employeeId)
         {
-            await this.teamsService.AddEmployee(teamId, employeeId);
+            await this.teamsService.AddEmployeeAsync(teamId, employeeId);
             return this.RedirectToAction("Index");
         }
 

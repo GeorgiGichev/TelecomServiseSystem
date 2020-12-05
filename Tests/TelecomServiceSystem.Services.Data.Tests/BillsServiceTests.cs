@@ -60,7 +60,7 @@
             Assert.Single(bills);
             Assert.Collection(
                 bills,
-                x => x.Url = url);
+                x => Assert.Equal(url, x.Url));
         }
     }
 }

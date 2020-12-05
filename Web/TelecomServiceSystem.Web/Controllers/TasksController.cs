@@ -19,7 +19,7 @@
 
         public async Task<IActionResult> GetFreeSlotsAsJson(int addressId)
         {
-            var slots = await this.tasksService.GetFreeSlotsByAddressId<SlotViewModel>(addressId);
+            var slots = await this.tasksService.GetFreeSlotsByAddressIdAsync<SlotViewModel>(addressId);
             return this.Json(slots);
         }
     }

@@ -62,7 +62,7 @@ else
     {
         this.InputModel = await this.serviceInfo.GetByIdAsync<ServiceInputModel>(this.Id);
 
-        this.Services = await this.serviceService.GetServiceNamesByType<ServiceViewModelBlazor>(this.InputModel.ServiceServiceType);
+        this.Services = await this.serviceService.GetServiceNamesByTypeAsync<ServiceViewModelBlazor>(this.InputModel.ServiceServiceType);
     }
 
     private async Task GetPdf()

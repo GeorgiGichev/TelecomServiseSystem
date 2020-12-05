@@ -240,9 +240,6 @@
             var serviceInfos = await service.GetBySearchCriteriaAsync<InputOrderSearchModel, ServiceInfoSearchModel>(serviceInfo);
 
             Assert.Single(serviceInfos);
-            Assert.Collection(
-                serviceInfos,
-                x => x.ServiceType = ServiceType.Mobile.ToString());
         }
 
         [Fact]

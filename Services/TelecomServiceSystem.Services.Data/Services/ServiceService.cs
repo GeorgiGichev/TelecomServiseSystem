@@ -20,7 +20,7 @@
             this.serviceRepo = serviceRepo;
         }
 
-        public async Task<IEnumerable<T>> GetServiceNamesByType<T>(string type)
+        public async Task<IEnumerable<T>> GetServiceNamesByTypeAsync<T>(string type)
         {
             return await this.serviceRepo.All()
                .Where(s => s.ServiceType == Enum.Parse<ServiceType>(type, true))
@@ -28,7 +28,7 @@
                .ToListAsync();
         }
 
-        public async Task Create<T>(T model)
+        public async Task CreateAsync<T>(T model)
         {
             var service = model.To<Service>();
             if (await this.serviceRepo.AllAsNoTracking()
@@ -39,7 +39,7 @@
             }
         }
 
-        public async Task<IEnumerable<string>> GetAllTypes()
+        public async Task<IEnumerable<string>> GetAllTypesAsync()
         {
             var result = await this.serviceRepo.AllAsNoTracking()
                 .Select(x => x.ServiceType.ToString())

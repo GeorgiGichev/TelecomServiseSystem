@@ -5,10 +5,10 @@
 
     public interface IServiceService
     {
-        Task<IEnumerable<T>> GetServiceNamesByType<T>(string type);
+        Task<IEnumerable<T>> GetServiceNamesByTypeAsync<T>(string type);
 
-        Task Create<T>(T model);
+        Task CreateAsync<T>(T model);
 
-        Task<IEnumerable<string>> GetAllTypes();
+        Task<IEnumerable<string>> GetAllTypesAsync();
     }
 }

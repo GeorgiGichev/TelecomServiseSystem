@@ -1,9 +1,10 @@
 ﻿namespace TelecomServiceSystem.Services.Data.Tests
 {
-    using Microsoft.EntityFrameworkCore;
-    using Moq;
     using System;
     using System.Threading.Tasks;
+
+    using Microsoft.EntityFrameworkCore;
+    using Moq;
     using TelecomServiceSystem.Data;
     using TelecomServiceSystem.Data.Models;
     using TelecomServiceSystem.Data.Models.Enums;

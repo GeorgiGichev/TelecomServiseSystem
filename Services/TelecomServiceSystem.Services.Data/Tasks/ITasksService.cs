@@ -5,7 +5,7 @@
 
     public interface ITasksService
     {
-        Task<IEnumerable<T>> GetFreeSlotsByAddressId<T>(int addressId);
+        Task<IEnumerable<T>> GetFreeSlotsByAddressIdAsync<T>(int addressId);
 
         Task CreateAsync(string orderId, int slotId);
 

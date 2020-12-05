@@ -21,13 +21,13 @@
         public async Task<IEnumerable<T>> GetFreeNumbersAsync<T>(string serviceType, string serviceName)
         {
             string startOfNumber = string.Empty;
-            if (serviceType == "mobile")
+            if (serviceType.ToLower() == "mobile")
             {
                 startOfNumber = "86";
             }
             else
             {
-                if (serviceName.Contains("Net"))
+                if (serviceName.ToLower().Contains("net"))
                 {
                     startOfNumber = "N.";
                 }
