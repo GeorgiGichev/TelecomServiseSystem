@@ -1,7 +1,9 @@
 ﻿namespace TelecomServiceSystem.Web.ViewModels.Services
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
+    using Microsoft.AspNetCore.Http;
     using TelecomServiceSystem.Data.Models;
     using TelecomServiceSystem.Services.Mapping;
 
@@ -18,5 +20,8 @@
         public DateTime Expirеs { get; set; }
 
         public string CustomerId { get; set; }
+
+        [Required]
+        public IFormFile Image { get; set; }
     }
 }

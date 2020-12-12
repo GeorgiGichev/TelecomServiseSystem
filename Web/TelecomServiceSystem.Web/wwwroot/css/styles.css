@@ -2590,6 +2590,11 @@ fieldset:disabled a.btn {
     color: #fff;
     background-color: #007bff;
     border-color: #007bff;
+    border-radius: 0;
+    box-shadow: 2px 2px 4px #000000;
+    text-shadow: 2px 2px 4px #000000;
+    border-radius: 5px;
+    overflow: hidden;
 }
 
     .btn-primary:hover {
@@ -2625,6 +2630,11 @@ fieldset:disabled a.btn {
     color: #fff;
     background-color: #6c757d;
     border-color: #6c757d;
+    border-radius: 0;
+    box-shadow: 2px 2px 4px #000000;
+    text-shadow: 2px 2px 4px #000000;
+    border-radius: 5px;
+    overflow: hidden;
 }
 
     .btn-secondary:hover {

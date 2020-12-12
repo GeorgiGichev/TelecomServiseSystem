@@ -31,10 +31,11 @@
             {
                 UserId = orderFromModel.UserId,
                 Status = Status.ForExecution,
+                DocumentUrl = orderFromModel.DocumentUrl,
             };
             await this.orderRepo.AddAsync(orderToAdd);
             await this.orderRepo.SaveChangesAsync();
-            var info = await this.serviceInfoService.CreateAsync(orderToAdd.Id, serviceInfo);
+            var info = await this.serviceInfoService.CreateAsync(orderToAdd.Id, serviceInfo, orderFromModel.DocumentUrl);
 
             return info.To<Toutput>();
         }

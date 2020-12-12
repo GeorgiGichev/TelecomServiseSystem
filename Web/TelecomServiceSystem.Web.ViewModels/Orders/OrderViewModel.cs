@@ -10,5 +10,7 @@
         public string UserId { get; set; }
 
         public int ServiceInfoId { get; set; }
+
+        public string DocumentUrl { get; set; }
     }
 }

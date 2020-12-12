@@ -27,8 +27,4 @@
     <ProjectReference Include="..\..\Tests\TelecomServiceSystem.Services.Data.Tests\TelecomServiceSystem.Services.Data.Tests.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="SignalR\" />
-  </ItemGroup>
-
 </Project>

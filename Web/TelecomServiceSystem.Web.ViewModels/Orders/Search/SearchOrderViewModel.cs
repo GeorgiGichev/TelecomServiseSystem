@@ -18,5 +18,7 @@
         public DateTime? OrderCreatedOn { get; set; }
 
         public string ServiceName { get; set; }
+
+        public string OrderDocumentUrl { get; set; }
     }
 }

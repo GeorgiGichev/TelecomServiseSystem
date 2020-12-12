@@ -4,10 +4,20 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using TelecomServiceSystem.Common;
+    using TelecomServiceSystem.Services.CloudinaryService;
+    using TelecomServiceSystem.Services.Data.Addresses;
+    using TelecomServiceSystem.Services.Data.Customers;
     using TelecomServiceSystem.Services.Data.ServiceInfos;
+    using TelecomServiceSystem.Services.Data.ServiceNumber;
     using TelecomServiceSystem.Services.Data.Services;
+    using TelecomServiceSystem.Services.HtmlToPDF;
+    using TelecomServiceSystem.Services.ViewRrender;
+    using TelecomServiceSystem.Web.Infrastructure.Extensions;
+    using TelecomServiceSystem.Web.ViewModels.Addresses;
+    using TelecomServiceSystem.Web.ViewModels.ContractTemplates;
     using TelecomServiceSystem.Web.ViewModels.Services;
 
     [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + GlobalConstants.SellerRoleName)]
@@ -15,11 +25,25 @@
     {
         private readonly IServiceInfoService serviceInfoService;
         private readonly IServiceService serviceService;
+        private readonly ICustomerService customerService;
+        private readonly IAddressService addressService;
+        private readonly IViewRenderService viewRenderService;
+        private readonly IHtmlToPdfConverter htmlToPdfConverter;
+        private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly IServiceNumberService serviceNumberService;
+        private readonly IUploadService uploadService;
 
-        public ServicesController(IServiceInfoService serviceInfoService, IServiceService serviceService)
+        public ServicesController(IServiceInfoService serviceInfoService, IServiceService serviceService, ICustomerService customerService, IAddressService addressService, IViewRenderService viewRenderService, IHtmlToPdfConverter htmlToPdfConverter, IWebHostEnvironment webHostEnvironment, IServiceNumberService serviceNumberService, IUploadService uploadService)
         {
             this.serviceInfoService = serviceInfoService;
             this.serviceService = serviceService;
+            this.customerService = customerService;
+            this.addressService = addressService;
+            this.viewRenderService = viewRenderService;
+            this.htmlToPdfConverter = htmlToPdfConverter;
+            this.webHostEnvironment = webHostEnvironment;
+            this.serviceNumberService = serviceNumberService;
+            this.uploadService = uploadService;
         }
 
         public async Task<IActionResult> AllByCustomer(string id)
@@ -52,7 +76,8 @@
                 return this.View(model);
             }
 
-            await this.serviceInfoService.ContractCancelAsync(model.Id);
+            var url = await this.uploadService.UploadImageAsync(model.Image);
+            await this.serviceInfoService.ContractCancelAsync(model.Id, url);
             return this.Redirect($"/Services/AllByCustomer/{model.CustomerId}");
         }
 
@@ -77,6 +102,36 @@
 
             await this.serviceService.CreateAsync<ServiceCreateInputModel>(model);
             return this.Redirect("/Home/Index");
+        }
+
+        public async Task<IActionResult> Renew(string customerId, int duration, int serviceId, string serviceType, int serviceInfoId)
+        {
+            var model = await this.customerService.GetByIdAsync<ContarctViewModel>(customerId);
+            model.Plan = await this.serviceService.GetByIdAsync<ServiceContractViewModel>(serviceId);
+            model.ContractDuration = duration;
+            model.Number = await this.serviceNumberService.GetByServiceInfoId(serviceInfoId);
+            var serviceAddress = await this.addressService.GetByServiceInfoIdAsync<InstalationAddressViewModel>(serviceInfoId);
+            model.ServiceAddress = serviceAddress == null ? "N/A" : serviceAddress.ToString();
+            model.ServiceType = serviceType;
+            model.UserId = this.User.GetId();
+            model.Address = await this.addressService.GetMainAddressAsync<AddressViewModel>(customerId);
+            var htmlData = await this.viewRenderService.RenderToStringAsync("~/Views/Services/Renew.cshtml", model);
+            var fileContents = this.htmlToPdfConverter.Convert(this.webHostEnvironment.ContentRootPath, htmlData, "A4", "Portrait");
+            return this.File(fileContents, "application/pdf");
+        }
+
+        public async Task<IActionResult> CancellationPdf(string customerId, string number, string service, int serviceId)
+        {
+            var model = await this.customerService.GetByIdAsync<CancellationViewModel>(customerId);
+            model.Plan = service;
+            model.Number = number;
+            var serviceAddress = await this.addressService.GetByServiceInfoIdAsync<InstalationAddressViewModel>(serviceId);
+            model.ServiceAddress = serviceAddress == null ? "N/A" : serviceAddress.ToString();
+            model.UserId = this.User.GetId();
+            model.Address = await this.addressService.GetMainAddressAsync<AddressViewModel>(customerId);
+            var htmlData = await this.viewRenderService.RenderToStringAsync("~/Views/Services/CancellationPdf.cshtml", model);
+            var fileContents = this.htmlToPdfConverter.Convert(this.webHostEnvironment.ContentRootPath, htmlData, "A4", "Portrait");
+            return this.File(fileContents, "application/pdf");
         }
     }
 }

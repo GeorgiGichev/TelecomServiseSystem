@@ -47,5 +47,19 @@
                 .ToListAsync();
             return result;
         }
+
+        public async Task<T> GetByNameAsync<T>(string name)
+        {
+            return (await this.serviceRepo.All()
+                .FirstOrDefaultAsync(x => x.Name == name))
+                .To<T>();
+        }
+
+        public async Task<T> GetByIdAsync<T>(int id)
+        {
+            return (await this.serviceRepo.All()
+                .FirstOrDefaultAsync(x => x.Id == id))
+                .To<T>();
+        }
     }
 }

@@ -2,7 +2,25 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+$("#getPdf").on("click", function () {
+    const elementService = document.getElementById("serviceName");
+    const selectedService = elementService.options[elementService.selectedIndex].text;
+    const elementNumber = document.getElementById("numbers");
+    const selectedNumber = elementNumber.options[elementNumber.selectedIndex].text;
+    const elementDuration = document.getElementById("duration");
+    const selectedDuration = elementDuration.options[elementDuration.selectedIndex].text;
+    const elementAddress = document.getElementById("address");
+    const selectedAddress = elementAddress.options[elementAddress.selectedIndex].text;
+    const elementType = document.getElementById("type");
+    const selectedType = elementType.value;
+    const elementCustomerId = document.getElementById("customer");
+    const selectedCustomerId = elementCustomerId.value;
 
+    var win;
+    var url = `/Orders/GetPdf?customerId=${selectedCustomerId}&serviceType=${selectedType}&address=${selectedAddress}&duration=${selectedDuration}&number=${selectedNumber}&service=${selectedService}`;
+    win = window.open("", "_blank");
+    win.location = url;
+});
 
 $(function () {
     var PlaceHolderElement = $('#PlaceHolder');
@@ -30,7 +48,6 @@ $(function () {
 function GetFreeSlots() {
     const element = document.getElementById("address");
     const selectedAddress = element.options[element.selectedIndex].value;
-    console.log(selectedAddress);
     const slotsSelect = document.getElementById("slots");
     var i, L = slotsSelect.options.length - 1;
     for (i = L; i >= 0; i--) {

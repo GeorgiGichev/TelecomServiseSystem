@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TelecomServiceSystem.Data;
 
 namespace TelecomServiceSystem.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201211170934_AddUrlToOrder")]
+    partial class AddUrlToOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -546,40 +548,6 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.ToTable("Devices");
                 });
 
-            modelBuilder.Entity("TelecomServiceSystem.Data.Models.Document", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ServiceInfoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("ServiceInfoId");
-
-                    b.ToTable("Document");
-                });
-
             modelBuilder.Entity("TelecomServiceSystem.Data.Models.EnginieringTask", b =>
                 {
                     b.Property<int>("Id")
@@ -1014,17 +982,6 @@ namespace TelecomServiceSystem.Data.Migrations
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("TelecomServiceSystem.Data.Models.Document", b =>
-                {
-                    b.HasOne("TelecomServiceSystem.Data.Models.ServiceInfo", "ServiceInfo")
-                        .WithMany("Documents")
-                        .HasForeignKey("ServiceInfoId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("ServiceInfo");
-                });
-
             modelBuilder.Entity("TelecomServiceSystem.Data.Models.EnginieringTask", b =>
                 {
                     b.HasOne("TelecomServiceSystem.Data.Models.Team", "Team")
@@ -1166,11 +1123,6 @@ namespace TelecomServiceSystem.Data.Migrations
             modelBuilder.Entity("TelecomServiceSystem.Data.Models.Service", b =>
                 {
                     b.Navigation("ServicesInfo");
-                });
-
-            modelBuilder.Entity("TelecomServiceSystem.Data.Models.ServiceInfo", b =>
-                {
-                    b.Navigation("Documents");
                 });
 
             modelBuilder.Entity("TelecomServiceSystem.Data.Models.ServiceNumber", b =>

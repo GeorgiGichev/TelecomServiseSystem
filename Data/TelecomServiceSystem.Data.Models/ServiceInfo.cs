@@ -1,6 +1,7 @@
 ﻿namespace TelecomServiceSystem.Data.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,6 +9,11 @@
 
     public class ServiceInfo : BaseDeletableModel<int>
     {
+        public ServiceInfo()
+        {
+            this.Documents = new HashSet<Document>();
+        }
+
         [Required]
         [ForeignKey(nameof(Order))]
         public string OrderId { get; set; }
@@ -46,5 +52,7 @@
         public int? AddressId { get; set; }
 
         public virtual Address Address { get; set; }
+
+        public virtual ICollection<Document> Documents { get; set; }
     }
 }

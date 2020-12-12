@@ -27,11 +27,12 @@
             this.serviceNumberService = serviceNumberService;
         }
 
-        public async Task<ServiceInfo> CreateAsync<T>(string orderId, T model)
+        public async Task<ServiceInfo> CreateAsync<T>(string orderId, T model, string url)
         {
             var serviceInfoToAdd = model.To<ServiceInfo>();
             serviceInfoToAdd.OrderId = orderId;
             serviceInfoToAdd.Expirеs = DateTime.UtcNow.AddMonths(serviceInfoToAdd.ContractDuration);
+            serviceInfoToAdd.Documents.Add(new Document { Url = url });
             await this.serviseInfoRepo.AddAsync(serviceInfoToAdd);
             await this.serviseInfoRepo.SaveChangesAsync();
 
@@ -68,7 +69,7 @@
             this.serviseInfoRepo.Update(serviceInfo);
             if (serviceInfo.ICC != null)
             {
-                var sim = await this.simRepo.All().FirstOrDefaultAsync(s => s.ICC == serviceInfo.ICC);
+                var sim = await this.simRepo.AllWithDeleted().FirstOrDefaultAsync(s => s.ICC == serviceInfo.ICC);
                 this.simRepo.HardDelete(sim);
             }
 
@@ -135,19 +136,26 @@
                 .FirstOrDefaultAsync();
         }
 
-        public async Task RenewAsync<T>(T model)
+        public async Task RenewAsync<T>(T model, string url)
         {
+            var doc = new Document
+            {
+                Url = url,
+            };
+
             var serviceInput = model.To<ServiceInfo>();
             var service = await this.serviseInfoRepo.All().FirstOrDefaultAsync(a => a.Id == serviceInput.Id);
             service.Expirеs = DateTime.UtcNow.AddMonths(serviceInput.ContractDuration);
+            service.Documents.Add(doc);
             await this.serviseInfoRepo.UpdateModel(service, model);
         }
 
-        public async Task ContractCancelAsync(int id)
+        public async Task ContractCancelAsync(int id, string url)
         {
             var service = await this.serviseInfoRepo.All().FirstOrDefaultAsync(x => x.Id == id);
             service.IsActive = false;
             service.CancellationDate = DateTime.UtcNow;
+            service.Documents.Add(new Document { Url = url });
             await this.serviceNumberService.SetNumberAsFreeAsync(service.ServiceNumberId);
             this.serviseInfoRepo.Update(service);
             await this.serviseInfoRepo.SaveChangesAsync();

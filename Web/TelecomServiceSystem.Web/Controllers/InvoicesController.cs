@@ -20,7 +20,11 @@
 
         public async Task<IActionResult> All(string customerId)
         {
-            var model = await this.billsService.GetAllByCustomerIdAsync<InvoiceViewModel>(customerId);
+            var model = new InvoicesCustomerViewModel
+            {
+                CustomerId = customerId,
+                Invoices = await this.billsService.GetAllByCustomerIdAsync<InvoiceViewModel>(customerId),
+            };
             return this.View(model);
         }
     }

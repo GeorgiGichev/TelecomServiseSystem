@@ -11,3 +11,10 @@
         newwindow.location.href = url;
     }
 </script>
+
+<script>
+    window.getFileName = () => {
+        const fileChosen = document.getElementById('file-chosen');
+        fileChosen.textContent = this.files[0].name
+    }
+</script>

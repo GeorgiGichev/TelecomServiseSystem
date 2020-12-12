@@ -10,5 +10,9 @@
         Task SetNumberAsHiredAsync(int numberId);
 
         Task SetNumberAsFreeAsync(int numberId);
+
+        Task<string> GetByIdAsync(int numberId);
+
+        Task<string> GetByServiceInfoId(int serviceInfoId);
     }
 }

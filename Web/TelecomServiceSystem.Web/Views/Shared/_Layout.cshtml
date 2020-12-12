@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
+    <title>@this.ViewData["Title"] @GlobalConstants.SystemName</title>
 
     <link href="~/lib/fontawesome/css/all.css" rel="stylesheet" asp-append-version="true"/>
     <link href="~/css/styles.css" rel="stylesheet" asp-append-version="true" />
@@ -135,6 +135,7 @@
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous" asp-append-version="true"></script>
     <script src="~/js/datatables-demo.js" asp-append-version="true"></script>
     <script src="~/js/scripts.js" asp-append-version="true"></script>
+    <script src="~/lib/Json2/lib/JSON2.min.js" asp-append-version="true"></script>
     <script src="_framework/blazor.server.js"></script>
     @this.RenderSection("Scripts", required: false)
 </body>

@@ -20,5 +20,9 @@
         Task AddNewCityAsync<T>(T model);
 
         Task<bool> CityExistAsync(int id);
+
+        Task<T> GetMainAddressAsync<T>(string customerId);
+
+        Task<T> GetByServiceInfoIdAsync<T>(int serviceId);
     }
 }

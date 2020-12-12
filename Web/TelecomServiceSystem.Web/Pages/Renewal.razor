@@ -2,8 +2,10 @@
 @using TelecomServiceSystem.Web.ViewModels.Services
 @inject TelecomServiceSystem.Services.Data.ServiceInfos.IServiceInfoService serviceInfo
 @inject TelecomServiceSystem.Services.Data.Services.IServiceService serviceService
-@inject NavigationManager NavManager;
+@inject TelecomServiceSystem.Services.CloudinaryService.IUploadService uploadService
+@inject NavigationManager NavManager
 @inject IJSRuntime jsRuntime
+@using System.IO
 @using TelecomServiceSystem.Web.Pages.Utilities
 
 @if (this.InputModel == null)
@@ -12,34 +14,74 @@
 }
 else
 {
+    <style>
+        #lab {
+            display: block;
+            width: 100%;
+            padding: 0.5rem;
+            font-family: sans-serif;
+            cursor: pointer;
+            margin-top: 1rem;
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+            box-shadow: 2px 2px 4px #000000;
+            text-shadow: 2px 2px 4px #000000;
+            border-radius: 5px;
+        }
+
+        #file-chosen {
+            margin-left: 0.3rem;
+            font-family: sans-serif;
+        }
+    </style>
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Contract renewal</h3></div>
                     <div class="card-body">
-                        <EditForm Model="this.InputModel" OnValidSubmit="this.Submit">
+                        <EditForm Model="this.InputModel" OnValidSubmit="this.Submit" >
                             <div class="form-row">
-                                <CustomInputSelect @bind-Value="this.InputModel.ServiceId" class="form-control col-md-4">
-                                    @foreach (var service in this.Services)
-                                        {
-                                        <option value="@service.Id">@service.Name</option>
-                                        }
-                                </CustomInputSelect>
-                                <div class="col-md-1"></div>
-                                <CustomInputSelect @bind-Value="this.InputModel.ContractDuration" class="form-control col-md-4">
-                                    <option value="12">12</option>
-                                    <option value="24">24</option>
-                                </CustomInputSelect>
-                                <div class="col-md-1"></div>
-                                <a class="btn btn-primary text-light" @onclick="this.GetPdf">Generate contract</a>
+                                <div class="form-group col-md-6">
+                                    <label class="required">Rate plan</label>
+                                    <CustomInputSelect @bind-Value="this.InputModel.ServiceId" class="form-control">
+                                        @foreach (var service in this.Services)
+                                            {
+                                            <option value="@service.Id">@service.Name</option>
+                                            }
+                                    </CustomInputSelect>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="required">Contract duration</label>
+                                    <CustomInputSelect @bind-Value="this.InputModel.ContractDuration" class="form-control">
+                                        <option value="12">12</option>
+                                        <option value="24">24</option>
+                                    </CustomInputSelect>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <a class="btn btn-primary btn-block text-light" @onclick="this.GetPdf">Generate contract</a>
+                            </div>
+                            @if (this.showFileError)
+                            {
+                                <div class="text-danger">Uploaded is required.</div>
+                            }
+                            <div class="form-group col-md-12 text-center">
+                                <div class="form-group">
+                                    <label for="label" id="lab" asp-for="Image" class="required">Upload document</label>
+                                    <InputFile OnChange="this.OnInputFileChange" @bind-Value="this.InputModel.Image" Id="label" class="form-control-file" asp-for="Image" type="file" hidden></InputFile>
+                                    <span id="file-chosen">@this.textFile</span>
+                                    <span asp-validation-for="Image" class="text-danger"></span>
+                                </div>
                             </div>
                             <hr />
                             <div class="form-row">
-                               
-                                <div class="col-md-1"></div>
                                 <button type="submit" class="btn btn-primary btn-block">Submit</button>
                             </div>
+                            <hr />
+                            <a class="btn btn-secondary btn-block text-white" @onclick="this.Back">Close</a>
                         </EditForm>
                     </div>
                 </div>
@@ -50,13 +92,22 @@ else
 
 
 
+
 @code{
+    string textFile = "No file chosen";
+
     public ServiceInputModel InputModel { get; set; }
 
     [Parameter]
     public int Id { get; set; }
 
     public IEnumerable<ServiceViewModelBlazor> Services { get; set; }
+
+    public IReadOnlyList<IBrowserFile> selectedFiles { get; set; } = new List<IBrowserFile>();
+
+    bool existFile = false;
+
+    bool showFileError = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -67,13 +118,48 @@ else
 
     private async Task GetPdf()
     {
-        await NavManager.NavigateToNewWindowAsync(jsRuntime, $"/Orders/GetPdf/{this.Id}", "");
+        await this.NavManager.NavigateToNewWindowAsync(jsRuntime, $"/Services/Renew?customerId={this.InputModel.CustomerId}&duration={this.InputModel.ContractDuration}&serviceId={this.InputModel.ServiceId}&serviceType={this.InputModel.ServiceServiceType}&serviceInfoId={this.InputModel.Id}", "");
     }
 
     private async Task Submit()
     {
-        await this.serviceInfo.RenewAsync<ServiceInputModel>(this.InputModel);
-        NavManager.NavigateTo($"/Services/AllByCustomer/{this.InputModel.CustomerId}", true);
+
+        if (existFile)
+        {
+            byte[] destinationImage;
+            using var stream = this.selectedFiles.FirstOrDefault().OpenReadStream();
+            var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            destinationImage = memoryStream.ToArray();
+            var url = await this.uploadService.UploadBillAsync(destinationImage);
+
+            await this.serviceInfo.RenewAsync<ServiceInputModel>(this.InputModel, url);
+            NavManager.NavigateTo($"/Services/AllByCustomer/{this.InputModel.CustomerId}", true);
+        }
+        else
+        {
+            showFileError = true;
+        }
+
+    }
+
+    private void Back()
+    {
+        this.NavManager.NavigateTo($"/Services/AllByCustomer/{this.InputModel.CustomerId}", true);
+    }
+
+    private void GetJs()
+    {
+        this.jsRuntime.InvokeVoidAsync("getFileName");
+    }
+
+    private void OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        this.existFile = true;
+        this.showFileError = false;
+        this.selectedFiles = e.GetMultipleFiles();
+        this.textFile = selectedFiles.FirstOrDefault().Name;
+        this.StateHasChanged();
     }
 
 }

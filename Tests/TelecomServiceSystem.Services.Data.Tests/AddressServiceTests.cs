@@ -413,5 +413,46 @@
                 x => Assert.Equal("Varna", x.Name));
             Assert.Single(cities);
         }
+
+        [Fact]
+        public async Task GetMainAddressAsyncShouldReturnMainAddress()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            var dbContext = new ApplicationDbContext(options);
+
+            var addressRepo = new EfDeletableEntityRepository<Address>(dbContext);
+            var countryRepo = new EfDeletableEntityRepository<Country>(dbContext);
+            var cityRepo = new EfDeletableEntityRepository<City>(dbContext);
+
+            var service = new AddressService(addressRepo, countryRepo, cityRepo);
+
+            var customerId = Guid.NewGuid().ToString();
+            await service.CreateAsync<AddressModel>(new AddressModel()
+            {
+                Id = 1,
+                CityId = 1,
+                Street = "ASD",
+                Neighborhood = "NTest",
+                Number = 1,
+                CustomerId = customerId,
+                IsMainAddress = true,
+            });
+            await service.CreateAsync<AddressModel>(new AddressModel()
+            {
+                Id = 2,
+                CityId = 1,
+                Street = "Test",
+                Neighborhood = "NTest",
+                Number = 1,
+                CustomerId = customerId,
+                IsMainAddress = false,
+            });
+
+            var address = await service.GetMainAddressAsync<AddressModel>(customerId);
+
+            Assert.Equal("ASD", address.Street);
+            Assert.True(address.IsMainAddress);
+        }
     }
 }

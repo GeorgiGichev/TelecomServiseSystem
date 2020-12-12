@@ -44,6 +44,13 @@
       ]
     },
     {
+      "library": "json2@0.4.0",
+      "destination": "wwwroot/lib/Json2/",
+      "files": [
+        "lib/JSON2.min.js"
+      ]
+    },
+    {
       "library": "@fortawesome/fontawesome-free@5.15.1",
       "destination": "wwwroot/lib/fontawesome/",
       "files": [

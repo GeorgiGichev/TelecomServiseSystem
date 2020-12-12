@@ -29,7 +29,7 @@
             var moqServiceInfoService = new Mock<IServiceInfoService>();
 
             var fackeInfo = new ServiceInfo();
-            moqServiceInfoService.Setup(x => x.CreateAsync<ServiceInfoModel>(It.IsAny<string>(), It.IsAny<ServiceInfoModel>())).Returns(Task.FromResult(fackeInfo));
+            moqServiceInfoService.Setup(x => x.CreateAsync<ServiceInfoModel>(It.IsAny<string>(), It.IsAny<ServiceInfoModel>(), It.IsAny<string>())).Returns(Task.FromResult(fackeInfo));
 
             var moqServiceNumberService = new Mock<IServiceNumberService>();
 
@@ -67,7 +67,7 @@
             var moqServiceInfoService = new Mock<IServiceInfoService>();
 
             var fackeInfo = new ServiceInfo();
-            moqServiceInfoService.Setup(x => x.CreateAsync<ServiceInfoModel>(It.IsAny<string>(), It.IsAny<ServiceInfoModel>())).Returns(Task.FromResult(fackeInfo));
+            moqServiceInfoService.Setup(x => x.CreateAsync<ServiceInfoModel>(It.IsAny<string>(), It.IsAny<ServiceInfoModel>(), It.IsAny<string>())).Returns(Task.FromResult(fackeInfo));
 
             var moqServiceNumberService = new Mock<IServiceNumberService>();
 

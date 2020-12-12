@@ -7,7 +7,7 @@
 
     public interface IServiceInfoService
     {
-        Task<ServiceInfo> CreateAsync<T>(string orderId, T model);
+        Task<ServiceInfo> CreateAsync<T>(string orderId, T model, string url);
 
         Task<string> GetICCAsync();
 
@@ -21,9 +21,9 @@
 
         Task<T> GetByIdAsync<T>(int id);
 
-        Task RenewAsync<T>(T model);
+        Task RenewAsync<T>(T model, string url);
 
-        Task ContractCancelAsync(int id);
+        Task ContractCancelAsync(int id, string url);
 
         Task<bool> ExistByOrderIdAsync(string orderId);
 

@@ -1,5 +1,8 @@
 ﻿namespace TelecomServiceSystem.Web.ViewModels.Services
 {
+    using System.ComponentModel.DataAnnotations;
+
+    using Microsoft.AspNetCore.Http;
     using TelecomServiceSystem.Data.Models;
     using TelecomServiceSystem.Services.Mapping;
 
@@ -14,5 +17,10 @@
         public int ContractDuration { get; set; }
 
         public string ServiceServiceType { get; set; }
+
+        [Required]
+        public IFormFile Image { get; set; }
+
+        public string DocumentUrl { get; set; }
     }
 }

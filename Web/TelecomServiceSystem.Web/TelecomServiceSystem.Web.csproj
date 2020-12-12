@@ -43,7 +43,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Data\TelecomServiceSystem.Data.Models\TelecomServiceSystem.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\TelecomServiceSystem.Data\TelecomServiceSystem.Data.csproj" />
     <ProjectReference Include="..\..\Services\TelecomServiceSystem.Services.Data\TelecomServiceSystem.Services.Data.csproj" />
     <ProjectReference Include="..\..\Services\TelecomServiceSystem.Services.Mapping\TelecomServiceSystem.Services.Mapping.csproj" />
@@ -93,6 +92,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\lib\Json2\" />
     <Folder Include="wwwroot\lib\signalr\" />
   </ItemGroup>
 </Project>

@@ -110,5 +110,21 @@
             return await this.cityRepo.AllAsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id) == null ? false : true;
         }
+
+        public async Task<T> GetMainAddressAsync<T>(string customerId)
+        {
+            return await this.addressRepo.All()
+                .Where(x => x.CustomerId == customerId && x.IsMainAddress)
+                .To<T>()
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<T> GetByServiceInfoIdAsync<T>(int serviceId)
+        {
+            return await this.addressRepo.All()
+                .Where(x => x.ServicesInfos.Any(y => y.Id == serviceId))
+                .To<T>()
+                .FirstOrDefaultAsync();
+        }
     }
 }

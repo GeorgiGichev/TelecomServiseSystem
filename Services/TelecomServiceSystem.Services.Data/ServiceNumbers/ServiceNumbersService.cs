@@ -18,6 +18,20 @@
             this.numbersRepo = numbersRepo;
         }
 
+        public async Task<string> GetByIdAsync(int numberId)
+        {
+            return (await this.numbersRepo.All()
+                .FirstOrDefaultAsync(x => x.Id == numberId)).Number;
+        }
+
+        public async Task<string> GetByServiceInfoId(int serviceInfoId)
+        {
+            return await this.numbersRepo.All()
+                .Where(x => x.ServiceInfos.Any(y => y.Id == serviceInfoId))
+                .Select(x => x.Number)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<T>> GetFreeNumbersAsync<T>(string serviceType, string serviceName)
         {
             string startOfNumber = string.Empty;

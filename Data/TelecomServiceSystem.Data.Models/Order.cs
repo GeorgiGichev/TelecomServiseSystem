@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     using TelecomServiceSystem.Data.Common.Models;
@@ -15,6 +16,7 @@
             this.ServicesInfos = new HashSet<ServiceInfo>();
         }
 
+        [Required]
         [ForeignKey(nameof(ApplicationUser))]
         public string UserId { get; set; }
 
@@ -23,6 +25,9 @@
         public DateTime? FinishedOn { get; set; }
 
         public Status Status { get; set; }
+
+        [Required]
+        public string DocumentUrl { get; set; }
 
         public int? EnginieringTaskId { get; set; }
 

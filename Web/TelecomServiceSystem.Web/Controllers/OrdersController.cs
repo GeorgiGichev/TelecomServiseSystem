@@ -3,11 +3,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.SignalR;
     using TelecomServiceSystem.Common;
+    using TelecomServiceSystem.Services.CloudinaryService;
     using TelecomServiceSystem.Services.Data.Addresses;
     using TelecomServiceSystem.Services.Data.Customers;
     using TelecomServiceSystem.Services.Data.Orders;
@@ -20,8 +22,10 @@
     using TelecomServiceSystem.Web.Hubs;
     using TelecomServiceSystem.Web.Infrastructure.Extensions;
     using TelecomServiceSystem.Web.ViewModels.Addresses;
+    using TelecomServiceSystem.Web.ViewModels.ContractTemplates;
     using TelecomServiceSystem.Web.ViewModels.Orders;
     using TelecomServiceSystem.Web.ViewModels.Orders.Search;
+    using TelecomServiceSystem.Web.ViewModels.Services;
 
     [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + GlobalConstants.SellerRoleName)]
     public class OrdersController : BaseController
@@ -37,8 +41,9 @@
         private readonly ITasksService tasksService;
         private readonly IHubContext<TaskHub, ITaskHub> context;
         private readonly ICustomerService customerService;
+        private readonly IUploadService uploadService;
 
-        public OrdersController(IOrderService orderService, IServiceService serviceService, IServiceNumberService numberService, IServiceInfoService serviceInfoService, IViewRenderService viewRenderService, IHtmlToPdfConverter htmlToPdfConverter, IWebHostEnvironment environment, IAddressService addressService, ITasksService tasksService, IHubContext<TaskHub, ITaskHub> context, ICustomerService customerService)
+        public OrdersController(IOrderService orderService, IServiceService serviceService, IServiceNumberService numberService, IServiceInfoService serviceInfoService, IViewRenderService viewRenderService, IHtmlToPdfConverter htmlToPdfConverter, IWebHostEnvironment environment, IAddressService addressService, ITasksService tasksService, IHubContext<TaskHub, ITaskHub> context, ICustomerService customerService, IUploadService uploadService)
         {
             this.orderService = orderService;
             this.serviceService = serviceService;
@@ -51,6 +56,7 @@
             this.tasksService = tasksService;
             this.context = context;
             this.customerService = customerService;
+            this.uploadService = uploadService;
         }
 
         public async Task<IActionResult> ChooseServiceType(string customerId)
@@ -88,7 +94,7 @@
                 return this.NotFound();
             }
 
-            var model = new OrderInputViewModel
+            var model = new OrderInputModel
             {
                 ServiceType = serviceType,
             };
@@ -116,11 +122,11 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(OrderInputViewModel model)
+        public async Task<IActionResult> Create(OrderInputModel model)
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(model.ServiceType, model);
+                return this.View(model.ServiceType.ToLower() == "mobile" ? "Mobile" : "Fixed", model);
             }
 
             await this.CreateOrder(model.ServiceType, model);
@@ -131,10 +137,17 @@
             });
         }
 
-        public async Task<IActionResult> GetPdf(OrderViewModel input)
+        public async Task<IActionResult> GetPdf(string customerId, string serviceType, string address, int duration, string number, string service)
         {
-            // var model = this.serviceInfoService.GetByOrderId(input);
-            var htmlData = await this.viewRenderService.RenderToStringAsync("~/Views/Orders/GetPdf.cshtml", null);
+            var model = await this.customerService.GetByIdAsync<ContarctViewModel>(customerId);
+            model.Plan = await this.serviceService.GetByNameAsync<ServiceContractViewModel>(service);
+            model.ContractDuration = duration;
+            model.Number = number;
+            model.ServiceAddress = address;
+            model.ServiceType = serviceType;
+            model.UserId = this.User.GetId();
+            model.Address = await this.addressService.GetMainAddressAsync<AddressViewModel>(customerId);
+            var htmlData = await this.viewRenderService.RenderToStringAsync("~/Views/Orders/GetPdf.cshtml", model);
             var fileContents = this.htmlToPdfConverter.Convert(this.environment.ContentRootPath, htmlData, "A4", "Portrait");
             return this.File(fileContents, "application/pdf");
         }
@@ -175,7 +188,7 @@
         private async Task<HashSet<SearchOrderViewModel>> GetCustomersAsync(SearchOrderInputModel model)
             => (await this.serviceInfoService.GetBySearchCriteriaAsync<SearchOrderViewModel, SearchOrderInputModel>(model)).ToHashSet();
 
-        private async Task CreateOrder(string serviceType, OrderInputViewModel model)
+        private async Task CreateOrder(string serviceType, OrderInputModel model)
         {
             if (serviceType == "mobile")
             {
@@ -184,6 +197,7 @@
                     new OrderViewModel
                     {
                         UserId = this.User.GetId(),
+                        DocumentUrl = await this.uploadService.UploadImageAsync(model.Image),
                     },
                     model.MobileServiceInfo);
 
@@ -196,6 +210,7 @@
                     new OrderViewModel
                     {
                         UserId = this.User.GetId(),
+                        DocumentUrl = await this.uploadService.UploadImageAsync(model.Image),
                     },
                     model.FixedServiceInfo);
 

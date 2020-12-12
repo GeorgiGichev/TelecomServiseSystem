@@ -10,5 +10,9 @@
         Task CreateAsync<T>(T model);
 
         Task<IEnumerable<string>> GetAllTypesAsync();
+
+        Task<T> GetByNameAsync<T>(string name);
+
+        Task<T> GetByIdAsync<T>(int id);
     }
 }

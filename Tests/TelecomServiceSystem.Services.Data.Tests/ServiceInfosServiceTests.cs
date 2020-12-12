@@ -42,7 +42,7 @@
             var orderId = Guid.NewGuid().ToString();
             var model = new ServiceInfoModel();
 
-            var serviceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model);
+            var serviceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model, string.Empty);
 
             var count = await serviceInfoRepo.AllAsNoTracking()
                 .CountAsync();
@@ -77,7 +77,7 @@
             var orderId = Guid.NewGuid().ToString();
             var model = new ServiceInfoModel();
 
-            var createdServiceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model);
+            var createdServiceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model, string.Empty);
 
             var serviceInfo = await service.GetByOrderIdAsync<ServiceInfoModel>(orderId);
 
@@ -185,7 +185,7 @@
                 ICC = "89359032201234567890",
             };
 
-            var serviceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model);
+            var serviceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model, string.Empty);
 
             await service.SetServiceAsActiveAsync(serviceInfo.Id);
 
@@ -267,7 +267,7 @@
                 CustomerId = customerId,
                 IsActive = true,
             };
-            var createdServiceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model);
+            var createdServiceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model, string.Empty);
 
             var serviceInfos = await service.GetAllByCustomerIdAsync<ServiceInfoModel>(customerId);
 
@@ -298,7 +298,7 @@
             var customerId = Guid.NewGuid().ToString();
             var orderId = Guid.NewGuid().ToString();
             var model = new ServiceInfoModel();
-            var createdServiceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model);
+            var createdServiceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model, string.Empty);
 
             var serviceInfos = await service.GetByIdAsync<ServiceInfoModel>(1);
 
@@ -328,11 +328,11 @@
             {
                 ContractDuration = 12,
             };
-            var createdServiceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model);
+            var createdServiceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model, string.Empty);
 
             var serviceInfo = await service.GetByIdAsync<ServiceInfoModel>(1);
             serviceInfo.ContractDuration = 24;
-            await service.RenewAsync<ServiceInfoModel>(serviceInfo);
+            await service.RenewAsync<ServiceInfoModel>(serviceInfo, string.Empty);
 
             serviceInfo = await service.GetByIdAsync<ServiceInfoModel>(1);
 
@@ -362,9 +362,9 @@
             {
                 IsActive = true,
             };
-            var createdServiceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model);
+            var createdServiceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model, string.Empty);
 
-            await service.ContractCancelAsync(1);
+            await service.ContractCancelAsync(1, string.Empty);
 
             var serviceInfo = await service.GetByIdAsync<ServiceInfoModel>(1);
 
@@ -391,7 +391,7 @@
 
             var orderId = Guid.NewGuid().ToString();
             var model = new ServiceInfoModel();
-            var createdServiceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model);
+            var createdServiceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model, string.Empty);
 
             Assert.True(await service.ExistByOrderIdAsync(orderId));
         }
@@ -416,7 +416,7 @@
 
             var orderId = Guid.NewGuid().ToString();
             var model = new ServiceInfoModel();
-            var createdServiceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model);
+            var createdServiceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model, string.Empty);
 
             Assert.False(await service.ExistByOrderIdAsync(Guid.NewGuid().ToString()));
         }
@@ -441,7 +441,7 @@
 
             var orderId = Guid.NewGuid().ToString();
             var model = new ServiceInfoModel();
-            var createdServiceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model);
+            var createdServiceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model, string.Empty);
 
             Assert.True(await service.ExistByIdAsync(1));
         }
@@ -466,7 +466,7 @@
 
             var orderId = Guid.NewGuid().ToString();
             var model = new ServiceInfoModel();
-            var createdServiceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model);
+            var createdServiceInfo = await service.CreateAsync<ServiceInfoModel>(orderId, model, string.Empty);
 
             Assert.False(await service.ExistByIdAsync(2));
         }
