@@ -105,6 +105,12 @@
             return this.RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> Delete(string id)
+        {
+            await this.employeesService.Delete(id);
+            return this.RedirectToAction("Index");
+        }
+
         private async Task<HashSet<SearhEmployeeOutputModel>> GetEmployeesAsync(SearchEmpoloyeeInputModel model)
           => (await this.employeesService.GetBySearchCriteriaAsync<SearhEmployeeOutputModel, SearchEmpoloyeeInputModel>(model)).ToHashSet();
     }

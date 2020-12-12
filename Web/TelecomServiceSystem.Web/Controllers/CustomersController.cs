@@ -93,6 +93,13 @@
             return this.View(model);
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> Delete(string id)
+        {
+            await this.customerService.Delete(id);
+            return this.RedirectToAction("Search");
+        }
+
         private async Task<HashSet<SearchCustomersOutpuModel>> GetCustomersAsync(SearchCustomerInputModel model)
             => (await this.customerService.GetBySearchCriteriaAsync<SearchCustomersOutpuModel, SearchCustomerInputModel>(model)).ToHashSet();
     }

@@ -21,6 +21,14 @@
             this.usersRepo = usersRepo;
         }
 
+        public async Task Delete(string employeeId)
+        {
+            var employee = await this.usersRepo.All()
+                .FirstOrDefaultAsync(x => x.Id == employeeId);
+            this.usersRepo.Delete(employee);
+            await this.usersRepo.SaveChangesAsync();
+        }
+
         public async Task EditAsync<T>(T input)
         {
             var employeeToEdit = input.To<ApplicationUser>();

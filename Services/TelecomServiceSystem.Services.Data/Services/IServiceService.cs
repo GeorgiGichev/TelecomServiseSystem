@@ -14,5 +14,9 @@
         Task<T> GetByNameAsync<T>(string name);
 
         Task<T> GetByIdAsync<T>(int id);
+
+        Task<IEnumerable<T>> GetAllAsync<T>();
+
+        Task Delete(int id);
     }
 }

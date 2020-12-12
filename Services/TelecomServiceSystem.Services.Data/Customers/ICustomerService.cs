@@ -16,5 +16,7 @@
         Task<IEnumerable<T>> GetAllForBillingAsync<T>();
 
         Task<bool> ExistAsync(string id);
+
+        Task Delete(string id);
     }
 }

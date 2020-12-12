@@ -24,5 +24,9 @@
         Task<T> GetMainAddressAsync<T>(string customerId);
 
         Task<T> GetByServiceInfoIdAsync<T>(int serviceId);
+
+        Task<IEnumerable<T>> GetAllCitiesAsync<T>();
+
+        Task DeleteCityAsync(int id);
     }
 }

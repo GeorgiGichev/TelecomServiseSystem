@@ -1,0 +1,51 @@
+﻿@model IEnumerable<TelecomServiceSystem.Web.ViewModels.Addresses.CityViewModel>
+@using TelecomServiceSystem.Common
+@{ this.ViewData["Title"] = "All Cities"; }
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header"><h3 class="text-center font-weight-light my-4">Search Customers</h3></div>
+                <div class="card-body">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>City</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>City</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    @foreach (var city in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                            <div class="float-left">@city.Name</div>
+                                            <div class="float-right">
+                                                <a class="btn btn-danger" asp-controller="Addresses" asp-action="Delete" asp-route-id="@city.Id">Delete</a>
+                                            </div>
+                                                </td>
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-md-offset-2">
+                <section>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+

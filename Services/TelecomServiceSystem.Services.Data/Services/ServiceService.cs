@@ -61,5 +61,18 @@
                 .FirstOrDefaultAsync(x => x.Id == id))
                 .To<T>();
         }
+
+        public async Task<IEnumerable<T>> GetAllAsync<T>()
+        {
+            return await this.serviceRepo.All().To<T>().ToListAsync();
+        }
+
+        public async Task Delete(int id)
+        {
+            var service = await this.serviceRepo.All()
+                .FirstOrDefaultAsync(x => x.Id == id);
+            this.serviceRepo.Delete(service);
+            await this.serviceRepo.SaveChangesAsync();
+        }
     }
 }

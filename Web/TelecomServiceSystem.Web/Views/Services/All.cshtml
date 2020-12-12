@@ -1,0 +1,51 @@
+﻿@model IEnumerable<TelecomServiceSystem.Web.ViewModels.Services.ServiceAllViewModel>
+@using TelecomServiceSystem.Common
+@{ this.ViewData["Title"] = "All Services"; }
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header"><h3 class="text-center font-weight-light my-4">Search Customers</h3></div>
+                <div class="card-body">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th width="45%">Name</th>
+                                        <th width="45%">Price</th>
+                                        <th width="10%">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    @foreach (var service in Model)
+                                    {
+                                        <tr>
+                                            <td>@service.Name</td>
+                                            <td>@service.Price</td>
+                                            <td><a class="btn btn-danger" asp-controller="Services" asp-action="Delete" asp-route-id="@service.Id">Delete</a></td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-md-offset-2">
+                <section>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+

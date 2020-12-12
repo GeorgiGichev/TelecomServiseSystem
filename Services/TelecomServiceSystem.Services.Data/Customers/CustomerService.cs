@@ -28,6 +28,14 @@
             return customerToAdd.Id;
         }
 
+        public async Task Delete(string id)
+        {
+            var customer = await this.customerRepo.All()
+                .FirstOrDefaultAsync(x => x.Id == id);
+            this.customerRepo.Delete(customer);
+            await this.customerRepo.SaveChangesAsync();
+        }
+
         public async Task EditAsync<T>(T input)
         {
             var customerToEdit = input.To<Customer>();

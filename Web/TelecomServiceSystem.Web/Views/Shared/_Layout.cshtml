@@ -61,7 +61,7 @@
                             }
                         }
                         @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName)
-                      || this.User.IsInRole(GlobalConstants.SellerRoleName))
+                 || this.User.IsInRole(GlobalConstants.SellerRoleName))
                         {
 
                             <div class="sb-sidenav-menu-heading">Create</div>
@@ -96,6 +96,18 @@
                             <a class="nav-link" asp-area="Engineering" asp-controller="Engineering" asp-action="AllTasks">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tools"></i></div>
                                 All Tasks
+                            </a>
+                        }
+                        @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                        {
+                            <div class="sb-sidenav-menu-heading">Delete</div>
+                            <a class="nav-link" asp-controller="Services" asp-action="All">
+                                <div class="sb-nav-link-icon"><i class="fas fa-ban"></i></div>
+                                Delete Services
+                            </a>
+                            <a class="nav-link" asp-controller="Addresses" asp-action="AllCities">
+                                <div class="sb-nav-link-icon"><i class="fas fa-ban"></i></div>
+                                Delete Cities
                             </a>
                         }
                     </div>

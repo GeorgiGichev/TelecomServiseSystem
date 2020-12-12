@@ -78,5 +78,19 @@
             await this.addressService.AddNewCityAsync<CityInputModel>(model);
             return this.Redirect($"/Home/Index");
         }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> AllCities()
+        {
+            var model = await this.addressService.GetAllCitiesAsync<CityViewModel>();
+            return this.View(model);
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.addressService.DeleteCityAsync(id);
+            return this.RedirectToAction("AllCities");
+        }
     }
 }

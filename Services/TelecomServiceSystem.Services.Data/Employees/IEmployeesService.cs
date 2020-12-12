@@ -12,5 +12,7 @@
         Task EditAsync<T>(T input);
 
         Task<bool> ExistAsync(string id);
+
+        Task Delete(string employeeId);
     }
 }

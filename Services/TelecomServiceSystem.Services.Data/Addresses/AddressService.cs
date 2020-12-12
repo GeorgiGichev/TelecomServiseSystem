@@ -126,5 +126,18 @@
                 .To<T>()
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<IEnumerable<T>> GetAllCitiesAsync<T>()
+        {
+            return await this.cityRepo.All().To<T>().ToListAsync();
+        }
+
+        public async Task DeleteCityAsync(int id)
+        {
+            var city = await this.cityRepo.All()
+                .FirstOrDefaultAsync(x => x.Id == id);
+            this.cityRepo.Delete(city);
+            await this.cityRepo.SaveChangesAsync();
+        }
     }
 }

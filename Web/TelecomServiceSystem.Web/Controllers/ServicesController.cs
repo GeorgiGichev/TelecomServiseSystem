@@ -57,6 +57,20 @@
             return this.View(model);
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> All()
+        {
+            var model = await this.serviceService.GetAllAsync<ServiceAllViewModel>();
+            return this.View(model);
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.serviceService.Delete(id);
+            return this.RedirectToAction("All");
+        }
+
         public async Task<IActionResult> Cancellation(int serviceInfoId)
         {
             if (!await this.serviceInfoService.ExistByIdAsync(serviceInfoId))

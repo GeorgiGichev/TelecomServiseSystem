@@ -1,4 +1,5 @@
 ﻿@model TelecomServiceSystem.Web.ViewModels.CustomersSearch.SearchCustomersViewModel
+@using TelecomServiceSystem.Common
 @{ this.ViewData["Title"] = "Search Customers"; }
 
 <div class="container">
@@ -52,6 +53,11 @@
                                                 <th>Personal Number</th>
                                                 <th>Created On</th>
                                                 <th>Deleted On</th>
+                                                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                                                {
+                                            <th>Delete</th>
+                                            }
+
                                             </tr>
                                         </thead>
                                         <tfoot>
@@ -62,19 +68,27 @@
                                                 <th>Personal Number</th>
                                                 <th>Created On</th>
                                                 <th>Deleted On</th>
+                                                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                                                {
+                                            <th>Delete</th>
+}
                                             </tr>
                                         </tfoot>
                                         <tbody>
                                             @foreach (var customer in Model.CustomersList)
                                             {
-                                <tr>
-                                    <td>@customer.FirstName</td>
-                                    <td>@customer.MiddleName</td>
-                                    <td>@customer.LastName</td>
-                                    <td><a asp-area="" asp-controller="Customers" asp-action="Edit" asp-route-id="@customer.Id">@customer.PersonalNumber</a></td>
-                                    <td>@customer.CreatedOn</td>
-                                    <td>@customer.DeletedOn</td>
-                                </tr>
+                                            <tr>
+                                                <td>@customer.FirstName</td>
+                                                <td>@customer.MiddleName</td>
+                                                <td>@customer.LastName</td>
+                                                <td><a asp-area="" asp-controller="Customers" asp-action="Edit" asp-route-id="@customer.Id">@customer.PersonalNumber</a></td>
+                                                <td>@customer.CreatedOn</td>
+                                                <td>@customer.DeletedOn</td>
+                                                @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                                                { 
+                                            <td><a class="btn btn-danger" asp-controller="Customers" asp-action="Delete" asp-route-id="@customer.Id">Delete</a></td>
+                                            }
+                                            </tr>
 }
 
                                         </tbody>
