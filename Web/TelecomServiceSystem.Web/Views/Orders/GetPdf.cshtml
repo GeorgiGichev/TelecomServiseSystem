@@ -126,38 +126,41 @@
                                 </td>
                             </tr>
                         </table>
-                        <table class="" width="100%">
-                            <tr>
-                                <td class="border" width="7%">
-                                    Адрес:
-                                </td>
-                                <td class="border" width="43%">
-                                    Град/село: <strong>@Model.Address.CityName</strong>
-                                </td>
-                                <td class="border" width="50%">
-                                    Кв./ж.к.: <strong>@Model.Address.Neighborhood</strong>
-                                </td>
-                            </tr>
-                        </table>
-                        <table class="" width="100%">
-                            <tr>
-                                <td class="border" width="40%">
-                                    Улица: <strong>@Model.Address.Street</strong>
-                                </td>
-                                <td class="border" width="15%">
-                                    №: <strong>@Model.Address.Number</strong>
-                                </td>
-                                <td class="border" width="15%">
-                                    Вх.: <strong>@Model.Address.Entrance</strong>
-                                </td>
-                                <td class="border" width="15%">
-                                    Ет.: <strong>@Model.Address.Floor</strong>
-                                </td>
-                                <td class="border" width="15%">
-                                    Ап.: <strong>@Model.Address.Apartment</strong>
-                                </td>
-                            </tr>
-                        </table>
+                        @if (Model.Address != null)
+                        {
+                            <table class="" width="100%">
+                                <tr>
+                                    <td class="border" width="7%">
+                                        Адрес:
+                                    </td>
+                                    <td class="border" width="43%">
+                                        Град/село: <strong>@Model.Address.CityName</strong>
+                                    </td>
+                                    <td class="border" width="50%">
+                                        Кв./ж.к.: <strong>@Model.Address.Neighborhood</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table class="" width="100%">
+                                <tr>
+                                    <td class="border" width="40%">
+                                        Улица: <strong>@Model.Address.Street</strong>
+                                    </td>
+                                    <td class="border" width="15%">
+                                        №: <strong>@Model.Address.Number</strong>
+                                    </td>
+                                    <td class="border" width="15%">
+                                        Вх.: <strong>@Model.Address.Entrance</strong>
+                                    </td>
+                                    <td class="border" width="15%">
+                                        Ет.: <strong>@Model.Address.Floor</strong>
+                                    </td>
+                                    <td class="border" width="15%">
+                                        Ап.: <strong>@Model.Address.Apartment</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        }
                     </div>
                     <div class="card-header text-center">
                         <strong>АДРЕС ЗА ПОЛУЧАВАНЕ НА СМЕТКИ/ФАКТУРИ</strong>

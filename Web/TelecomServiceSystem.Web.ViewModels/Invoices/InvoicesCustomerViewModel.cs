@@ -6,6 +6,6 @@
     {
         public string CustomerId { get; set; }
 
-        public IEnumerable<InvoiceViewModel> Invoices { get; set; }
+        public IEnumerable<InvoiceViewModel> Invoices { get; set; } = new HashSet<InvoiceViewModel>();
     }
 }

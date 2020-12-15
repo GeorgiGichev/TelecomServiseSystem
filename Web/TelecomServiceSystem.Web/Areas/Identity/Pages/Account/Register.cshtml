@@ -6,13 +6,18 @@
 
 <style>
     #lab {
-        background-color: dodgerblue;
-        color: white;
+        display: block;
+        width: 100%;
         padding: 0.5rem;
         font-family: sans-serif;
-        border-radius: 0.3rem;
         cursor: pointer;
         margin-top: 1rem;
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+        box-shadow: 2px 2px 4px #000000;
+        text-shadow: 2px 2px 4px #000000;
+        border-radius: 5px;
     }
 
     #file-chosen {
@@ -75,7 +80,7 @@
                                 <select class="col-md-12 form-control" id="serviceName" asp-for="Input.Role">
                                     <option value="Admin">Administrator</option>
                                     <option value="Seller">Seller</option>
-                                    <option value="Engeneer">Engeneer</option>
+                                    <option value="Engineer">Engineer</option>
                                 </select>
                                 <span asp-validation-for="Input.Role" class="text-danger"></span>
                             </div>
@@ -96,7 +101,7 @@
                                 <span asp-validation-for="Input.Phone" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group text-center">
                             <label for="label" id="lab" asp-for="Input.Image" class="required">Upload image</label>
                             <input Id="label" class="form-control-file" asp-for="Input.Image" type="file" hidden>
                             <span id="file-chosen">No file chosen</span>

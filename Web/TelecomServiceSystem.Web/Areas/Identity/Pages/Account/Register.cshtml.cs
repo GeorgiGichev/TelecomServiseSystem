@@ -111,7 +111,7 @@
                     }
                     else
                     {
-                        if (await this.userManager.IsInRoleAsync(user, "Engeneer"))
+                        if (await this.userManager.IsInRoleAsync(user, "Engineer"))
                         {
                             return this.Redirect($"/Administration/Employee/AllFreeTeams?employeeId={user.Id}&cityId={user.CityId}");
                         }
@@ -170,7 +170,7 @@
             public string EGN { get; set; }
 
             [Required]
-            [RegularExpression(@"^Admin$|^Seller$|^Engeneer$", ErrorMessage = "Invalid role")]
+            [RegularExpression(@"^Admin$|^Seller$|^Engineer$", ErrorMessage = "Invalid role")]
             [Display(Name = "Role")]
             public string Role { get; set; }
 

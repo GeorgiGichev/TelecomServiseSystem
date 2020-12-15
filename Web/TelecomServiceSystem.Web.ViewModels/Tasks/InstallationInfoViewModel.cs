@@ -11,6 +11,8 @@
 
         public string CustomerLastName { get; set; }
 
+        public string CustomerPhone { get; set; }
+
         public string AddressCityName { get; set; }
 
         public string AddressStreet { get; set; }

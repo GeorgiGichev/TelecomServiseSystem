@@ -147,7 +147,7 @@
             model.ServiceType = serviceType;
             model.UserId = this.User.GetId();
             model.Address = await this.addressService.GetMainAddressAsync<AddressViewModel>(customerId);
-            var htmlData = await this.viewRenderService.RenderToStringAsync("~/Views/Orders/GetPdf.cshtml", model);
+            var htmlData = await this.viewRenderService.RenderToStringAsync($"~/Views/Orders/GetPdf.cshtml", model);
             var fileContents = this.htmlToPdfConverter.Convert(this.environment.ContentRootPath, htmlData, "A4", "Portrait");
             return this.File(fileContents, "application/pdf");
         }

@@ -110,12 +110,16 @@
         console.log(selectedService);
         const elementNumber = document.getElementById("numbers");
         const selectedNumber = elementNumber.options[elementNumber.selectedIndex].text;
+        console.log(selectedNumber);
         const elementDuration = document.getElementById("duration");
         const selectedDuration = elementDuration.options[elementDuration.selectedIndex].text;
+        console.log(selectedDuration);
         const elementType = document.getElementById("type");
         const selectedType = elementType.value;
+        console.log(selectedType);
         const elementCustomerId = document.getElementById("customer");
         const selectedCustomerId = elementCustomerId.value;
+        console.log(selectedCustomerId);
 
         var win;
         var url = `/Orders/GetPdf?customerId=${selectedCustomerId}&serviceType=${selectedType}&address=${null}&duration=${selectedDuration}&number=${selectedNumber}&service=${selectedService}`;

@@ -41,9 +41,10 @@
 
         public async Task<T> GetByOrderIdAsync<T>(string orderId)
         {
-            var result = (await this.serviseInfoRepo.All()
+            var result = await this.serviseInfoRepo.All()
                 .Where(si => si.OrderId == orderId)
-                .FirstOrDefaultAsync()).To<T>();
+                .To<T>()
+                .FirstOrDefaultAsync();
             return result;
         }
 

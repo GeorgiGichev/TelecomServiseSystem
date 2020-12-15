@@ -64,7 +64,14 @@
 
         public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
-            return await this.serviceRepo.All().To<T>().ToListAsync();
+            if (this.serviceRepo.All().Any())
+            {
+                return await this.serviceRepo.All().To<T>().ToListAsync();
+            }
+            else
+            {
+                return new List<T>();
+            }
         }
 
         public async Task Delete(int id)

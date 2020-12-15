@@ -118,16 +118,22 @@
     $("#getPdf").on("click", function () {
         const elementService = document.getElementById("serviceName");
         const selectedService = elementService.options[elementService.selectedIndex].text;
+        console.log(selectedService);
         const elementNumber = document.getElementById("numbers");
         const selectedNumber = elementNumber.options[elementNumber.selectedIndex].text;
+        console.log(selectedNumber);
         const elementDuration = document.getElementById("duration");
         const selectedDuration = elementDuration.options[elementDuration.selectedIndex].text;
+        console.log(selectedDuration);
         const elementAddress = document.getElementById("address");
         const selectedAddress = elementAddress.options[elementAddress.selectedIndex].text;
+        console.log(selectedAddress);
         const elementType = document.getElementById("type");
         const selectedType = elementType.value;
+        console.log(selectedType);
         const elementCustomerId = document.getElementById("customer");
         const selectedCustomerId = elementCustomerId.value;
+        console.log(selectedCustomerId);
     
         var win;
         var url = `/Orders/GetPdf?customerId=${selectedCustomerId}&serviceType=${selectedType}&address=${selectedAddress}&duration=${selectedDuration}&number=${selectedNumber}&service=${selectedService}`;

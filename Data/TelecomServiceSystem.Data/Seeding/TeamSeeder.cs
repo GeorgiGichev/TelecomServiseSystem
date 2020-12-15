@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -30,12 +31,12 @@
         private IEnumerable<InstalationSlot> GetInstalationSlots()
         {
             var year = DateTime.UtcNow.Year;
-            var startDate = DateTime.UtcNow == DateTime.Parse($"31/12/{year}")
-                ? DateTime.Parse($"01/01/{year + 1}")
+            var startDate = DateTime.UtcNow == DateTime.ParseExact($"31/12/{year}", @"dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None)
+                ? DateTime.ParseExact($"01/01/{year + 1}", @"dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None)
                 : DateTime.UtcNow.AddDays(1);
-            var endDate = DateTime.UtcNow == DateTime.Parse($"31/12/{year}")
-                ? DateTime.Parse($"31/12/{year + 1}")
-                : DateTime.Parse($"31/12/{year}");
+            var endDate = DateTime.UtcNow == DateTime.ParseExact($"31/12/{year}", @"dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None)
+                ? DateTime.ParseExact($"31/12/{year + 1}", @"dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None)
+                : DateTime.ParseExact($"31/12/{year}", @"dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None);
             var slots = new HashSet<InstalationSlot>();
 
             while (startDate <= endDate)

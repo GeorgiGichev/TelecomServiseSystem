@@ -36,60 +36,67 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="@Model.Input.IsDeleted"></label>
-                            <input type="checkbox" asp-for="@Model.Input.IsDeleted"/>
+                            <input type="checkbox" asp-for="@Model.Input.IsDeleted" />
                             <span asp-validation-for="@Model.Input.IsDeleted" class="text-danger"></span>
                         </div>
                         <div class="form-row">
-                            <div class=" col-md-10"></div>
+                            <div class="col-md-8"></div>
                             <div class="col-md-2">
                                 <button type="submit" class="btn btn-primary btn-block">Search</button>
                             </div>
-                        </div>
-                        <hr />
-                        <div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th>First Name</th>
-                                                <th>Middle Name</th>
-                                                <th>Last Name</th>
-                                                <th>EGN</th>
-                                                <th>Created On</th>
-                                                <th>Deleted On</th>
-                                                <th>Delete</th>
-                                            </tr>
-                                        </thead>
-                                        <tfoot>
-                                            <tr>
-                                                <th>First Name</th>
-                                                <th>Middle Name</th>
-                                                <th>Last Name</th>
-                                                <th>EGN</th>
-                                                <th>Created On</th>
-                                                <th>Deleted On</th>
-                                                <th>Delete</th>
-                                            </tr>
-                                        </tfoot>
-                                        <tbody>
-                                            @foreach (var employee in Model.EmployeesList)
-                                            {
-                                            <tr>
-                                                <td>@employee.FirstName</td>
-                                                <td>@employee.MiddleName</td>
-                                                <td>@employee.LastName</td>
-                                                <td><a id="button" asp-area="Administration" asp-controller="Employee" asp-action="Edit" asp-route-id="@employee.Id">@employee.EGN</a></td>
-                                                <td>@employee.CreatedOn</td>
-                                                <td>@employee.DeletedOn</td>
-                                                <td><a class="btn btn-danger" asp-area="Administration" asp-controller="Employee" asp-action="Delete" asp-route-id="@employee.Id">Delete</a></td>
-                                            </tr>}
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div class="col-md-2">
+                                <a asp-area="Administration" asp-controller="Employee" asp-action="Index" class="btn btn-primary btn-block">Clear</a>
                             </div>
                         </div>
                     </form>
+                    <hr />
+                    <div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>First Name</th>
+                                            <th>Middle Name</th>
+                                            <th>Last Name</th>
+                                            <th>EGN</th>
+                                            <th>Created On</th>
+                                            <th>Deleted On</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>First Name</th>
+                                            <th>Middle Name</th>
+                                            <th>Last Name</th>
+                                            <th>EGN</th>
+                                            <th>Created On</th>
+                                            <th>Deleted On</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach (var employee in Model.EmployeesList)
+                                        {
+                            <tr>
+                                <td>@employee.FirstName</td>
+                                <td>@employee.MiddleName</td>
+                                <td>@employee.LastName</td>
+                                <td><a id="button" asp-area="Administration" asp-controller="Employee" asp-action="Edit" asp-route-id="@employee.Id">@employee.EGN</a></td>
+                                <td>@employee.CreatedOn</td>
+                                <td>@employee.DeletedOn</td>
+                                <td>
+                                    <a class="btn btn-danger" asp-area="Administration" asp-controller="Employee" asp-action="Delete" asp-route-id="@employee.Id">Delete</a>
+                                </td>
+                            </tr>
+}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="col-md-6 col-md-offset-2">
                 </div>
@@ -97,3 +104,4 @@
         </div>
     </div>
 </div>
+

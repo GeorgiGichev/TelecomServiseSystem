@@ -8,7 +8,7 @@
     using TelecomServiceSystem.Services.Data.Tasks;
     using TelecomServiceSystem.Web.ViewModels.Slots;
 
-    [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + GlobalConstants.EngineerRoleName)]
+    [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + GlobalConstants.EngineerRoleName + "," + GlobalConstants.SellerRoleName)]
     public class TasksController : Controller
     {
         private readonly ITasksService tasksService;

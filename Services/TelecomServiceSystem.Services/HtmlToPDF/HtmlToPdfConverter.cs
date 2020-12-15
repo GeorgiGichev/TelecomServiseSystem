@@ -11,11 +11,12 @@
             var inputFileName = $"input_{Guid.NewGuid()}.html";
             var outputFileName = $"output_{Guid.NewGuid()}.pdf";
             File.WriteAllText($"{basePath}/{inputFileName}", htmlCode);
-            var startInfo = new ProcessStartInfo(@"C:\PhantomJs\bin\phantomjs\bin\phantomjs.exe")
+            var startInfo = new ProcessStartInfo(@"phantomjs.exe")
             {
                 WorkingDirectory = basePath,
                 Arguments = $"rasterize.js \"{inputFileName}\" \"{outputFileName}\" \"{formatType}\" \"{orientationType.ToLower()}\"",
                 UseShellExecute = true,
+                WindowStyle = ProcessWindowStyle.Hidden,
             };
 
             var process = new Process { StartInfo = startInfo };

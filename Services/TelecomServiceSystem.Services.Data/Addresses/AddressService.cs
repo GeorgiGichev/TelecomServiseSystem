@@ -129,7 +129,14 @@
 
         public async Task<IEnumerable<T>> GetAllCitiesAsync<T>()
         {
-            return await this.cityRepo.All().To<T>().ToListAsync();
+            if (this.cityRepo.All().Any())
+            {
+                return await this.cityRepo.All().To<T>().ToListAsync();
+            }
+            else
+            {
+                return new List<T>();
+            }
         }
 
         public async Task DeleteCityAsync(int id)

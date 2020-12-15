@@ -6,7 +6,7 @@
 
     public class InvoicesCreatorJob
     {
-        public const string CronSchedule = "1 0 1 * *";
+        public const string CronSchedule = "00 18 15 * *";
         private readonly IBillingService billingService;
 
         public InvoicesCreatorJob(IBillingService billingService)
