@@ -53,6 +53,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Orders\GetPdf.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\css\site.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

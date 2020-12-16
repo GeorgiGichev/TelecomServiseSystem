@@ -3,6 +3,7 @@
     using System;
     using System.Diagnostics;
     using System.IO;
+    using System.Text;
 
     public class HtmlToPdfConverter : IHtmlToPdfConverter
     {
@@ -11,7 +12,7 @@
             var inputFileName = $"input_{Guid.NewGuid()}.html";
             var outputFileName = $"output_{Guid.NewGuid()}.pdf";
             File.WriteAllText($"{basePath}/{inputFileName}", htmlCode);
-            var startInfo = new ProcessStartInfo(@"phantomjs.exe")
+            var startInfo = new ProcessStartInfo($"phantomjs.exe")
             {
                 WorkingDirectory = basePath,
                 Arguments = $"rasterize.js \"{inputFileName}\" \"{outputFileName}\" \"{formatType}\" \"{orientationType.ToLower()}\"",
@@ -21,9 +22,7 @@
 
             var process = new Process { StartInfo = startInfo };
             process.Start();
-
             process.WaitForExit();
-
             var bytes = File.ReadAllBytes($"{basePath}/{outputFileName}");
 
             File.Delete($"{basePath}/{inputFileName}");

@@ -101,11 +101,11 @@
                         @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                         {
                             <div class="sb-sidenav-menu-heading">Delete</div>
-                            <a class="nav-link" asp-controller="Services" asp-action="All">
+                            <a class="nav-link" asp-area="" asp-controller="Services" asp-action="All">
                                 <div class="sb-nav-link-icon"><i class="fas fa-ban"></i></div>
                                 Delete Services
                             </a>
-                            <a class="nav-link" asp-controller="Addresses" asp-action="AllCities">
+                            <a class="nav-link "asp-area="" asp-controller="Addresses" asp-action="AllCities">
                                 <div class="sb-nav-link-icon"><i class="fas fa-ban"></i></div>
                                 Delete Cities
                             </a>
