@@ -128,6 +128,12 @@
         {
             if (!this.ModelState.IsValid)
             {
+                model.Services = await this.serviceService.GetServiceNamesByTypeAsync<ServiceViewModel>(model.ServiceType);
+                if (model.ServiceType == "mobile")
+                {
+                    model.Numbers = await this.numberService.GetFreeNumbersAsync<ServiceNumberViewModel>(model.ServiceType, null);
+                }
+
                 return this.View(model.ServiceType.ToLower() == "mobile" ? "Mobile" : "Fixed", model);
             }
 

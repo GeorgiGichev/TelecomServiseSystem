@@ -87,6 +87,7 @@
         {
             if (!this.ModelState.IsValid)
             {
+                model = await this.serviceInfoService.GetByIdAsync<ServiceCancelationViewModel>(model.Id);
                 return this.View(model);
             }
 
