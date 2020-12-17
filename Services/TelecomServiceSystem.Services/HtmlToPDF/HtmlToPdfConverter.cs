@@ -12,7 +12,7 @@
             var inputFileName = $"input_{Guid.NewGuid()}.html";
             var outputFileName = $"output_{Guid.NewGuid()}.pdf";
             File.WriteAllText($"{basePath}/{inputFileName}", htmlCode);
-            var startInfo = new ProcessStartInfo($"phantomjs.exe")
+            var startInfo = new ProcessStartInfo("phantomjs.exe")
             {
                 WorkingDirectory = basePath,
                 Arguments = $"rasterize.js \"{inputFileName}\" \"{outputFileName}\" \"{formatType}\" \"{orientationType.ToLower()}\"",
@@ -36,7 +36,7 @@
             var inputFileName = $"input_{Guid.NewGuid()}.html";
             var outputFileName = $"output_{Guid.NewGuid()}.png";
             File.WriteAllText($"{basePath}/{inputFileName}", htmlCode);
-            var startInfo = new ProcessStartInfo(@"C:\PhantomJs\bin\phantomjs\bin\phantomjs.exe")
+            var startInfo = new ProcessStartInfo("phantomjs.exe")
             {
                 WorkingDirectory = basePath,
                 Arguments = $"rasterize.js \"{inputFileName}\" \"{outputFileName}\" \"{formatType}\" \"{orientationType.ToLower()}\"",

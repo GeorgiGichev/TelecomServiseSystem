@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Hosting;
     using TelecomServiceSystem.Services.CloudinaryService;
     using TelecomServiceSystem.Services.Data.Bills;
     using TelecomServiceSystem.Services.Data.Customers;
@@ -20,8 +21,9 @@
         private readonly ICustomerService customerService;
         private readonly IBillsService billsService;
         private readonly IEmailSender emailSender;
+        private readonly IWebHostEnvironment enviroment;
 
-        public BillingService(IViewRenderService viewRenderService, IHtmlToPdfConverter htmlToPdfConverter, IUploadService uploadService, ICustomerService customerService, IBillsService billsService, IEmailSender emailSender)
+        public BillingService(IViewRenderService viewRenderService, IHtmlToPdfConverter htmlToPdfConverter, IUploadService uploadService, ICustomerService customerService, IBillsService billsService, IEmailSender emailSender, IWebHostEnvironment enviroment)
         {
             this.viewRenderService = viewRenderService;
             this.htmlToPdfConverter = htmlToPdfConverter;
@@ -29,6 +31,7 @@
             this.customerService = customerService;
             this.billsService = billsService;
             this.emailSender = emailSender;
+            this.enviroment = enviroment;
         }
 
         public async Task CreateAsync()
@@ -55,7 +58,7 @@
                 }
 
                 var htmlData = await this.viewRenderService.RenderToStringAsync("~/Views/Bills/Bill.cshtml", customer);
-                var fileContents = this.htmlToPdfConverter.ConvertToImage(Environment.CurrentDirectory, htmlData, "A4", "Portrait");
+                var fileContents = this.htmlToPdfConverter.ConvertToImage(this.enviroment.ContentRootPath, htmlData, "A4", "Portrait");
 
                 var url = await this.uploadService.UploadBillAsync(fileContents);
 
