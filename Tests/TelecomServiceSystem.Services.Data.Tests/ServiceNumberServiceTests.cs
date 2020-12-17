@@ -268,5 +268,48 @@
 
             Assert.Equal("866666666", number);
         }
+
+        [Fact]
+        public async Task GetByServiceInfoIdShouldWorkCorrectlyWhitTypeMobile()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            var dbContext = new ApplicationDbContext(options);
+
+            var numberRepo = new EfDeletableEntityRepository<ServiceNumber>(dbContext);
+
+            var service = new ServiceNumbersService(numberRepo);
+
+            await numberRepo.AddAsync(new ServiceNumber
+            {
+                Number = "866666666",
+                IsFree = true,
+                ServiceInfos = new HashSet<ServiceInfo> { new ServiceInfo() },
+            });
+
+            await numberRepo.AddAsync(new ServiceNumber
+            {
+                Number = "866666661",
+                IsFree = false,
+            });
+
+            await numberRepo.AddAsync(new ServiceNumber
+            {
+                Number = "N.123456",
+                IsFree = true,
+            });
+
+            await numberRepo.AddAsync(new ServiceNumber
+            {
+                Number = "TV.123456",
+                IsFree = true,
+            });
+
+            await numberRepo.SaveChangesAsync();
+
+            var number = await service.GetByServiceInfoId(1);
+
+            Assert.Equal("866666666", number);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace TelecomServiceSystem.Services.Data.Tests
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
@@ -342,6 +343,44 @@
 
             Assert.Equal(newName, customer.FirstName);
             Assert.Equal(newEGN, customer.EGN);
+        }
+
+        [Fact]
+        public async Task DeleteAsyncShouldWorkCorrectly()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            var dbContext = new ApplicationDbContext(options);
+
+            var userRepo = new EfDeletableEntityRepository<ApplicationUser>(dbContext);
+
+            var service = new EmployeesService(userRepo);
+
+            await userRepo.AddAsync(new ApplicationUser
+            {
+                FirstName = "ivan",
+                LastName = "ivanov",
+                MiddleName = "ivanov",
+                EGN = "1234567890",
+            });
+            await userRepo.AddAsync(new ApplicationUser
+            {
+                FirstName = "ivan2",
+                LastName = "ivanov2",
+                MiddleName = "ivanov2",
+                EGN = "1234567892",
+            });
+            await userRepo.SaveChangesAsync();
+
+            var customerId = (await userRepo.AllAsNoTracking()
+                .FirstOrDefaultAsync()).Id;
+
+            await service.DeleteAsync(customerId);
+
+            var customers = await userRepo.All().ToListAsync();
+
+            Assert.Single(customers);
+            Assert.DoesNotContain(customers, x => x.Id == customerId);
         }
     }
 }

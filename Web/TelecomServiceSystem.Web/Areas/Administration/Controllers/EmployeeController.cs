@@ -107,7 +107,7 @@
 
         public async Task<IActionResult> Delete(string id)
         {
-            await this.employeesService.Delete(id);
+            await this.employeesService.DeleteAsync(id);
             return this.RedirectToAction("Index");
         }
 

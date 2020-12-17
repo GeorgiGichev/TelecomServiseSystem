@@ -137,5 +137,144 @@
             Assert.Contains("Mobile", types);
             Assert.Contains("Fix", types);
         }
+
+        [Fact]
+        public async Task GetByNameAsyncShouldWorkCorrectly()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            var dbContext = new ApplicationDbContext(options);
+
+            var serviceRepo = new EfDeletableEntityRepository<Service>(dbContext);
+
+            var service = new ServiceService(serviceRepo);
+
+            await serviceRepo.AddAsync(new Service
+            {
+                ServiceType = ServiceType.Mobile,
+                Name = "ASD",
+            });
+
+            await serviceRepo.AddAsync(new Service
+            {
+                ServiceType = ServiceType.Fix,
+                Name = "ASDD",
+            });
+
+            await serviceRepo.SaveChangesAsync();
+
+            var serviceFromDB = await service.GetByNameAsync<ServiceModel>("ASD");
+
+            Assert.Equal("ASD", serviceFromDB.Name);
+            Assert.Equal(1, serviceFromDB.ServiceType);
+        }
+
+        [Fact]
+        public async Task GetByIdAsyncShouldWorkCorrectly()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            var dbContext = new ApplicationDbContext(options);
+
+            var serviceRepo = new EfDeletableEntityRepository<Service>(dbContext);
+
+            var service = new ServiceService(serviceRepo);
+
+            await serviceRepo.AddAsync(new Service
+            {
+                ServiceType = ServiceType.Mobile,
+                Name = "ASD",
+            });
+
+            await serviceRepo.AddAsync(new Service
+            {
+                ServiceType = ServiceType.Fix,
+                Name = "ASDD",
+            });
+
+            await serviceRepo.SaveChangesAsync();
+
+            var serviceFromDB = await service.GetByIdAsync<ServiceModel>(1);
+
+            Assert.Equal("ASD", serviceFromDB.Name);
+            Assert.Equal(1, serviceFromDB.ServiceType);
+        }
+
+        [Fact]
+        public async Task GetAllAsyncShouldWorkCorrectly()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            var dbContext = new ApplicationDbContext(options);
+
+            var serviceRepo = new EfDeletableEntityRepository<Service>(dbContext);
+
+            var service = new ServiceService(serviceRepo);
+
+            await serviceRepo.AddAsync(new Service
+            {
+                ServiceType = ServiceType.Mobile,
+                Name = "ASD",
+            });
+
+            await serviceRepo.AddAsync(new Service
+            {
+                ServiceType = ServiceType.Fix,
+                Name = "ASDD",
+            });
+
+            await serviceRepo.SaveChangesAsync();
+
+            var services = await service.GetAllAsync<ServiceModel>();
+
+            Assert.Equal(2, services.Count());
+        }
+
+        [Fact]
+        public async Task GetAllAsyncShouldReturnEmptyCollectionWhenRepoIsEmpty()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            var dbContext = new ApplicationDbContext(options);
+
+            var serviceRepo = new EfDeletableEntityRepository<Service>(dbContext);
+
+            var service = new ServiceService(serviceRepo);
+
+
+            var services = await service.GetAllAsync<ServiceModel>();
+
+            Assert.Empty(services);
+        }
+
+        [Fact]
+        public async Task DeleteAsyncShouldWorkCorrectly()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            var dbContext = new ApplicationDbContext(options);
+
+            var serviceRepo = new EfDeletableEntityRepository<Service>(dbContext);
+
+            var service = new ServiceService(serviceRepo);
+
+            await serviceRepo.AddAsync(new Service
+            {
+                ServiceType = ServiceType.Mobile,
+                Name = "ASD",
+            });
+
+            await serviceRepo.AddAsync(new Service
+            {
+                ServiceType = ServiceType.Fix,
+                Name = "ASDD",
+            });
+
+            await serviceRepo.SaveChangesAsync();
+            await service.DeleteAsync(1);
+            var services = await service.GetAllAsync<ServiceModel>();
+
+            Assert.Single(services);
+        }
     }
 }

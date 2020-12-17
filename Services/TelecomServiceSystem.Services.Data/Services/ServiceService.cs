@@ -74,7 +74,7 @@
             }
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var service = await this.serviceRepo.All()
                 .FirstOrDefaultAsync(x => x.Id == id);

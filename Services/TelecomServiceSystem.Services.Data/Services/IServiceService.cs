@@ -17,6 +17,6 @@
 
         Task<IEnumerable<T>> GetAllAsync<T>();
 
-        Task Delete(int id);
+        Task DeleteAsync(int id);
     }
 }

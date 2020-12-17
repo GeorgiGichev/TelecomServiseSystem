@@ -28,7 +28,7 @@
             return customerToAdd.Id;
         }
 
-        public async Task Delete(string id)
+        public async Task DeleteAsync(string id)
         {
             var customer = await this.customerRepo.All()
                 .FirstOrDefaultAsync(x => x.Id == id);

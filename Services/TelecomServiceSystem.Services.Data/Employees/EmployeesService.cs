@@ -21,7 +21,7 @@
             this.usersRepo = usersRepo;
         }
 
-        public async Task Delete(string employeeId)
+        public async Task DeleteAsync(string employeeId)
         {
             var employee = await this.usersRepo.All()
                 .FirstOrDefaultAsync(x => x.Id == employeeId);

@@ -96,7 +96,7 @@
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Delete(string id)
         {
-            await this.customerService.Delete(id);
+            await this.customerService.DeleteAsync(id);
             return this.RedirectToAction("Search");
         }
 

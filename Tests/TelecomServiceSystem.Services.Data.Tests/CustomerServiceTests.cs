@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
@@ -293,6 +294,34 @@
             Assert.Collection(
                 customers,
                 x => Assert.Equal("1234567890", x.PersonalNumber));
+        }
+
+        [Fact]
+        public async Task DeleteAsyncShouldWorkCorrectly()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            var dbContext = new ApplicationDbContext(options);
+
+            var customerRepo = new EfDeletableEntityRepository<Customer>(dbContext);
+
+            var service = new CustomerService(customerRepo);
+            var customerId = Guid.NewGuid().ToString();
+            await customerRepo.AddAsync(new Customer
+            {
+                Id = customerId,
+                FirstName = "Ivan",
+            });
+            await customerRepo.AddAsync(new Customer
+            {
+                FirstName = "Dragan",
+            });
+            await customerRepo.SaveChangesAsync();
+            await service.DeleteAsync(customerId);
+            var customers = await customerRepo.All().ToListAsync();
+
+            Assert.Single(customers);
+            Assert.DoesNotContain(customers, x => x.Id == customerId);
         }
     }
 }

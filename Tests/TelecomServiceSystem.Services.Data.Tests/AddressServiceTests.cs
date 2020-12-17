@@ -1,6 +1,7 @@
 ﻿namespace TelecomServiceSystem.Services.Data.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -453,6 +454,134 @@
 
             Assert.Equal("ASD", address.Street);
             Assert.True(address.IsMainAddress);
+        }
+
+        [Fact]
+        public async Task GetByServiceInfoIdAsyncShouldReturnMainAddress()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            var dbContext = new ApplicationDbContext(options);
+
+            var addressRepo = new EfDeletableEntityRepository<Address>(dbContext);
+            var countryRepo = new EfDeletableEntityRepository<Country>(dbContext);
+            var cityRepo = new EfDeletableEntityRepository<City>(dbContext);
+
+            var service = new AddressService(addressRepo, countryRepo, cityRepo);
+
+            var customerId = Guid.NewGuid().ToString();
+            await addressRepo.AddAsync(new Address()
+            {
+                Id = 1,
+                CityId = 1,
+                Street = "ASD",
+                Neighborhood = "NTest",
+                Number = 1,
+                CustomerId = customerId,
+                IsMainAddress = true,
+                ServicesInfos = new HashSet<ServiceInfo> { new ServiceInfo() },
+            });
+            await addressRepo.AddAsync(new Address()
+            {
+                Id = 2,
+                CityId = 1,
+                Street = "Test",
+                Neighborhood = "NTest",
+                Number = 1,
+                CustomerId = customerId,
+                IsMainAddress = false,
+            });
+            await addressRepo.SaveChangesAsync();
+            var address = await service.GetByServiceInfoIdAsync<AddressModel>(1);
+
+            Assert.Equal("ASD", address.Street);
+            Assert.True(address.IsMainAddress);
+        }
+
+        [Fact]
+        public async Task GetAllCitiesAsyncGetAllCitiesAsyncShouldWorkCorrectly()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            var dbContext = new ApplicationDbContext(options);
+
+            var addressRepo = new EfDeletableEntityRepository<Address>(dbContext);
+            var countryRepo = new EfDeletableEntityRepository<Country>(dbContext);
+            var cityRepo = new EfDeletableEntityRepository<City>(dbContext);
+
+            var service = new AddressService(addressRepo, countryRepo, cityRepo);
+
+            await cityRepo.AddAsync(new City
+            {
+                Name = "Varna",
+                Country = new Country
+                {
+                    Name = GlobalConstants.CountryOfUsing,
+                },
+            });
+            await cityRepo.SaveChangesAsync();
+
+            var cities = await service.GetAllCitiesAsync<CityModel>();
+            Assert.Collection(
+                cities,
+                x => Assert.Equal("Varna", x.Name));
+            Assert.Single(cities);
+        }
+
+        [Fact]
+        public async Task GetAllCitiesAsyncGetAllCitiesAsyncShouldReturnEmptyCollectionWhenRepoIsEmpty()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            var dbContext = new ApplicationDbContext(options);
+
+            var addressRepo = new EfDeletableEntityRepository<Address>(dbContext);
+            var countryRepo = new EfDeletableEntityRepository<Country>(dbContext);
+            var cityRepo = new EfDeletableEntityRepository<City>(dbContext);
+
+            var service = new AddressService(addressRepo, countryRepo, cityRepo);
+
+            var cities = await service.GetAllCitiesAsync<CityModel>();
+
+            Assert.Empty(cities);
+        }
+
+        [Fact]
+        public async Task DeleteCityAsyncGetAllCitiesAsyncShouldWorkCorrectly()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()).Options;
+            var dbContext = new ApplicationDbContext(options);
+
+            var addressRepo = new EfDeletableEntityRepository<Address>(dbContext);
+            var countryRepo = new EfDeletableEntityRepository<Country>(dbContext);
+            var cityRepo = new EfDeletableEntityRepository<City>(dbContext);
+
+            var service = new AddressService(addressRepo, countryRepo, cityRepo);
+
+            await cityRepo.AddAsync(new City
+            {
+                Name = "Varna",
+                Country = new Country
+                {
+                    Name = GlobalConstants.CountryOfUsing,
+                },
+            });
+            await cityRepo.AddAsync(new City
+            {
+                Name = "Sofia",
+                Country = new Country
+                {
+                    Name = GlobalConstants.CountryOfUsing,
+                },
+            });
+            await cityRepo.SaveChangesAsync();
+            await service.DeleteCityAsync(2);
+            var cities = await service.GetAllCitiesAsync<CityModel>();
+            Assert.Collection(
+                cities,
+                x => Assert.Equal("Varna", x.Name));
+            Assert.Single(cities);
         }
     }
 }

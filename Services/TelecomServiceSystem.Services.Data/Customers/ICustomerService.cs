@@ -17,6 +17,6 @@
 
         Task<bool> ExistAsync(string id);
 
-        Task Delete(string id);
+        Task DeleteAsync(string id);
     }
 }

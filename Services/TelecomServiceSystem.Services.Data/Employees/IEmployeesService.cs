@@ -13,6 +13,6 @@
 
         Task<bool> ExistAsync(string id);
 
-        Task Delete(string employeeId);
+        Task DeleteAsync(string employeeId);
     }
 }
