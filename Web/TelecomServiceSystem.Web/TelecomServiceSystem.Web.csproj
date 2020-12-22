@@ -8,6 +8,7 @@
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
+    <ApplicationInsightsResourceId>/subscriptions/c50d58e3-cb57-493c-82d1-a4e354741525/resourceGroups/TelecomServiceSystem/providers/microsoft.insights/components/TelecomServiceSystem</ApplicationInsightsResourceId>
   </PropertyGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
@@ -18,6 +19,7 @@
     <PackageReference Include="Hangfire.AspNetCore" Version="1.7.18" />
     <PackageReference Include="Hangfire.Core" Version="1.7.18" />
     <PackageReference Include="Hangfire.SqlServer" Version="1.7.18" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="5.0.0" />
