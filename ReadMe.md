@@ -5,7 +5,7 @@ Live at <a href='https://telecomservicesystem.azurewebsites.net/'>https://teleco
 
 For test use 
 
-Username: Georgi.Gichev
+Username: test
 
 Password: 123456
 
